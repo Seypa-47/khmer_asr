@@ -1,0 +1,35 @@
+[
+  {
+    "approach": "Approach 1 (Trained)",
+    "name": "Whisper-Tiny",
+    "architecture": "Seq2Seq Transformer",
+    "strategy": "Full Fine-Tuning",
+    "trainable_params_m": 37.8,
+    "hardware": "Tesla T4 GPU (Google Colab)",
+    "training_time": "~15 minutes",
+    "test_cer": 83.6,
+    "test_wer": 100.0
+  },
+  {
+    "approach": "Approach 2 (Comparison)",
+    "name": "Meta MMS-1B Khmer",
+    "architecture": "Acoustic CTC Model",
+    "strategy": "Adapter / Transfer Learning",
+    "trainable_params_m": 2.5,
+    "hardware": "Tesla T4 GPU (Google Colab)",
+    "training_time": "~10 minutes",
+    "test_cer": 48.2,
+    "test_wer": 94.5
+  },
+  {
+    "approach": "Approach 3 (Ablation)",
+    "name": "Whisper-Tiny (Frozen Enc)",
+    "architecture": "Seq2Seq Transformer",
+    "strategy": "Linear Probe / Decoder-Only",
+    "trainable_params_m": 28.5,
+    "hardware": "Tesla T4 GPU (Google Colab)",
+    "training_time": "~11 minutes",
+    "test_cer": 89.4,
+    "test_wer": 100.0
+  }
+]

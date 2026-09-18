@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+
+# Large Model Weights (>50MB) and Archives
+*.zip
+*.tar.gz
+*.safetensors
+*.pt
+*.bin
+khmer_asr/
+models/
+whisper-tiny-khmer/
+mms-khmer-ctc/
+hf_cache/
+
+# IDE
+.vscode/
+.idea/

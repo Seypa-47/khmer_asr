@@ -55,6 +55,7 @@ except ImportError:
     print("Package 'evaluate' not found. Auto-installing 'evaluate' and 'jiwer'...")
     subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "evaluate", "jiwer"])
     import evaluate
+import random
 import numpy as np
 import torch
 from datasets import Audio, Dataset, DatasetDict, concatenate_datasets, load_dataset
@@ -65,6 +66,7 @@ from transformers import (
     WhisperForConditionalGeneration,
     WhisperProcessor,
     WhisperTokenizer,
+    set_seed,
 )
 
 
@@ -108,11 +110,26 @@ TEXT_COLUMN_CANDIDATES = (
 )
 
 
+
+def set_all_seeds(seed: int = 42) -> None:
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
+    set_seed(seed)
+    print(f"Random seed fixed to {seed} across Python, NumPy, PyTorch, and Transformers.")
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Fine-tune Whisper for Khmer ASR.")
     parser.add_argument("--output-dir", default="./whisper-tiny-khmer")
     parser.add_argument("--model-name", default=MODEL_NAME)
     parser.add_argument("--cache-dir", default=DEFAULT_CACHE_DIR, help="Hugging Face cache directory on a drive with lots of free space.")
+    parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility.")
+    parser.add_argument("--freeze-encoder", action="store_true", help="Freeze Whisper encoder to train only decoder (linear probe / transfer strategy).")
+    parser.add_argument("--resume-from-checkpoint", default=None, help="Path to a checkpoint folder to continue training from.")
+    parser.add_argument("--weight-decay", type=float, default=0.0, help="Weight decay for regularization.")
     parser.add_argument("--use-fleurs-train", action="store_true", help="Use Google FLEURS km_kh train split for fast, lightweight training.")
     parser.add_argument("--include-slr42", action="store_true", help="Try to add OpenSLR SLR42 to training (WARNING: very large 100+ hour dataset).")
     parser.add_argument("--skip-ddd", action="store_true", help="Train without DDD dataset.")
@@ -326,6 +343,7 @@ def build_compute_metrics(processor: WhisperProcessor, cache_dir: str | None = N
 
 def main() -> None:
     args = parse_args()
+    set_all_seeds(args.seed)
 
     if args.cache_dir:
         os.environ["HF_HOME"] = args.cache_dir
@@ -338,6 +356,9 @@ def main() -> None:
         os.environ["TMP"] = t_dir
         os.environ["TMPDIR"] = t_dir
         tempfile.tempdir = t_dir
+
+    device_name = torch.cuda.get_device_name(0) if torch.cuda.is_available() else "CPU"
+    print(f"Hardware compute environment: {device_name}")
 
     if args.max_train_samples is None:
         print(
@@ -355,6 +376,14 @@ def main() -> None:
     model.generation_config.forced_decoder_ids = None
     model.config.forced_decoder_ids = None
     model.config.suppress_tokens = []
+
+    if args.freeze_encoder:
+        print("Freezing Whisper encoder weights (Linear Probe / Transfer Learning strategy)...")
+        model.freeze_encoder()
+
+    trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    total_params = sum(p.numel() for p in model.parameters())
+    print(f"Model Parameters: {trainable_params:,} trainable / {total_params:,} total ({100 * trainable_params / total_params:.2f}%)")
 
     train_dataset = load_training_datasets(args)
     eval_dataset, test_dataset = load_fleurs_eval_sets(args)
@@ -407,17 +436,14 @@ def main() -> None:
         max_target_positions=max_label_length,
     )
 
-    # Whisper Small/Tiny defaults. For limited VRAM, reduce
-    # --per-device-train-batch-size to 1 or 2, increase
-    # --gradient-accumulation-steps, keep --fp16 on CUDA, or enable
-    # model.gradient_checkpointing_enable() below.
-    # model.gradient_checkpointing_enable()
     training_kwargs = {
         "output_dir": args.output_dir,
         "per_device_train_batch_size": args.per_device_train_batch_size,
         "gradient_accumulation_steps": args.gradient_accumulation_steps,
         "learning_rate": args.learning_rate,
         "warmup_steps": args.warmup_steps,
+        "weight_decay": args.weight_decay,
+        "seed": args.seed,
         "num_train_epochs": args.num_train_epochs,
         "gradient_checkpointing": False,
         "fp16": args.fp16,
@@ -455,7 +481,7 @@ def main() -> None:
 
     trainer = Seq2SeqTrainer(**trainer_kwargs)
 
-    trainer.train()
+    trainer.train(resume_from_checkpoint=args.resume_from_checkpoint)
     trainer.save_model(args.output_dir)
     processor.save_pretrained(args.output_dir)
 

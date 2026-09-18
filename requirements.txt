@@ -8,3 +8,5 @@ accelerate
 tensorboard
 soundfile
 librosa
+gradio
+matplotlib
