@@ -59,7 +59,7 @@ def get_model_and_processor(model_choice: str):
 
     if "MMS-1B" in model_choice:
         if os.path.exists(LOCAL_MMS_PATH):
-            print(f"[*] Loading Student Trained Meta MMS-1B Khmer CTC from {LOCAL_MMS_PATH}...")
+            print(f"[*] Loading Meta MMS-1B Khmer CTC (Version 2.0) from {LOCAL_MMS_PATH}...")
             proc = AutoProcessor.from_pretrained(LOCAL_MMS_PATH)
             mdl = Wav2Vec2ForCTC.from_pretrained(LOCAL_MMS_PATH).to(DEVICE)
         else:
@@ -77,16 +77,16 @@ def get_model_and_processor(model_choice: str):
         MODELS[model_choice] = ("whisper", proc, mdl)
         return "whisper", proc, mdl
     else:
-        print(f"[*] Loading Student Trained Whisper Tiny ({LOCAL_WHISPER_PATH})...")
+        print(f"[*] Loading Whisper Tiny (Version 1.0) from {LOCAL_WHISPER_PATH}...")
         proc = WhisperProcessor.from_pretrained(LOCAL_WHISPER_PATH, language="Khmer", task="transcribe")
         mdl = WhisperForConditionalGeneration.from_pretrained(LOCAL_WHISPER_PATH).to(DEVICE)
         mdl.eval()
         MODELS[model_choice] = ("whisper", proc, mdl)
         return "whisper", proc, mdl
 
-# Pre-load student MMS model as default
-DEFAULT_MODEL_NAME = "🏆 Approach 2: Meta MMS-1B Khmer CTC (Student Trained · 15.5% CER)"
-print("[*] Pre-warming Student Trained Meta MMS-1B model...")
+# Pre-load Version 2.0 MMS model as default
+DEFAULT_MODEL_NAME = "🏆 Approach 2: Meta MMS-1B Khmer CTC (Version 2.0 · 15 Epochs)"
+print("[*] Pre-warming Meta MMS-1B model...")
 get_model_and_processor(DEFAULT_MODEL_NAME)
 print("[*] Models ready!")
 
@@ -313,7 +313,7 @@ def build_app():
                     container=False,
                 )
                 model_status = gr.Textbox(
-                    value="Whisper-Tiny (37.8M params) · Colab Trial",
+                    value="Meta MMS-1B CTC (Version 2.0 · 15 Epochs)",
                     interactive=False,
                     scale=1,
                     container=False,
@@ -323,13 +323,12 @@ def build_app():
             with gr.Row():
                 model_selector = gr.Dropdown(
                     choices=[
-                        "🏆 Approach 2: Meta MMS-1B Khmer CTC (Student Trained · 15.5% CER)",
-                        "🧪 Approach 1: Whisper-Tiny Khmer (Student Trained · 49.3% CER)",
-                        "⚡ Khmer Whisper Base (High Accuracy Comparison)",
+                        "🏆 Approach 2: Meta MMS-1B Khmer CTC (Version 2.0 · 15 Epochs)",
+                        "🧪 Approach 1: Whisper-Tiny Khmer (Version 1.0)",
+                        "⚡ Khmer Whisper Base (Reference Model)",
                     ],
-                    value="🏆 Approach 2: Meta MMS-1B Khmer CTC (Student Trained · 15.5% CER)",
+                    value="🏆 Approach 2: Meta MMS-1B Khmer CTC (Version 2.0 · 15 Epochs)",
                     label="🧠 ជ្រើសរើសម៉ូឌែល ASR (ASR Model Architecture)",
-                    info="🏆 Meta MMS-1B: ម៉ូឌែល Acoustic CTC ដែលនិស្សិតបានបង្វឹកផ្ទាល់លើ FLEURS (Non-autoregressive, គ្មានការវិលជុំ ជជជ... ឡើយ)",
                     interactive=True,
                 )
 
