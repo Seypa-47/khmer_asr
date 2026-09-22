@@ -77,7 +77,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--unfreeze-top-layers", type=int, default=4, help="Number of top transformer encoder layers to unfreeze (0 = freeze all)")
     parser.add_argument("--apply-spec-augment", action="store_true", default=True, help="Apply SpecAugment data masking during training")
     parser.add_argument("--lr-scheduler-type", default="cosine", help="Learning rate scheduler type (e.g. cosine, linear)")
-    parser.add_argument("--warmup-ratio", type=float, default=0.1, help="Warmup ratio for learning rate schedule")
+    parser.add_argument("--warmup-steps", type=int, default=50, help="Warmup steps for learning rate schedule")
     parser.add_argument("--per-device-train-batch-size", type=int, default=1)
     parser.add_argument("--per-device-eval-batch-size", type=int, default=1)
     parser.add_argument("--gradient-accumulation-steps", type=int, default=8)
@@ -253,7 +253,7 @@ def main() -> None:
         gradient_accumulation_steps=args.gradient_accumulation_steps,
         learning_rate=args.learning_rate,
         lr_scheduler_type=args.lr_scheduler_type,
-        warmup_ratio=args.warmup_ratio,
+        warmup_steps=args.warmup_steps,
         num_train_epochs=args.num_train_epochs,
         fp16=args.fp16,
         gradient_checkpointing=True,
