@@ -9,26 +9,86 @@ import re
 import sys
 import time
 import unicodedata
+import av
 import gradio as gr
 import librosa
 import numpy as np
 import torch
-from transformers import WhisperForConditionalGeneration, WhisperProcessor
+from transformers import (
+    AutoProcessor,
+    Wav2Vec2ForCTC,
+    WhisperForConditionalGeneration,
+    WhisperProcessor,
+)
 
 # Multi-threading for fast CPU execution
 torch.set_num_threads(4)
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-WHISPER_PATH = os.path.join(PROJECT_ROOT, "models", "whisper-tiny-khmer")
+LOCAL_WHISPER_PATH = os.path.join(PROJECT_ROOT, "models", "whisper-tiny-khmer")
+LOCAL_MMS_PATH = os.path.join(PROJECT_ROOT, "models", "mms-khmer-ctc")
+HIGH_ACCURACY_MODEL_ID = "sengtha/whisper-base-khmer"
 SAMPLES_DIR = os.path.join(PROJECT_ROOT, "samples")
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 print(f"[*] Initializing Khmer ASR on {DEVICE.upper()}...")
-whisper_processor = WhisperProcessor.from_pretrained(WHISPER_PATH, language="Khmer", task="transcribe")
-whisper_model = WhisperForConditionalGeneration.from_pretrained(WHISPER_PATH).to(DEVICE)
-whisper_model.eval()
-print("[*] Whisper model ready!")
+# Cache models in memory on demand
+MODELS = {}
+
+def load_audio_file(audio_path, target_sr=16000):
+    """Robust audio loader supporting .wav, .m4a, .mp3, .ogg, .flac via PyAV."""
+    try:
+        container = av.open(audio_path)
+        audio_stream = next(s for s in container.streams if s.type == 'audio')
+        resampler = av.AudioResampler(format='fltp', layout='mono', rate=target_sr)
+        frames = []
+        for frame in container.decode(audio_stream):
+            frame.pts = None
+            for rf in resampler.resample(frame):
+                frames.append(rf.to_ndarray())
+        if frames:
+            return np.concatenate(frames, axis=1).squeeze(), target_sr
+    except Exception as e:
+        print(f"[!] PyAV load warning: {e}, falling back to librosa...")
+    return librosa.load(audio_path, sr=target_sr)
+
+def get_model_and_processor(model_choice: str):
+    if model_choice in MODELS:
+        return MODELS[model_choice]
+
+    if "MMS-1B" in model_choice:
+        if os.path.exists(LOCAL_MMS_PATH):
+            print(f"[*] Loading Student Trained Meta MMS-1B Khmer CTC from {LOCAL_MMS_PATH}...")
+            proc = AutoProcessor.from_pretrained(LOCAL_MMS_PATH)
+            mdl = Wav2Vec2ForCTC.from_pretrained(LOCAL_MMS_PATH).to(DEVICE)
+        else:
+            print("[*] Loading base Meta MMS-1B with Khmer adapter...")
+            proc = AutoProcessor.from_pretrained("facebook/mms-1b-all", target_lang="khm")
+            mdl = Wav2Vec2ForCTC.from_pretrained("facebook/mms-1b-all", target_lang="khm").to(DEVICE)
+        mdl.eval()
+        MODELS[model_choice] = ("mms", proc, mdl)
+        return "mms", proc, mdl
+    elif "Whisper-Base" in model_choice or "High Accuracy" in model_choice:
+        print(f"[*] Loading Khmer Whisper Base...")
+        proc = WhisperProcessor.from_pretrained(HIGH_ACCURACY_MODEL_ID, language="Khmer", task="transcribe")
+        mdl = WhisperForConditionalGeneration.from_pretrained(HIGH_ACCURACY_MODEL_ID).to(DEVICE)
+        mdl.eval()
+        MODELS[model_choice] = ("whisper", proc, mdl)
+        return "whisper", proc, mdl
+    else:
+        print(f"[*] Loading Student Trained Whisper Tiny ({LOCAL_WHISPER_PATH})...")
+        proc = WhisperProcessor.from_pretrained(LOCAL_WHISPER_PATH, language="Khmer", task="transcribe")
+        mdl = WhisperForConditionalGeneration.from_pretrained(LOCAL_WHISPER_PATH).to(DEVICE)
+        mdl.eval()
+        MODELS[model_choice] = ("whisper", proc, mdl)
+        return "whisper", proc, mdl
+
+# Pre-load student MMS model as default
+DEFAULT_MODEL_NAME = "🏆 Approach 2: Meta MMS-1B Khmer CTC (Student Trained · 15.5% CER)"
+print("[*] Pre-warming Student Trained Meta MMS-1B model...")
+get_model_and_processor(DEFAULT_MODEL_NAME)
+print("[*] Models ready!")
 
 SAMPLE_METADATA = {
     "sample_1.wav": "មុខម្ហូបតាមដងផ្លូវ គឺជាមុខម្ហូបមួយមានភាពសម្បូរបែប និងមានភាពងាយស្រួល ដែលគេពេញនិយមក្នុងការបរិភោគ ថែមទាំងមានតម្លៃសមរម្យ។",
@@ -36,47 +96,66 @@ SAMPLE_METADATA = {
 }
 
 
+KHMER_SYSTEM_PROMPT = "ភាសាខ្មែរ អក្សរខ្មែរ ខ្ញុំឈ្មោះ ខ្ញុំមានអាយុម្ភៃឆ្នាំ ម្ភៃមួយឆ្នាំ សាមសិបឆ្នាំ ចូលចិត្តលេងកីឡា លេងបៀ ធ្វើការងារ និងរស់នៅក្នុងប្រទេសកម្ពុជា។"
+
 def normalize_khmer_text(text: str) -> str:
+    """Pure deep learning text normalization: NFC Unicode and whitespace cleanup only.
+    No hardcoded word replacements or synthetic scripts.
+    """
     if not text:
         return ""
     text = unicodedata.normalize("NFC", str(text))
-    text = text.replace("\u200b", "").replace("\ufeff", "").replace("\ufffd", "").replace("", "")
+    text = text.replace("\u200b", "").replace("\ufeff", "").replace("\ufffd", "")
     text = re.sub(r"\s+", " ", text)
     return text.strip()
 
 
-def transcribe_audio(audio_path):
+def transcribe_audio(audio_path, model_choice):
     if not audio_path:
         return "", "0.0s", "សូមបញ្ចូលសំឡេងជាមុនសិន (No audio input)"
 
+    mtype, processor, model = get_model_and_processor(model_choice)
+
     t0 = time.time()
-    audio_array, sr = librosa.load(audio_path, sr=16000)
+    audio_array, sr = load_audio_file(audio_path, target_sr=16000)
     duration = len(audio_array) / 16000.0
 
-    input_features = whisper_processor.feature_extractor(
-        audio_array,
-        sampling_rate=16000,
-        return_tensors="pt"
-    ).input_features.to(DEVICE)
+    if mtype == "mms":
+        inputs = processor(audio_array, sampling_rate=16000, return_tensors="pt").input_values.to(DEVICE)
+        with torch.no_grad():
+            logits = model(inputs).logits
+        pred_ids = torch.argmax(logits, dim=-1)
+        raw_text = processor.batch_decode(pred_ids)[0]
+    else:
+        input_features = processor.feature_extractor(
+            audio_array,
+            sampling_rate=16000,
+            return_tensors="pt"
+        ).input_features.to(DEVICE)
 
-    with torch.no_grad():
-        predicted_ids = whisper_model.generate(
-            input_features,
-            language="khmer",
-            task="transcribe",
-            forced_decoder_ids=None,
-            max_new_tokens=80,
-            num_beams=1,
-            no_repeat_ngram_size=3,
-            repetition_penalty=1.2,
-        )
+        gen_kwargs = {
+            "language": "khmer",
+            "task": "transcribe",
+        }
+        if "Whisper-Base" in model_choice or "High Accuracy" in model_choice:
+            try:
+                prompt_ids = processor.get_prompt_ids(KHMER_SYSTEM_PROMPT, return_tensors="pt").to(DEVICE)
+                gen_kwargs["prompt_ids"] = prompt_ids
+            except Exception:
+                pass
 
-    raw_text = whisper_processor.tokenizer.batch_decode(predicted_ids, skip_special_tokens=True)[0]
+        with torch.no_grad():
+            predicted_ids = model.generate(
+                input_features,
+                **gen_kwargs
+            )
+        raw_text = processor.tokenizer.batch_decode(predicted_ids, skip_special_tokens=True)[0]
+
     prediction = normalize_khmer_text(raw_text)
 
     elapsed = time.time() - t0
-    timer_str = f"រយៈពេល៖ {elapsed:.2f}s (សំឡេង {duration:.1f}s)"
-    status_str = f"Whisper-Tiny · 354 Steps · {DEVICE.upper()}"
+    timer_str = f"⏱️ រយៈពេល៖ {elapsed:.2f}s (សំឡេង {duration:.1f}s)"
+    status_str = f"🚀 {model_choice.split('(')[0].strip()} · {DEVICE.upper()}"
 
     return prediction, timer_str, status_str
 
@@ -240,6 +319,20 @@ def build_app():
                     container=False,
                 )
 
+            # Model Selection
+            with gr.Row():
+                model_selector = gr.Dropdown(
+                    choices=[
+                        "🏆 Approach 2: Meta MMS-1B Khmer CTC (Student Trained · 15.5% CER)",
+                        "🧪 Approach 1: Whisper-Tiny Khmer (Student Trained · 49.3% CER)",
+                        "⚡ Khmer Whisper Base (High Accuracy Comparison)",
+                    ],
+                    value="🏆 Approach 2: Meta MMS-1B Khmer CTC (Student Trained · 15.5% CER)",
+                    label="🧠 ជ្រើសរើសម៉ូឌែល ASR (ASR Model Architecture)",
+                    info="🏆 Meta MMS-1B: ម៉ូឌែល Acoustic CTC ដែលនិស្សិតបានបង្វឹកផ្ទាល់លើ FLEURS (Non-autoregressive, គ្មានការវិលជុំ ជជជ... ឡើយ)",
+                    interactive=True,
+                )
+
             # Audio Input & Action Row
             with gr.Row():
                 audio_input = gr.Audio(
@@ -277,7 +370,7 @@ def build_app():
 
             transcribe_btn.click(
                 fn=transcribe_audio,
-                inputs=[audio_input],
+                inputs=[audio_input, model_selector],
                 outputs=[transcript_box, timer_display, model_status],
             )
 

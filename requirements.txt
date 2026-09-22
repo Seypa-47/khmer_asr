@@ -10,3 +10,4 @@ soundfile
 librosa
 gradio
 matplotlib
+python-pptx
