@@ -14,9 +14,11 @@ import json
 import os
 import random
 import re
+import shutil
 import sys
 import unicodedata
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
 
 import numpy as np
@@ -29,6 +31,11 @@ from transformers import (
     Wav2Vec2ForCTC,
     set_seed,
 )
+
+try:
+    from .matched_fleurs import load_manifest, select_manifest_split
+except ImportError:  # Direct execution: python src/train_mms.py
+    from matched_fleurs import load_manifest, select_manifest_split
 
 try:
     import evaluate
@@ -72,10 +79,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-train-samples", type=int, default=1000)
     parser.add_argument("--max-eval-samples", type=int, default=200)
     parser.add_argument("--max-test-samples", type=int, default=200)
+    parser.add_argument("--split-manifest", default=None, help="Shared FLEURS row manifest for a controlled comparison.")
+    parser.add_argument("--metrics-output", type=Path, default=None, help="Write test and run metrics to this JSON file.")
+    parser.add_argument("--trainer-state-output", type=Path, default=None, help="Copy saved training history to this JSON file.")
+    parser.add_argument("--resume-from-checkpoint", default=None, help="Resume a saved Trainer checkpoint after interruption.")
+    parser.add_argument("--skip-test", action="store_true", help="Use validation only during hyperparameter tuning.")
+    parser.add_argument("--tuning-only", action="store_true", help="Save validation history without large pilot checkpoints.")
     parser.add_argument("--num-train-epochs", type=float, default=15.0)
     parser.add_argument("--learning-rate", type=float, default=5e-5)
+    parser.add_argument("--weight-decay", type=float, default=0.0, help="Weight decay regularization.")
     parser.add_argument("--unfreeze-top-layers", type=int, default=4, help="Number of top transformer encoder layers to unfreeze (0 = freeze all)")
-    parser.add_argument("--apply-spec-augment", action="store_true", default=True, help="Apply SpecAugment data masking during training")
+    parser.add_argument("--apply-spec-augment", action=argparse.BooleanOptionalAction, default=True, help="Apply SpecAugment data masking during training")
     parser.add_argument("--lr-scheduler-type", default="cosine", help="Learning rate scheduler type (e.g. cosine, linear)")
     parser.add_argument("--warmup-steps", type=int, default=50, help="Warmup steps for learning rate schedule")
     parser.add_argument("--per-device-train-batch-size", type=int, default=1)
@@ -159,6 +173,8 @@ def build_compute_metrics(processor: AutoProcessor):
 
 def main() -> None:
     args = parse_args()
+    if args.tuning_only and not args.skip_test:
+        raise ValueError("--tuning-only requires --skip-test so held-out test rows remain untouched")
     set_all_seeds(args.seed)
 
     device_name = torch.cuda.get_device_name(0) if torch.cuda.is_available() else "CPU"
@@ -178,6 +194,7 @@ def main() -> None:
     model.load_adapter(args.target_lang)
 
     # SpecAugment and CTC numerical stability settings
+    model.config.apply_spec_augment = args.apply_spec_augment
     if args.apply_spec_augment:
         model.config.apply_spec_augment = True
         model.config.mask_time_prob = 0.05
@@ -232,24 +249,33 @@ def main() -> None:
     if torch.cuda.is_available():
         torch.cuda.empty_cache()
 
-    # Match Whisper's deterministic FLEURS subset: shuffle the official train
-    # split with the same seed, then take the same requested number of rows.
-    raw_train = raw_train.shuffle(seed=args.seed)
-    if args.max_train_samples:
-        raw_train = raw_train.select(range(min(args.max_train_samples, len(raw_train))))
-    if args.max_eval_samples:
-        raw_val = raw_val.select(range(min(args.max_eval_samples, len(raw_val))))
-    if args.max_test_samples:
-        raw_test = raw_test.select(range(min(args.max_test_samples, len(raw_test))))
-
-    # Filter out audio > 10 seconds (160,000 samples) to prevent VRAM spikes on 1B model
-    raw_train = raw_train.filter(lambda b: len(b["audio"]["array"]) <= 160_000)
-    raw_val = raw_val.filter(lambda b: len(b["audio"]["array"]) <= 160_000)
+    if args.split_manifest:
+        manifest = load_manifest(args.split_manifest)
+        if manifest["seed"] != args.seed:
+            raise ValueError("Training seed differs from the shared split manifest seed")
+        raw_train = select_manifest_split(raw_train, manifest, "train")
+        raw_val = select_manifest_split(raw_val, manifest, "validation")
+        raw_test = select_manifest_split(raw_test, manifest, "test")
+        print(f"Matched FLEURS rows (train/validation/test): {(len(raw_train), len(raw_val), len(raw_test))}")
+    else:
+        # Historical selection retained for reproducing the earlier, diagnostic run.
+        raw_train = raw_train.shuffle(seed=args.seed)
+        if args.max_train_samples:
+            raw_train = raw_train.select(range(min(args.max_train_samples, len(raw_train))))
+        if args.max_eval_samples:
+            raw_val = raw_val.select(range(min(args.max_eval_samples, len(raw_val))))
+        if args.max_test_samples:
+            raw_test = raw_test.select(range(min(args.max_test_samples, len(raw_test))))
+        raw_train = raw_train.filter(lambda b: len(b["audio"]["array"]) <= 160_000)
+        raw_val = raw_val.filter(lambda b: len(b["audio"]["array"]) <= 160_000)
 
     vocab_size = model.config.vocab_size
     train_data = raw_train.map(lambda b: prepare_dataset(b, processor, vocab_size=vocab_size), remove_columns=raw_train.column_names)
     eval_data = raw_val.map(lambda b: prepare_dataset(b, processor, vocab_size=vocab_size), remove_columns=raw_val.column_names)
-    test_data = raw_test.map(lambda b: prepare_dataset(b, processor, vocab_size=vocab_size), remove_columns=raw_test.column_names)
+    test_data = None if args.skip_test else raw_test.map(
+        lambda b: prepare_dataset(b, processor, vocab_size=vocab_size),
+        remove_columns=raw_test.column_names,
+    )
 
     data_collator = DataCollatorCTCWithPadding(processor=processor)
     compute_metrics = build_compute_metrics(processor)
@@ -259,6 +285,7 @@ def main() -> None:
         per_device_train_batch_size=args.per_device_train_batch_size,
         gradient_accumulation_steps=args.gradient_accumulation_steps,
         learning_rate=args.learning_rate,
+        weight_decay=args.weight_decay,
         lr_scheduler_type=args.lr_scheduler_type,
         warmup_steps=args.warmup_steps,
         num_train_epochs=args.num_train_epochs,
@@ -267,10 +294,11 @@ def main() -> None:
         per_device_eval_batch_size=args.per_device_eval_batch_size,
         eval_strategy="steps",
         eval_steps=args.eval_steps,
+        save_strategy="no" if args.tuning_only else "steps",
         save_steps=args.save_steps,
         save_total_limit=2,
         logging_steps=args.logging_steps,
-        load_best_model_at_end=True,
+        load_best_model_at_end=not args.tuning_only,
         metric_for_best_model="cer",
         greater_is_better=False,
         report_to=["tensorboard"],
@@ -287,27 +315,48 @@ def main() -> None:
         processing_class=processor.feature_extractor,
     )
 
+    train_metrics = None
     if not args.eval_only:
         print("Starting training for Approach 2 (Meta MMS Khmer CTC)...")
         gc.collect()
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
-        trainer.train()
-        trainer.save_model(args.output_dir)
-        processor.save_pretrained(args.output_dir)
+        train_metrics = trainer.train(resume_from_checkpoint=args.resume_from_checkpoint).metrics
+        if not args.tuning_only:
+            trainer.save_model(args.output_dir)
+            processor.save_pretrained(args.output_dir)
         trainer.save_state()
+        if args.trainer_state_output:
+            args.trainer_state_output.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(Path(args.output_dir) / "trainer_state.json", args.trainer_state_output)
 
-    print("Evaluating Approach 2 on FLEURS km_kh held-out test set...")
-    test_metrics = trainer.evaluate(eval_dataset=test_data, metric_key_prefix="test")
-    print(f"Approach 2 Test Results: {test_metrics}")
+    test_metrics = {}
+    if not args.skip_test:
+        print("Evaluating Approach 2 on FLEURS km_kh held-out test set...")
+        test_metrics = trainer.evaluate(eval_dataset=test_data, metric_key_prefix="test")
+        print(f"Approach 2 Test Results: {test_metrics}")
 
     results_dir = os.path.join(os.path.dirname(os.path.abspath(args.output_dir)), "results")
     if not os.path.exists(results_dir):
         results_dir = "./results"
     os.makedirs(results_dir, exist_ok=True)
-    metrics_path = os.path.join(results_dir, "mms_test_metrics.json")
-    with open(metrics_path, "w", encoding="utf-8") as f:
-        json.dump(test_metrics, f, indent=2)
+    metrics_path = args.metrics_output or Path(results_dir) / "mms_test_metrics.json"
+    metrics_path = Path(metrics_path)
+    metrics_path.parent.mkdir(parents=True, exist_ok=True)
+    report = dict(test_metrics)
+    report.update({
+        "train_metrics": train_metrics,
+        "train_examples": len(train_data),
+        "validation_examples": len(eval_data),
+        "test_examples": len(raw_test),
+        "hardware": device_name,
+        "learning_rate": args.learning_rate,
+        "weight_decay": args.weight_decay,
+        "spec_augment": args.apply_spec_augment,
+        "split_manifest": args.split_manifest,
+    })
+    with metrics_path.open("w", encoding="utf-8") as f:
+        json.dump(report, f, indent=2)
     print(f"Saved test metrics to {metrics_path}")
 
 

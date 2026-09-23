@@ -61,41 +61,51 @@ Use Python 3.10 or 3.11 with a CUDA GPU for training the MMS-1B model. Install t
 pip install -r requirements.txt
 ```
 
-The commands below use Google Colab with a T4 GPU. They keep the same seed and FLEURS subset in both training scripts.
+Use `notebooks/khmer_asr_experiments.ipynb` on a Google Colab GPU for the controlled rerun. The commands below prepare the same saved row list for both models. **These new runs have not yet been completed, and the historical scores above remain diagnostic.**
 
 ### Matched rerun
 
 ```bash
-# Whisper-Tiny: fixed 1,000 train / 200 validation / 200 test examples
+# One shared list of eligible official FLEURS rows for both models.
+python src/matched_fleurs.py --output results/matched_fleurs_split.json \
+  --seed 42 --train-candidates 1000 --validation-candidates 200 \
+  --test-start 200 --test-candidates 200 --max-duration-seconds 10
+
+# Whisper-Tiny: train, validate, and test on the shared row list.
 python src/finetune_whisper.py \
-  --output-dir ./models/whisper-tiny-khmer-reproduce \
-  --model-name openai/whisper-tiny \
-  --use-fleurs-train --skip-ddd \
-  --max-train-samples 1000 --max-eval-samples 200 --max-test-samples 200 \
-  --seed 42 --num-train-epochs 3 --learning-rate 1e-5 \
+  --output-dir ./models/whisper-tiny-khmer-matched \
+  --model-name openai/whisper-tiny --use-fleurs-train --skip-ddd \
+  --split-manifest results/matched_fleurs_split.json \
+  --metrics-output results/whisper_matched_metrics.json \
+  --trainer-state-output results/whisper_matched_trainer_state.json \
+  --seed 42 --num-train-epochs 3 --learning-rate 1e-5 --weight-decay 0 \
   --warmup-steps 35 --per-device-train-batch-size 1 \
   --per-device-eval-batch-size 4 --gradient-accumulation-steps 8 \
   --eval-steps 118 --save-steps 118 --fp16
 
-# MMS CTC: uses the same shuffled train subset and first 200 validation/test rows
+# MMS CTC: use the identical row list and a new checkpoint folder.
 python src/train_mms.py \
-  --output-dir ./models/mms-khmer-ctc \
+  --output-dir ./models/mms-khmer-ctc-matched \
   --model-id facebook/mms-1b-all --target-lang khm \
-  --max-train-samples 1000 --max-eval-samples 200 --max-test-samples 200 \
-  --seed 42 --num-train-epochs 15 --learning-rate 5e-5 \
+  --split-manifest results/matched_fleurs_split.json \
+  --metrics-output results/mms_matched_metrics.json \
+  --trainer-state-output results/mms_matched_trainer_state.json \
+  --seed 42 --num-train-epochs 15 --learning-rate 5e-5 --weight-decay 0 \
   --unfreeze-top-layers 4 --apply-spec-augment --lr-scheduler-type cosine \
   --warmup-steps 50 --per-device-train-batch-size 1 \
   --per-device-eval-batch-size 1 --gradient-accumulation-steps 8 --fp16
 
-# Score Whisper on the same 200 test examples and save every prediction
-python src/evaluate_saved_whisper.py --max-samples 200
-python src/analyze_saved_predictions.py
-
-# Build tables and figures from the saved metrics
-python src/evaluate_and_plot.py
+# After both runs: save every prediction and create figures from the new evidence.
+python src/evaluate_saved_whisper.py --model-dir models/whisper-tiny-khmer-matched \
+  --split-manifest results/matched_fleurs_split.json \
+  --output results/whisper_matched_predictions.json --device cuda
+python src/evaluate_saved_mms.py --model-dir models/mms-khmer-ctc-matched \
+  --split-manifest results/matched_fleurs_split.json \
+  --output results/mms_matched_predictions.json --device cuda
+python src/plot_matched_results.py
 ```
 
-The Whisper reproduction command writes to a new directory. The MMS command uses `models/mms-khmer-ctc` and would overwrite the saved MMS model if run locally; choose a different output directory to preserve it. The two training scripts now select the same seed-42 raw training rows, but they apply different length filters, so matching the retained examples requires a shared precomputed subset. `src/train_mms.py` now saves trainer state for future learning-curve plots.
+The manifest removes recordings over 10 seconds and examples exceeding Whisper's label limit before either model trains. It records the exact retained indices. The new held-out test candidate rows start at index 200 because the earlier work repeatedly inspected rows 0–199. The matched output folders preserve the older local checkpoints. The Colab notebook includes three short MMS pilot runs: baseline, a lower learning rate, and weight decay. Pilot runs use validation only and save no large weights; the chosen settings then go into the full MMS run. `--no-apply-spec-augment` is also available for a later regularization comparison. Save final checkpoints and evidence to Google Drive as shown in the notebook. Update the README and slides only when the new runs have finished.
 
 ### Inference demo
 
@@ -105,7 +115,10 @@ Run `python app.py`, then open `http://127.0.0.1:7860`. The Windows launcher is 
 
 - `src/finetune_whisper.py`: Whisper training and evaluation pipeline.
 - `src/train_mms.py`: MMS CTC training pipeline.
+- `src/matched_fleurs.py`: Saves one fixed FLEURS row selection for both approaches.
 - `src/evaluate_saved_whisper.py`: Auditable Whisper scoring on the first N test rows.
+- `src/evaluate_saved_mms.py`: Auditable MMS scoring on the same rows.
+- `src/plot_matched_results.py`: Figures from completed matched runs.
 - `src/evaluate_and_plot.py`: Generates the summary table, JSON, and figures from saved results.
 - `notebooks/khmer_asr_experiments.ipynb`: Colab workflow.
 - `results/`: Saved scores, predictions, and figures.

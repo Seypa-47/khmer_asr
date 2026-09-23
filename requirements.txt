@@ -9,6 +9,7 @@ accelerate
 tensorboard
 soundfile
 librosa
+av
 gradio
 matplotlib
 python-pptx

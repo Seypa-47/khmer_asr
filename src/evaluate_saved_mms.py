@@ -16,6 +16,11 @@ from datasets import load_dataset
 from jiwer import cer
 from transformers import AutoProcessor, Wav2Vec2ForCTC
 
+try:
+    from .matched_fleurs import load_manifest
+except ImportError:
+    from matched_fleurs import load_manifest
+
 
 def normalize(text: str) -> str:
     text = unicodedata.normalize("NFC", text or "")
@@ -27,25 +32,36 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model-dir", default="models/mms-khmer-ctc")
     parser.add_argument("--max-samples", type=int, default=200)
+    parser.add_argument("--split-manifest", default=None, help="Evaluate exactly the shared FLEURS test row indices.")
     parser.add_argument("--threads", type=int, default=4)
+    parser.add_argument("--device", choices=("cpu", "cuda", "auto"), default="auto")
     parser.add_argument("--output", default="results/mms_test_predictions.json")
     args = parser.parse_args()
 
     torch.set_num_threads(args.threads)
+    device = "cuda" if args.device == "auto" and torch.cuda.is_available() else args.device
+    if device == "auto":
+        device = "cpu"
+    if device == "cuda" and not torch.cuda.is_available():
+        raise RuntimeError("CUDA was requested but is not available")
     processor = AutoProcessor.from_pretrained(
         args.model_dir, target_lang="khm", local_files_only=True
     )
     model = Wav2Vec2ForCTC.from_pretrained(
         args.model_dir, local_files_only=True, low_cpu_mem_usage=True
-    ).eval()
+    ).to(device).eval()
 
     dataset = load_dataset("google/fleurs", "km_kh", split="test")
-    count = min(args.max_samples, len(dataset))
+    indices = (
+        load_manifest(args.split_manifest)["indices"]["test"]
+        if args.split_manifest else list(range(min(args.max_samples, len(dataset))))
+    )
+    count = len(indices)
     audio_column = dataset.data.column("audio")
     text_column = dataset.data.column("transcription")
     rows: list[dict[str, object]] = []
 
-    for index in range(count):
+    for position, index in enumerate(indices, 1):
         record = audio_column[index].as_py()
         audio, sample_rate = sf.read(io.BytesIO(record["bytes"]), dtype="float32")
         if audio.ndim > 1:
@@ -53,7 +69,7 @@ def main() -> None:
         if sample_rate != 16_000:
             raise ValueError(f"Expected 16 kHz FLEURS audio; got {sample_rate} Hz")
 
-        inputs = processor(audio, sampling_rate=sample_rate, return_tensors="pt")
+        inputs = processor(audio, sampling_rate=sample_rate, return_tensors="pt").to(device)
         with torch.inference_mode():
             logits = model(**inputs).logits
         hypothesis = processor.batch_decode(logits.argmax(-1))[0]
@@ -67,8 +83,8 @@ def main() -> None:
                 "audio_seconds": len(audio) / sample_rate,
             }
         )
-        if (index + 1) % 25 == 0 or index + 1 == count:
-            print(f"Evaluated {index + 1}/{count}", flush=True)
+        if position % 25 == 0 or position == count:
+            print(f"Evaluated {position}/{count}", flush=True)
 
     cer_value = 100 * cer(
         [normalize(str(row["reference"])) for row in rows],
@@ -78,7 +94,7 @@ def main() -> None:
         "approach": "Meta MMS-1B Khmer CTC saved checkpoint",
         "dataset": "google/fleurs/km_kh test split",
         "test_examples": count,
-        "test_indices": f"0:{count}",
+        "test_indices": indices if args.split_manifest else f"0:{count}",
         "cer_percent_whitespace_removed": cer_value,
         "text_normalization": "NFC, remove U+200B/U+FEFF, then remove whitespace",
         "model_checkpoint": args.model_dir,
@@ -87,7 +103,7 @@ def main() -> None:
     output_path = Path(args.output)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"MMS CER on first {count}: {cer_value:.2f}%")
+    print(f"MMS CER on {count} selected test rows: {cer_value:.2f}%")
     print(f"Saved references and predictions to {output_path}")
 
 

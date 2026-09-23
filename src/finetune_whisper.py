@@ -22,13 +22,16 @@ from __future__ import annotations
 import argparse
 import io
 import inspect
+import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
 import unicodedata
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
 
 # Platform-aware default cache directory (Google Colab vs Windows vs generic)
@@ -70,6 +73,11 @@ from transformers import (
     WhisperTokenizer,
     set_seed,
 )
+
+try:
+    from .matched_fleurs import load_manifest, select_manifest_split
+except ImportError:  # Direct execution: python src/finetune_whisper.py
+    from matched_fleurs import load_manifest, select_manifest_split
 
 
 MODEL_NAME = "openai/whisper-tiny"
@@ -138,6 +146,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-train-samples", type=int, default=None)
     parser.add_argument("--max-eval-samples", type=int, default=None)
     parser.add_argument("--max-test-samples", type=int, default=None)
+    parser.add_argument("--split-manifest", default=None, help="Shared FLEURS row manifest for a controlled comparison.")
+    parser.add_argument("--metrics-output", type=Path, default=None, help="Write test and run metrics to this JSON file.")
+    parser.add_argument("--trainer-state-output", type=Path, default=None, help="Copy saved training history to this JSON file.")
     parser.add_argument("--preprocessing-num-workers", type=int, default=1)
     parser.add_argument("--num-train-epochs", type=float, default=3.0)
     parser.add_argument("--learning-rate", type=float, default=1e-5)
@@ -258,6 +269,15 @@ def limit_dataset(dataset: Dataset, max_samples: int | None) -> Dataset:
 
 
 def load_training_datasets(args: argparse.Namespace) -> Dataset:
+    if args.split_manifest:
+        if not args.use_fleurs_train or not args.skip_ddd or args.include_slr42:
+            raise ValueError("Matched FLEURS runs require --use-fleurs-train --skip-ddd without --include-slr42")
+        manifest = load_manifest(args.split_manifest)
+        if manifest["seed"] != args.seed:
+            raise ValueError("Training seed differs from the shared split manifest seed")
+        raw = load_dataset(FLEURS_DATASET, FLEURS_CONFIG, split="train", cache_dir=args.cache_dir)
+        return standardize_asr_dataset(select_manifest_split(raw, manifest, "train"), "matched FLEURS train")
+
     train_sets: list[Dataset] = []
 
     if args.use_fleurs_train or (args.skip_ddd and not args.include_slr42):
@@ -287,6 +307,15 @@ def load_training_datasets(args: argparse.Namespace) -> Dataset:
 
 def load_fleurs_eval_sets(args: argparse.Namespace) -> tuple[Dataset, Dataset]:
     fleurs = load_dataset(FLEURS_DATASET, FLEURS_CONFIG, cache_dir=args.cache_dir)
+    if args.split_manifest:
+        manifest = load_manifest(args.split_manifest)
+        validation = standardize_asr_dataset(
+            select_manifest_split(fleurs["validation"], manifest, "validation"), "matched FLEURS validation"
+        )
+        test = standardize_asr_dataset(
+            select_manifest_split(fleurs["test"], manifest, "test"), "matched FLEURS test"
+        )
+        return validation, test
     validation = standardize_asr_dataset(choose_split(fleurs, ("validation", "dev", "valid")), "FLEURS validation")
     test = standardize_asr_dataset(choose_split(fleurs, ("test",)), "FLEURS test")
     return limit_dataset(validation, args.max_eval_samples), limit_dataset(test, args.max_test_samples)
@@ -453,6 +482,13 @@ def main() -> None:
         input_columns=["label_length"],
         desc="Filtering long test labels",
     )
+    if args.split_manifest:
+        manifest = load_manifest(args.split_manifest)
+        actual = (len(train_dataset), len(eval_dataset), len(test_dataset))
+        expected = tuple(len(manifest["indices"][split]) for split in ("train", "validation", "test"))
+        if actual != expected:
+            raise ValueError(f"Whisper dropped rows from the shared split: expected {expected}, got {actual}")
+        print(f"Matched FLEURS rows (train/validation/test): {actual}")
     train_dataset = train_dataset.remove_columns(["label_length"])
     eval_dataset = eval_dataset.remove_columns(["label_length"])
     test_dataset = test_dataset.remove_columns(["label_length"])
@@ -508,13 +544,31 @@ def main() -> None:
 
     trainer = Seq2SeqTrainer(**trainer_kwargs)
 
-    trainer.train(resume_from_checkpoint=args.resume_from_checkpoint)
+    train_metrics = trainer.train(resume_from_checkpoint=args.resume_from_checkpoint).metrics
     trainer.save_model(args.output_dir)
     processor.save_pretrained(args.output_dir)
+    trainer.save_state()
+    if args.trainer_state_output:
+        args.trainer_state_output.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(Path(args.output_dir) / "trainer_state.json", args.trainer_state_output)
 
     print("Evaluating best checkpoint on FLEURS km_kh test split.")
     test_metrics = trainer.evaluate(eval_dataset=test_dataset, metric_key_prefix="test")
     print(test_metrics)
+    if args.metrics_output:
+        args.metrics_output.parent.mkdir(parents=True, exist_ok=True)
+        report = dict(test_metrics)
+        report.update({
+            "train_metrics": train_metrics,
+            "train_examples": len(train_dataset),
+            "validation_examples": len(eval_dataset),
+            "test_examples": len(test_dataset),
+            "hardware": torch.cuda.get_device_name(0) if torch.cuda.is_available() else "CPU",
+            "learning_rate": args.learning_rate,
+            "weight_decay": args.weight_decay,
+            "split_manifest": args.split_manifest,
+        })
+        args.metrics_output.write_text(json.dumps(report, indent=2), encoding="utf-8")
 
     if args.push_to_hub:
         dataset_tags = [DDD_DATASET_ALIASES[0], FLEURS_DATASET]

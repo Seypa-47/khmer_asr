@@ -21,6 +21,11 @@ from datasets import load_dataset
 from jiwer import cer
 from transformers import WhisperForConditionalGeneration, WhisperProcessor
 
+try:
+    from .matched_fleurs import load_manifest
+except ImportError:
+    from matched_fleurs import load_manifest
+
 
 def normalize(text: str, *, remove_spaces: bool = False) -> str:
     text = unicodedata.normalize("NFC", text or "")
@@ -33,6 +38,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model-dir", default="models/whisper-tiny-khmer")
     parser.add_argument("--max-samples", type=int, default=200)
+    parser.add_argument("--split-manifest", default=None, help="Evaluate exactly the shared FLEURS row indices.")
     parser.add_argument("--split", choices=("validation", "test"), default="test")
     parser.add_argument("--max-length", type=int, default=225)
     parser.add_argument("--output", default="results/whisper_test_predictions.json")
@@ -58,7 +64,11 @@ def main() -> None:
     model.config.forced_decoder_ids = None
 
     dataset = load_dataset("google/fleurs", "km_kh", split=args.split)
-    count = min(args.max_samples, len(dataset))
+    indices = (
+        load_manifest(args.split_manifest)["indices"][args.split]
+        if args.split_manifest else list(range(min(args.max_samples, len(dataset))))
+    )
+    count = len(indices)
     refs: list[str] = []
     hyps: list[str] = []
 
@@ -67,7 +77,7 @@ def main() -> None:
     for start in range(0, count, args.batch_size):
         stop = min(start + args.batch_size, count)
         waveforms = []
-        for index in range(start, stop):
+        for index in indices[start:stop]:
             audio_record = audio_column[index].as_py()
             audio, sampling_rate = sf.read(io.BytesIO(audio_record["bytes"]), dtype="float32")
             if audio.ndim > 1:
@@ -87,7 +97,7 @@ def main() -> None:
                 language="khmer",
                 task="transcribe",
             )
-        refs.extend(normalize(text_column[index].as_py()) for index in range(start, stop))
+        refs.extend(normalize(text_column[index].as_py()) for index in indices[start:stop])
         hyps.extend(normalize(text) for text in processor.batch_decode(
             token_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False
         ))
@@ -101,7 +111,7 @@ def main() -> None:
         "approach": "Whisper-Tiny full fine-tuning",
         "dataset": f"google/fleurs/km_kh {args.split} split",
         "test_examples": count,
-        "test_indices": f"0:{count}",
+        "test_indices": indices if args.split_manifest else f"0:{count}",
         "cer_percent_whitespace_removed": 100 * cer(metric_refs, metric_hyps),
         "text_normalization": "NFC, remove U+200B/U+FEFF, collapse whitespace, then remove whitespace for CER",
         "generation_max_length": args.max_length,
