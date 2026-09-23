@@ -1,35 +1,48 @@
-[
-  {
-    "approach": "Approach 1 (Trained)",
-    "name": "Whisper-Tiny",
-    "architecture": "Seq2Seq Transformer",
-    "strategy": "Full Fine-Tuning",
-    "trainable_params_m": 37.8,
-    "hardware": "Tesla T4 GPU (Google Colab)",
-    "training_time": "~60 minutes (10 epochs)",
-    "test_cer": 49.3,
-    "test_wer": 101.9
-  },
-  {
-    "approach": "Approach 2 (Comparison)",
-    "name": "Meta MMS-1B Khmer",
-    "architecture": "Acoustic CTC Model",
-    "strategy": "Adapter / Transfer Learning",
-    "trainable_params_m": 0.2,
-    "hardware": "Tesla T4 GPU (Google Colab)",
-    "training_time": "~7 minutes (3 epochs)",
-    "test_cer": 15.5,
-    "test_wer": 100.0
-  },
-  {
-    "approach": "Approach 3 (Ablation)",
-    "name": "Whisper-Tiny (Frozen Enc)",
-    "architecture": "Seq2Seq Transformer",
-    "strategy": "Linear Probe / Decoder-Only",
-    "trainable_params_m": 29.6,
-    "hardware": "Tesla T4 GPU (Google Colab)",
-    "training_time": "~30 minutes (5 epochs)",
-    "test_cer": 59.7,
-    "test_wer": 100.8
-  }
-]
+{
+  "dataset": "Google FLEURS km_kh",
+  "test_subset": "first 200 rows of official test split, shared by all listed checkpoints",
+  "cer_policy": "NFC text, remove U+200B/U+FEFF, then remove whitespace before CER",
+  "comparison_status": "diagnostic_only",
+  "comparability_note": "Saved runs did not retain identical train/validation example manifests and applied different filtering. The Whisper effective counts are inferred; MMS retained counts were not logged. Do not claim a controlled architecture comparison.",
+  "approaches": [
+    {
+      "name": "Whisper-Tiny full fine-tuning",
+      "architecture": "Seq2Seq Transformer",
+      "training_strategy": "Full fine-tuning",
+      "trainable_parameters_m": 37.8,
+      "test_cer_percent": 83.88820386354296,
+      "test_examples": 200,
+      "saved_training_examples": 941,
+      "saved_validation_examples": 189,
+      "data_count_status": "inferred from 354 optimizer steps and validation throughput; exact original selected indices not retained",
+      "training_epochs": 3,
+      "training_time": "Not recorded"
+    },
+    {
+      "name": "Meta MMS-1B CTC",
+      "architecture": "Wav2Vec 2.0 with CTC",
+      "training_strategy": "Top four encoder layers plus CTC head/adapter unfrozen",
+      "trainable_parameters_m": 79.08,
+      "test_cer_percent": 15.957566022935266,
+      "test_examples": 200,
+      "saved_training_examples": 1000,
+      "saved_validation_examples": 200,
+      "data_count_status": "requested counts in saved training code; actual retained counts after duration filtering not recorded",
+      "training_epochs": 15,
+      "training_time": "Not recorded"
+    },
+    {
+      "name": "Whisper-Tiny 35-step warmup",
+      "architecture": "Seq2Seq Transformer",
+      "training_strategy": "Full fine-tuning, 35-step warmup",
+      "trainable_parameters_m": 37.8,
+      "test_cer_percent": 83.66775025221388,
+      "test_examples": 200,
+      "saved_training_examples": 941,
+      "saved_validation_examples": 189,
+      "data_count_status": "941 and 189 retained after label filtering; seed-42 selected subsets",
+      "training_epochs": 3,
+      "training_time": "About 11 minutes on RTX 4050 Laptop GPU"
+    }
+  ]
+}

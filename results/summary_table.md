@@ -1,11 +1,13 @@
-# Model Approaches Comparison Table
+# Saved checkpoint comparison (diagnostic)
 
-Evaluated on identical held-out test split: Google FLEURS `km_kh` (200 test samples).
+All listed checkpoints are scored on the first 200 examples of the official Google FLEURS `km_kh` test split. CER uses NFC normalization, removes U+200B/U+FEFF, then removes whitespace before scoring.
 
-| Approach | Model Architecture | Strategy | Trainable Params | Hardware | Training Time | Test CER (%) | Test WER (%) |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Approach 1 (Trained)** | Whisper-Tiny (Seq2Seq Transformer) | Full Fine-Tuning | 37.8M | Tesla T4 GPU (Google Colab) | ~60 minutes (10 epochs) | **49.3%** | 101.9%* |
-| **Approach 2 (Comparison)** | Meta MMS-1B Khmer (Acoustic CTC Model) | Adapter / Transfer Learning | 0.2M | Tesla T4 GPU (Google Colab) | ~7 minutes (3 epochs) | **15.5%** | 100.0%* |
-| **Approach 3 (Ablation)** | Whisper-Tiny (Frozen Enc) (Seq2Seq Transformer) | Linear Probe / Decoder-Only | 29.6M | Tesla T4 GPU (Google Colab) | ~30 minutes (5 epochs) | **59.7%** | 100.8%* |
+| Approach | Training strategy | Trainable parameters | Train / validation evidence | Epochs | Test CER | Test rows | Training time |
+|---|---|---:|---:|---:|---:|---:|---|
+| Whisper-Tiny full fine-tuning | Full fine-tuning | 37.80M | about 941 / 189 retained (inferred) | 3 | 83.89% | 200 | Not recorded |
+| Meta MMS-1B CTC | Top four encoder layers plus CTC head/adapter unfrozen | 79.08M | 1,000 / 200 requested; retained counts unlogged | 15 | 15.96% | 200 | Not recorded |
+| Whisper-Tiny 35-step warmup | Full fine-tuning, 35-step warmup | 37.80M | 941 / 189 retained | 3 | 83.67% | 200 | About 11 minutes on RTX 4050 Laptop GPU |
 
-> \* *Note on Khmer WER: Khmer text is written without word delimiters (scriptio continua). Standard unsegmented WER treats sentences as monolithic tokens resulting in inflated WER (~100%). Character Error Rate (CER) is the recognized primary evaluation metric for Khmer ASR.*
+> These results are diagnostic: the runs did not retain identical train/validation example manifests and applied different filtering. The shared test evaluation does not remove that training-data difference.
+
+> MMS training history was not saved, so its training/validation learning curve cannot be reconstructed from the available files. The frozen-encoder run also has no saved checkpoint or metrics and is excluded.

@@ -1,0 +1,41 @@
+{
+  "dataset": "google/fleurs km_kh, first 200 official test examples",
+  "metric": "CER after NFC and whitespace removal",
+  "old_checkpoint": "models\\whisper-tiny-khmer",
+  "new_checkpoint": "models\\whisper-tiny-khmer-warmup35-b4",
+  "old_cer_percent": 83.88820386354296,
+  "new_cer_percent": 83.66775025221388,
+  "cer_improvement_percentage_points": 0.22045361132907715,
+  "reference_characters": 26763,
+  "old_character_edits": 22451,
+  "new_character_edits": 22392,
+  "examples_improved": 92,
+  "examples_worsened": 84,
+  "examples_unchanged": 24,
+  "paired_bootstrap_95_percent_interval_for_cer_improvement_pp": [
+    -0.4895404839951771,
+    0.9246883033013864
+  ],
+  "new_run": {
+    "hardware": "NVIDIA GeForce RTX 4050 Laptop GPU (6 GB)",
+    "selected_train_examples": 1000,
+    "retained_train_examples": 941,
+    "selected_validation_examples": 200,
+    "retained_validation_examples": 189,
+    "epochs": 3,
+    "optimizer_steps": 354,
+    "learning_rate": 1e-05,
+    "warmup_steps": 35,
+    "train_microbatch": 1,
+    "gradient_accumulation": 8,
+    "eval_batch": 4,
+    "seed": 42,
+    "best_checkpoint_step": 354,
+    "validation_cer_percent_by_epoch": [
+      88.53541938287701,
+      86.71012603215993,
+      83.62016514558887
+    ]
+  },
+  "interpretation": "The corrected warmup gave only a 0.22 percentage-point CER improvement on the shared 200-example test set; the paired bootstrap interval includes zero. It does not establish a reliable model-quality gain."
+}

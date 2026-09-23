@@ -26,6 +26,7 @@ torch.set_num_threads(4)
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 LOCAL_WHISPER_PATH = os.path.join(PROJECT_ROOT, "models", "whisper-tiny-khmer")
+RETRAINED_WHISPER_PATH = os.path.join(PROJECT_ROOT, "models", "whisper-tiny-khmer-warmup35-b4")
 LOCAL_MMS_PATH = os.path.join(PROJECT_ROOT, "models", "mms-khmer-ctc")
 HIGH_ACCURACY_MODEL_ID = "sengtha/whisper-base-khmer"
 SAMPLES_DIR = os.path.join(PROJECT_ROOT, "samples")
@@ -77,9 +78,10 @@ def get_model_and_processor(model_choice: str):
         MODELS[model_choice] = ("whisper", proc, mdl)
         return "whisper", proc, mdl
     else:
-        print(f"[*] Loading Whisper Tiny (Version 1.0) from {LOCAL_WHISPER_PATH}...")
-        proc = WhisperProcessor.from_pretrained(LOCAL_WHISPER_PATH, language="Khmer", task="transcribe")
-        mdl = WhisperForConditionalGeneration.from_pretrained(LOCAL_WHISPER_PATH).to(DEVICE)
+        whisper_path = RETRAINED_WHISPER_PATH if "35-Step Warmup" in model_choice else LOCAL_WHISPER_PATH
+        print(f"[*] Loading Whisper Tiny from {whisper_path}...")
+        proc = WhisperProcessor.from_pretrained(whisper_path, language="Khmer", task="transcribe")
+        mdl = WhisperForConditionalGeneration.from_pretrained(whisper_path).to(DEVICE)
         mdl.eval()
         MODELS[model_choice] = ("whisper", proc, mdl)
         return "whisper", proc, mdl
@@ -325,6 +327,7 @@ def build_app():
                     choices=[
                         "🏆 Approach 2: Meta MMS-1B Khmer CTC (Version 2.0 · 15 Epochs)",
                         "🧪 Approach 1: Whisper-Tiny Khmer (Version 1.0)",
+                        "🧪 Whisper-Tiny Khmer (35-Step Warmup Retrain)",
                         "⚡ Khmer Whisper Base (Reference Model)",
                     ],
                     value="🏆 Approach 2: Meta MMS-1B Khmer CTC (Version 2.0 · 15 Epochs)",

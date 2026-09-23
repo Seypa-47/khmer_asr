@@ -18,6 +18,20 @@ whisper-tiny-khmer/
 mms-khmer-ctc/
 hf_cache/
 
+# Local voice evaluations can contain names and other personal details.
+local_eval/
+logs/
+
 # IDE
 .vscode/
 .idea/
+
+# PowerPoint lock files and temporary slide review artifacts
+~$*.pptx
+.codex-pptx-*/
+.codex-finalizer/
+.chart-data-*/
+
+# Local assistant instructions and the unsent lecturer message
+.claude/
+output/teacher_progress_message.md

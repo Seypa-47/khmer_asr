@@ -1,184 +1,173 @@
 #!/usr/bin/env python
+"""Build comparison artifacts from saved, auditable evaluation files.
+
+This script intentionally fails if the Whisper prediction file is absent. It
+does not insert placeholder scores or synthesize training history.
 """
-Generate evaluation metrics tables and comparison figures for Khmer ASR project.
-Complies with Final Project Rubric Section 5.C & 5.D:
-- Training and validation loss/metric curves
-- Consolidated results comparison table
-- Comparison figures (CER bar chart and loss curves)
-"""
+
+from __future__ import annotations
 
 import json
 import os
+from pathlib import Path
+
 import matplotlib.pyplot as plt
 
-PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-RESULTS_DIR = os.path.join(PROJECT_ROOT, "results")
-os.makedirs(RESULTS_DIR, exist_ok=True)
-
-# Path to Whisper checkpoint trainer state
-WHISPER_TRAINER_STATE = os.path.join(
-    PROJECT_ROOT,
-    "models",
-    "whisper-tiny-khmer",
-    "checkpoint-354",
-    "trainer_state.json",
-)
+ROOT = Path(__file__).resolve().parents[1]
+RESULTS = ROOT / "results"
 
 
-def extract_whisper_history(trainer_state_path: str):
-    if not os.path.exists(trainer_state_path):
-        print(f"Warning: {trainer_state_path} not found. Using fallback mock log history.")
-        return [], []
-
-    with open(trainer_state_path, "r", encoding="utf-8") as f:
-        data = json.load(f)
-
-    train_steps, train_loss = [], []
-    eval_steps, eval_loss, eval_cer = [], [], []
-
-    for log in data.get("log_history", []):
-        if "loss" in log:
-            train_steps.append(log["step"])
-            train_loss.append(log["loss"])
-        if "eval_loss" in log:
-            eval_steps.append(log["step"])
-            eval_loss.append(log["eval_loss"])
-            eval_cer.append(log.get("eval_cer", 0.0))
-
-    return {
-        "train_steps": train_steps,
-        "train_loss": train_loss,
-        "eval_steps": eval_steps,
-        "eval_loss": eval_loss,
-        "eval_cer": eval_cer,
-    }
+def read_json(path: Path) -> dict:
+    with path.open(encoding="utf-8") as stream:
+        return json.load(stream)
 
 
-def plot_learning_curves(history: dict, output_path: str):
-    plt.figure(figsize=(10, 5))
-
-    # Subplot 1: Loss curves
-    plt.subplot(1, 2, 1)
-    if history.get("train_steps"):
-        plt.plot(history["train_steps"], history["train_loss"], label="Train Loss (Cross-Entropy)", color="#1f77b4", marker="o", markersize=3)
-    if history.get("eval_steps"):
-        plt.plot(history["eval_steps"], history["eval_loss"], label="Validation Loss", color="#ff7f0e", marker="s", markersize=6)
-    plt.title("Approach 1 (Whisper-Tiny) Loss Curves", fontsize=12, fontweight="bold")
-    plt.xlabel("Optimization Steps")
-    plt.ylabel("Loss")
-    plt.grid(True, linestyle="--", alpha=0.6)
-    plt.legend()
-
-    # Subplot 2: Validation CER
-    plt.subplot(1, 2, 2)
-    if history.get("eval_steps"):
-        plt.plot(history["eval_steps"], history["eval_cer"], label="Val CER (%)", color="#2ca02c", marker="^", markersize=6)
-    plt.title("Validation Character Error Rate (CER)", fontsize=12, fontweight="bold")
-    plt.xlabel("Optimization Steps")
-    plt.ylabel("CER (%)")
-    plt.grid(True, linestyle="--", alpha=0.6)
-    plt.legend()
-
-    plt.tight_layout()
-    plt.savefig(output_path, dpi=300)
-    plt.close()
-    print(f"Saved learning curves figure to {output_path}")
-
-
-def plot_comparison_barchart(models_data: list[dict], output_path: str):
-    names = [m["name"] for m in models_data]
-    cer_scores = [m["test_cer"] for m in models_data]
-    param_counts = [m["trainable_params_m"] for m in models_data]
-
-    fig, ax1 = plt.subplots(figsize=(9, 5))
-
-    color = "tab:blue"
-    ax1.set_xlabel("Approach / Model", fontweight="bold", fontsize=11)
-    ax1.set_ylabel("Test CER (%) [Lower is Better]", color=color, fontweight="bold", fontsize=11)
-    bars = ax1.bar(names, cer_scores, color=color, alpha=0.75, width=0.45)
-    ax1.tick_params(axis="y", labelcolor=color)
-
-    for bar in bars:
-        height = bar.get_height()
-        ax1.annotate(f"{height:.1f}%",
-                    xy=(bar.get_x() + bar.get_width() / 2, height),
-                    xytext=(0, 3),  # 3 points vertical offset
-                    textcoords="offset points",
-                    ha="center", va="bottom", fontweight="bold")
-
-    plt.title("ASR Approaches Comparison on Held-Out Test Set (Google FLEURS km_kh)", fontsize=13, fontweight="bold")
-    plt.grid(axis="y", linestyle="--", alpha=0.5)
-    plt.tight_layout()
-    plt.savefig(output_path, dpi=300)
-    plt.close()
-    print(f"Saved comparison bar chart to {output_path}")
-
-
-def generate_summary_table(models_data: list[dict], output_md_path: str, output_json_path: str):
-    with open(output_json_path, "w", encoding="utf-8") as f:
-        json.dump(models_data, f, indent=2)
-
-    lines = [
-        "# Model Approaches Comparison Table\n",
-        "Evaluated on identical held-out test split: Google FLEURS `km_kh` (200 test samples).\n",
-        "| Approach | Model Architecture | Strategy | Trainable Params | Hardware | Training Time | Test CER (%) | Test WER (%) |",
-        "| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |",
+def find_whisper_state() -> Path | None:
+    candidates = [
+        ROOT / "models/whisper-tiny-khmer/trainer_state.json",
+        RESULTS / "whisper_trainer_state_backup.json",
     ]
+    return next((path for path in candidates if path.is_file()), None)
 
-    for m in models_data:
-        lines.append(
-            f"| **{m['approach']}** | {m['name']} ({m['architecture']}) | {m['strategy']} | {m['trainable_params_m']}M | {m['hardware']} | {m['training_time']} | **{m['test_cer']:.1f}%** | {m['test_wer']:.1f}%* |"
+
+def make_learning_curves(state_path: Path | None, output: Path) -> None:
+    history = read_json(state_path).get("log_history", []) if state_path else []
+    train = [(row["step"], row["loss"]) for row in history if "loss" in row]
+    val_loss = [(row["step"], row["eval_loss"]) for row in history if "eval_loss" in row]
+    val_cer = [(row["step"], row["eval_cer"]) for row in history if "eval_cer" in row]
+
+    fig, ax = plt.subplots(figsize=(9, 4.8))
+    if train:
+        ax.plot(*zip(*train), label="Whisper train loss", color="#1f77b4", marker="o", ms=3)
+    if val_loss:
+        ax.plot(*zip(*val_loss), label="Whisper validation loss", color="#ff7f0e", marker="s", ms=5)
+    ax.set(title="Whisper loss history and validation CER", xlabel="Optimization step", ylabel="Loss")
+    ax.grid(alpha=0.25)
+
+    legend_handles, legend_labels = ax.get_legend_handles_labels()
+    if val_cer:
+        cer_axis = ax.twinx()
+        line, = cer_axis.plot(*zip(*val_cer), label="Whisper validation CER", color="#2ca02c", marker="^", ms=6)
+        cer_axis.set_ylabel("Validation CER (%)")
+        legend_handles.append(line)
+        legend_labels.append("Whisper validation CER")
+    ax.legend(legend_handles, legend_labels, loc="best")
+    fig.text(0.5, 0.015, "Whisper history only; historical CER retained spaces. MMS trainer history was not retained.", ha="center", fontsize=9, color="#8a3b12")
+    fig.tight_layout(rect=(0, 0.05, 1, 1))
+    fig.savefig(output, dpi=220, bbox_inches="tight")
+    plt.close(fig)
+
+
+def make_comparison_chart(records: list[dict], output: Path) -> None:
+    fig, ax = plt.subplots(figsize=(8.5, 4.8))
+    labels = [row["name"] for row in records]
+    values = [row["test_cer_percent"] for row in records]
+    bars = ax.bar(labels, values, color=["#315b8a", "#2f9b8f", "#688bb0"], width=0.55)
+    for bar, row in zip(bars, records):
+        ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 1,
+                f"{row['test_cer_percent']:.1f}%\n(n={row['test_examples']})",
+                ha="center", va="bottom", fontsize=10, fontweight="bold")
+    ax.set_ylabel("Character error rate (%) - lower is better")
+    ax.set_title("Saved checkpoints on the first 200 FLEURS test examples")
+    ax.set_ylim(0, max(values) * 1.25)
+    ax.grid(axis="y", alpha=0.25)
+    fig.text(0.5, 0.01, "Diagnostic only: saved runs used different selected examples and filtering.", ha="center", fontsize=9, color="#8a3b12")
+    fig.tight_layout(rect=(0, 0.05, 1, 1))
+    fig.savefig(output, dpi=220, bbox_inches="tight")
+    plt.close(fig)
+
+
+def main() -> None:
+    whisper_path = RESULTS / "whisper_test_predictions.json"
+    if not whisper_path.is_file():
+        raise FileNotFoundError(
+            f"{whisper_path} is missing. Run src/evaluate_saved_whisper.py first."
         )
+    mms_candidates = [RESULTS / "mms_test_metrics.json", ROOT / "models/results/mms_test_metrics.json"]
+    mms_path = next((path for path in mms_candidates if path.is_file()), None)
+    if mms_path is None:
+        raise FileNotFoundError("Saved MMS test metrics are missing.")
 
-    lines.append("\n> \\* *Note on Khmer WER: Khmer text is written without word delimiters (scriptio continua). Standard unsegmented WER treats sentences as monolithic tokens resulting in inflated WER (~100%). Character Error Rate (CER) is the recognized primary evaluation metric for Khmer ASR.*")
-
-    with open(output_md_path, "w", encoding="utf-8") as f:
-        f.write("\n".join(lines) + "\n")
-    print(f"Saved results summary markdown to {output_md_path}")
-
-
-def main():
-    history = extract_whisper_history(WHISPER_TRAINER_STATE)
-    plot_learning_curves(history, os.path.join(RESULTS_DIR, "learning_curves.png"))
-
-    models_data = [
+    whisper = read_json(whisper_path)
+    mms = read_json(mms_path)
+    rerun_path = RESULTS / "whisper_warmup35_test_predictions.json"
+    rerun = read_json(rerun_path) if rerun_path.is_file() else None
+    records = [
         {
-            "approach": "Approach 1 (Trained)",
-            "name": "Whisper-Tiny",
+            "name": "Whisper-Tiny full fine-tuning",
             "architecture": "Seq2Seq Transformer",
-            "strategy": "Full Fine-Tuning",
-            "trainable_params_m": 37.8,
-            "hardware": "Tesla T4 GPU (Google Colab)",
-            "training_time": "~15 minutes",
-            "test_cer": 83.6,
-            "test_wer": 100.0,
+            "training_strategy": "Full fine-tuning",
+            "trainable_parameters_m": 37.8,
+            "test_cer_percent": whisper["cer_percent_whitespace_removed"],
+            "test_examples": whisper["test_examples"],
+            "saved_training_examples": 941,
+            "saved_validation_examples": 189,
+            "data_count_status": "inferred from 354 optimizer steps and validation throughput; exact original selected indices not retained",
+            "training_epochs": 3,
+            "training_time": "Not recorded",
         },
         {
-            "approach": "Approach 2 (Comparison)",
-            "name": "Meta MMS-1B Khmer",
-            "architecture": "Acoustic CTC Model",
-            "strategy": "Adapter / Transfer Learning",
-            "trainable_params_m": 2.5,
-            "hardware": "Tesla T4 GPU (Google Colab)",
-            "training_time": "~10 minutes",
-            "test_cer": 48.2,
-            "test_wer": 94.5,
-        },
-        {
-            "approach": "Approach 3 (Ablation)",
-            "name": "Whisper-Tiny (Frozen Enc)",
-            "architecture": "Seq2Seq Transformer",
-            "strategy": "Linear Probe / Decoder-Only",
-            "trainable_params_m": 28.5,
-            "hardware": "Tesla T4 GPU (Google Colab)",
-            "training_time": "~11 minutes",
-            "test_cer": 89.4,
-            "test_wer": 100.0,
+            "name": "Meta MMS-1B CTC",
+            "architecture": "Wav2Vec 2.0 with CTC",
+            "training_strategy": "Top four encoder layers plus CTC head/adapter unfrozen",
+            "trainable_parameters_m": 79.08,
+            "test_cer_percent": mms["test_cer"],
+            "test_examples": 200,
+            "saved_training_examples": 1000,
+            "saved_validation_examples": 200,
+            "data_count_status": "requested counts in saved training code; actual retained counts after duration filtering not recorded",
+            "training_epochs": 15,
+            "training_time": "Not recorded",
         },
     ]
-
-    plot_comparison_barchart(models_data, os.path.join(RESULTS_DIR, "metrics_comparison.png"))
-    generate_summary_table(models_data, os.path.join(RESULTS_DIR, "summary_table.md"), os.path.join(RESULTS_DIR, "metrics_summary.json"))
+    if rerun is not None:
+        records.append({
+            "name": "Whisper-Tiny 35-step warmup",
+            "architecture": "Seq2Seq Transformer",
+            "training_strategy": "Full fine-tuning, 35-step warmup",
+            "trainable_parameters_m": 37.8,
+            "test_cer_percent": rerun["cer_percent_whitespace_removed"],
+            "test_examples": rerun["test_examples"],
+            "saved_training_examples": 941,
+            "saved_validation_examples": 189,
+            "data_count_status": "941 and 189 retained after label filtering; seed-42 selected subsets",
+            "training_epochs": 3,
+            "training_time": "About 11 minutes on RTX 4050 Laptop GPU",
+        })
+    RESULTS.mkdir(exist_ok=True)
+    make_learning_curves(find_whisper_state(), RESULTS / "learning_curves.png")
+    make_comparison_chart(records, RESULTS / "metrics_comparison.png")
+    summary = {
+        "dataset": "Google FLEURS km_kh",
+        "test_subset": "first 200 rows of official test split, shared by all listed checkpoints",
+        "cer_policy": "NFC text, remove U+200B/U+FEFF, then remove whitespace before CER",
+        "comparison_status": "diagnostic_only",
+        "comparability_note": "Saved runs did not retain identical train/validation example manifests and applied different filtering. The Whisper effective counts are inferred; MMS retained counts were not logged. Do not claim a controlled architecture comparison.",
+        "approaches": records,
+    }
+    (RESULTS / "metrics_summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
+    lines = [
+        "# Saved checkpoint comparison (diagnostic)",
+        "",
+        "All listed checkpoints are scored on the first 200 examples of the official Google FLEURS `km_kh` test split. CER uses NFC normalization, removes U+200B/U+FEFF, then removes whitespace before scoring.",
+        "",
+        "| Approach | Training strategy | Trainable parameters | Train / validation evidence | Epochs | Test CER | Test rows | Training time |",
+        "|---|---|---:|---:|---:|---:|---:|---|",
+    ]
+    for row in records:
+        lines.append(
+            f"| {row['name']} | {row['training_strategy']} | {row['trainable_parameters_m']:.2f}M | "
+            f"{('about 941 / 189 retained (inferred)' if row['name'] == 'Whisper-Tiny full fine-tuning' else '941 / 189 retained' if row['name'].startswith('Whisper') else '1,000 / 200 requested; retained counts unlogged')} | {row['training_epochs']} | "
+            f"{row['test_cer_percent']:.2f}% | {row['test_examples']} | {row['training_time']} |"
+        )
+    lines += [
+        "",
+        "> These results are diagnostic: the runs did not retain identical train/validation example manifests and applied different filtering. The shared test evaluation does not remove that training-data difference.",
+        "",
+        "> MMS training history was not saved, so its training/validation learning curve cannot be reconstructed from the available files. The frozen-encoder run also has no saved checkpoint or metrics and is excluded.",
+    ]
+    (RESULTS / "summary_table.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print("Updated results/metrics_summary.json, summary_table.md, and comparison figures.")
 
 
 if __name__ == "__main__":

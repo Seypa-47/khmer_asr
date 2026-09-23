@@ -20,6 +20,7 @@ their split names over time.
 from __future__ import annotations
 
 import argparse
+import io
 import inspect
 import os
 import re
@@ -57,6 +58,7 @@ except ImportError:
     import evaluate
 import random
 import numpy as np
+import soundfile as sf
 import torch
 from datasets import Audio, Dataset, DatasetDict, concatenate_datasets, load_dataset
 from transformers import (
@@ -228,9 +230,25 @@ def standardize_asr_dataset(dataset: Dataset, dataset_name: str) -> Dataset:
             dataset = dataset.remove_columns([new])
         dataset = dataset.rename_column(old, new)
 
-    dataset = dataset.cast_column("audio", Audio(sampling_rate=SAMPLING_RATE))
+    # Keep the encoded audio bytes here. datasets 5.x otherwise requires the
+    # optional TorchCodec/FFmpeg stack when each row is accessed. SoundFile
+    # handles the FLEURS WAV files used for this experiment directly.
+    dataset = dataset.cast_column("audio", Audio(decode=False))
     print(f"Standardized {dataset_name}: audio column -> audio, text column -> sentence")
     return dataset
+
+
+def decode_audio_record(record: dict[str, Any]) -> dict[str, Any]:
+    source = io.BytesIO(record["bytes"]) if record.get("bytes") is not None else record["path"]
+    waveform, sample_rate = sf.read(source, dtype="float32")
+    if waveform.ndim > 1:
+        waveform = waveform.mean(axis=1)
+    if sample_rate != SAMPLING_RATE:
+        import librosa
+
+        waveform = librosa.resample(waveform, orig_sr=sample_rate, target_sr=SAMPLING_RATE)
+        sample_rate = SAMPLING_RATE
+    return {"array": waveform, "sampling_rate": sample_rate}
 
 
 def limit_dataset(dataset: Dataset, max_samples: int | None) -> Dataset:
@@ -264,7 +282,7 @@ def load_training_datasets(args: argparse.Namespace) -> Dataset:
         raise RuntimeError("No training datasets were loaded. Use DDD, --use-fleurs-train, or enable --include-slr42.")
 
     train = train_sets[0] if len(train_sets) == 1 else concatenate_datasets(train_sets)
-    return limit_dataset(train.shuffle(seed=42), args.max_train_samples)
+    return limit_dataset(train.shuffle(seed=args.seed), args.max_train_samples)
 
 
 def load_fleurs_eval_sets(args: argparse.Namespace) -> tuple[Dataset, Dataset]:
@@ -276,7 +294,7 @@ def load_fleurs_eval_sets(args: argparse.Namespace) -> tuple[Dataset, Dataset]:
 
 def prepare_dataset_fn(processor: WhisperProcessor, max_target_positions: int = 448):
     def prepare(batch: dict[str, Any]) -> dict[str, Any]:
-        audio = batch["audio"]
+        audio = decode_audio_record(batch["audio"])
         sentence = normalize_khmer_text(batch["sentence"])
         batch["input_features"] = processor.feature_extractor(
             audio["array"],
@@ -333,9 +351,13 @@ def build_compute_metrics(processor: WhisperProcessor, cache_dir: str | None = N
         pred_str = [normalize_khmer_text(text) for text in pred_str]
         label_str = [normalize_khmer_text(text) for text in label_str]
 
+        # Khmer spaces mark phrase boundaries, not word boundaries. Score CER
+        # without whitespace so it matches the MMS evaluation policy.
+        cer_pred = [re.sub(r"\s+", "", text) for text in pred_str]
+        cer_ref = [re.sub(r"\s+", "", text) for text in label_str]
         return {
             "wer": 100 * wer_metric.compute(predictions=pred_str, references=label_str),
-            "cer": 100 * cer_metric.compute(predictions=pred_str, references=label_str),
+            "cer": 100 * cer_metric.compute(predictions=cer_pred, references=cer_ref),
         }
 
     return compute_metrics
@@ -344,6 +366,11 @@ def build_compute_metrics(processor: WhisperProcessor, cache_dir: str | None = N
 def main() -> None:
     args = parse_args()
     set_all_seeds(args.seed)
+
+    if not args.output_dir or args.output_dir.strip() == "":
+        args.output_dir = "./whisper-tiny-khmer"
+    if not args.cache_dir or args.cache_dir.strip() == "":
+        args.cache_dir = DEFAULT_CACHE_DIR
 
     if args.cache_dir:
         os.environ["HF_HOME"] = args.cache_dir

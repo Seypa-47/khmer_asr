@@ -2,6 +2,7 @@ torch
 torchaudio
 transformers
 datasets
+torchcodec
 evaluate
 jiwer
 accelerate

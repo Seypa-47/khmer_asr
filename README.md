@@ -1,296 +1,143 @@
-# Comparative Study of Deep Learning Architectures for Khmer Automatic Speech Recognition (ASR)
+# Khmer Automatic Speech Recognition
 
-**Course**: Deep Learning Final Project (Individual)  
-**Academic Year**: 2026 – 2027  
-**Department**: Department of Engineering, Bachelor of Software Engineering  
-**Lecturer**: Mr. Soklong HIM  
-**Student Name**: [Your Name]  
-**Student ID**: [Your Student ID]  
-**Deliverables**: GitHub Repository + Slide Deck (.pptx) + Interactive Web Application  
+Individual Deep Learning final project comparing a fine-tuned Whisper-Tiny Seq2Seq model with a Meta MMS CTC acoustic model on Khmer speech.
 
----
+**Course:** Deep Learning Final Project, 2026-2027  
+**Lecturer:** Mr. Soklong HIM  
+**Student:** Khemrak Pasey
 
-## 1. Problem Statement & Motivation
+> **Experiment status:** The saved Whisper and MMS checkpoints were tested on the same first 200 FLEURS test rows. Their training examples and filtering were not identical or fully logged, so the scores are diagnostic rather than a controlled architecture comparison. The professor approved the topic, not these model results. A frozen-encoder checkpoint and MMS training history were not retained.
 
-Automatic Speech Recognition (ASR) converts human acoustic speech waveforms into written text transcripts. While commercial speech recognition systems achieve near-human parity on resource-rich languages such as English or Mandarin, the Khmer language remains severely under-resourced in speech AI.
+## Problem
 
-### Mathematical Formulation
-Given a 16 kHz raw audio waveform:
-$$\mathbf{X} = (x_1, x_2, \dots, x_T), \quad x_t \in [-1.0, 1.0]$$
+Given a 16 kHz Khmer speech waveform, predict its Khmer Unicode transcript. Khmer text uses spaces mainly at phrase boundaries, so this project reports character error rate (CER) after NFC normalization and whitespace removal. Standard unsegmented word error rate is not used as the primary metric.
 
-The model optimizes the posterior probability distribution $P(\mathbf{Y} | \mathbf{X})$ to predict the corresponding Khmer Unicode text sequence:
-$$\mathbf{Y} = (y_1, y_2, \dots, y_U), \quad y_u \in \mathcal{V}_{\text{Khmer}}$$
-where $\mathcal{V}_{\text{Khmer}}$ represents the vocabulary of Khmer characters or subword tokens.
+## Data
 
-### Linguistic Challenges of Khmer
-1. **Scriptio Continua**: Khmer is written without spaces between words; spacing is reserved solely for clause/sentence boundaries. Words are inferred strictly through contextual semantics.
-2. **Complex Orthography**: An inventory of 33 consonants, 23 vowels, 14 independent vowels, and complex subscript consonants (*cheung* / ជើង) formed via the invisible consonant shifter sign `U+17D2`.
-3. **Register Phonetics**: Khmer consonants belong to either Series 1 (high register) or Series 2 (low register), fundamentally altering the vocalic pronunciation of attached vowel graphemes.
+The project uses the public Google FLEURS `km_kh` configuration from [Hugging Face Datasets](https://huggingface.co/datasets/google/fleurs). The dataset card identifies the FLEURS source and licensing terms. The downloaded version in this workspace contains 1,675 training, 326 validation, and 771 test examples. FLEURS supplies official splits; no speaker-level or class distribution applies to this transcription task. Audio is mono at 16 kHz. Known limits include the small amount of Khmer speech relative to high-resource languages and variation in speaker, recording, and topic.
 
-### Practical Impact
-Enables voice dictation for non-literate citizens, automated subtitle generation for national broadcast media, assistive accessibility interfaces, and hands-free medical documentation across Cambodia.
+The original Whisper run did not save its exact selected row indices. Its trainer state records 354 updates over three epochs with batch size 8, consistent with 941 usable training rows. Applying its documented label filter to a seed-42 shuffled 1,000-row FLEURS selection leaves exactly 941 rows. Its validation throughput similarly matches 189 retained rows from the first 200. These are strong inferences, not a preserved split manifest. The saved MMS training code selected the first 1,000 training rows without shuffling and removed clips over 10 seconds; its actual retained row count and training history were not saved. The two runs therefore cannot be treated as trained on the same examples.
 
----
+## Approaches
 
-## 2. Dataset & Preprocessing Pipeline
+| Approach | Architecture | Saved training strategy |
+|---|---|---|
+| Whisper-Tiny | Encoder-decoder Transformer with cross-attention | Full fine-tuning |
+| Meta MMS-1B Khmer | Wav2Vec 2.0 with CTC output | Top four Transformer layers plus CTC head/adapter unfrozen; SpecAugment enabled |
 
-### Primary Benchmark Dataset: Google FLEURS `km_kh`
-* **Source**: [Google FLEURS](https://huggingface.co/datasets/google/fleurs) (Few-shot Learning Evaluation of Universal Representations of Speech) hosted on Hugging Face Datasets.
-* **License**: Creative Commons Attribution 4.0 International (CC-BY 4.0).
-* **Audio Format**: Single-channel 16,000 Hz, 16-bit PCM mono WAV.
-* **Controlled Split**: Evaluated on an identical fixed split across all approaches to ensure fair, unbiased comparison:
-  * **Train Set**: 1,000 utterances
-  * **Validation Set**: 200 utterances
-  * **Held-out Test Set**: 200 utterances
-* **Known Noise & Bias**: Contains recordings from native speakers across various age groups and genders. Subtle acoustic variations include ambient microphone room reverberation and minor background noise.
+The MMS run is **not adapter-only tuning**. The saved MMS weights contain about 964.8M parameters, with approximately 79.1M trainable under the recorded top-four-layer training configuration. The frozen-encoder Whisper ablation is excluded because this workspace has no saved checkpoint or evaluation metrics for it.
 
-### Data Preprocessing & Sanitization Pipeline
-1. **Audio Standardization**: All utterances resampled to 16,000 Hz mono.
-   * *Whisper*: 80-channel log-mel spectrogram computed via 25ms Hann windows with 10ms hop length.
-   * *Meta MMS*: Normalized 1D raw waveform processed directly by 7-layer temporal convolutional feature encoder.
-2. **Text Normalization**: Unicode Canonical Decomposition followed by Canonical Composition (NFC normalization).
-3. **Zero-Width Character Removal**: Strips invisible zero-width non-breaking spaces (`\u200b`, `\ufeff`) and unassigned byte order marks.
-4. **Sequence Truncation Filtering**: Audio samples where target label sequence length exceeds 448 tokens are filtered to prevent autoregressive decoder memory overflow.
+The original Whisper training arguments show 3 epochs, learning rate `1e-5`, 500 warmup steps, batch size 8, and gradient accumulation 1. It ended after 354 updates, before warmup finished. The MMS arguments show 15 epochs, learning rate `5e-5`, 50 warmup steps, batch size 1, and gradient accumulation 8. A separate Whisper rerun with 35 warmup steps is documented below. The repository still does not retain a learning-rate and regularization sweep.
 
----
+## Results
 
-## 3. Deep Learning Approaches Compared
+All listed checkpoints were scored on the same first 200 examples of the FLEURS test split. CER applies NFC normalization, removes U+200B and U+FEFF, and removes whitespace before scoring. The 35-step-warmup Whisper rerun used the seed-42 shuffled first 1,000 training rows (941 retained after label filtering) and first 200 validation rows (189 retained).
 
-Complying with **Section 4 of the Final Project Rubric**, we evaluate three distinct deep learning approaches differing across **Architecture (Dimension A)** and **Training Strategy (Dimension B)**:
+| Approach | Trainable parameters | Training evidence | Epochs | Test CER (first 200) |
+|---|---:|---|---:|---:|
+| Original Whisper-Tiny | 37.8M | About 941 / 189 retained, inferred from run logs | 3 | **83.89%** |
+| Whisper-Tiny, 35-step warmup rerun | 37.8M | 941 train / 189 validation retained | 3 | **83.67%** |
+| Meta MMS-1B CTC, top four layers unfrozen | 79.1M | 1,000 train / 200 validation requested; retained counts unlogged | 15 | **15.96%** |
 
-| Approach | Model | Deep Learning Architecture | Training Strategy | Parameters | Theoretical Mechanism |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **Approach 1** | `openai/whisper-tiny` | **Seq2Seq Transformer** (Encoder-Decoder with Cross-Attention) | Full Fine-Tuning | 37.8M (100% trainable) | Joint acoustic-linguistic modeling; cross-attention aligns log-mel speech frames with autoregressive subwords. |
-| **Approach 2** | `facebook/mms-1b-all` | **Non-Autoregressive CTC Acoustic Model** | Adapter Fine-Tuning | 1.0B Total (2.5M adapter trainable) | Aligns speech frames directly to characters via Connectionist Temporal Classification loss; prevents text hallucination. |
-| **Approach 3** | `whisper-tiny (frozen enc)` | **Seq2Seq Transformer** | Linear Probe / Decoder-Only Tuning | 28.5M Trainable (9.3M frozen) | Freezes pre-trained multilingual acoustic encoder; isolates the transferability of pre-trained audio representations. |
+The Whisper rerun saved only 59 fewer character edits over 26,763 reference characters than the original: 22,392 versus 22,451. Among 200 clips, 92 improved, 84 worsened, and 24 tied. A paired utterance bootstrap interval for the CER improvement includes zero (`-0.49` to `+0.92` percentage points), so the observed `0.22`-point gain is too small to establish a reliable improvement. The result files retain both sets of Whisper predictions and the comparison details. MMS still has the much lower saved CER, while the differing training selections limit any architecture claim.
 
----
+### Figures and learning-curve evidence
 
-## 4. Systematic Hyperparameter Tuning
+![Saved Whisper learning history](results/learning_curves.png)
 
-In accordance with **Section 5.C**, systematic hyperparameter tuning was conducted for the best-performing model family (Whisper-Tiny) on Google Colab T4 GPU:
+![Shared-test CER diagnostic](results/metrics_comparison.png)
 
-| Trial | Learning Rate | Weight Decay | Warmup Steps | Batch Size (Effective) | Validation CER (%) | Observations |
-| :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| 1 | $1 \times 10^{-5}$ | 0.00 | 500 | 8 | 91.2% | Converged too slowly within the 10-epoch limit. |
-| 2 | $5 \times 10^{-5}$ | 0.01 | 300 | 16 (8 × 2) | 86.4% | Good convergence; slight regularization benefit from weight decay. |
-| **3 (Optimal)** | $\mathbf{1 \times 10^{-4}}$ | **0.00** | **200** | **16 (8 × 2)** | **83.6%** | **Fastest, most stable convergence without gradient explosion.** |
-| 4 | $5 \times 10^{-4}$ | 0.05 | 100 | 16 (8 × 2) | 98.7% | High learning rate caused loss oscillations and decoder divergence. |
+The original Whisper trainer state contains training loss and validation logs. Its historical validation CER retained spaces, while the post-hoc test CER removes whitespace; the two CER series therefore use different text policies. The warmup rerun's trainer state is saved in `results/whisper_warmup35_trainer_state.json`, with validation CER of 88.54%, 86.71%, and 83.62% after epochs one through three. MMS trainer history was not retained, so its learning curve cannot be reconstructed. The current figure shows the original Whisper history only.
 
-* **Hardware**: Google Colab Tesla T4 GPU (16 GB GDDR6 VRAM), mixed precision FP16 enabled.
-* **Optimizer**: AdamW ($\beta_1=0.9, \beta_2=0.999, \epsilon=10^{-8}$) with linear learning rate warmup and decay.
-* **Reproducibility**: Random seed fixed globally (`seed = 42`) across Python `random`, `numpy`, and `torch.manual_seed`.
+`results/error_analysis.md` reports 13,424 substitutions, 8,741 deletions, and 286 insertions across the 200 Whisper examples, plus five high-error examples. Several outputs show repeated-token decoding failures. The report avoids assigning an acoustic cause without listening to each audio clip. MMS per-example predictions were not saved, so the current error analysis covers Whisper only.
 
----
+## Training and evaluation
 
-## 5. Experimental Results & Visual Comparisons
+### Install
 
-All models were evaluated on the **exact same held-out test split** (200 test samples from Google FLEURS `km_kh`).
+Use Python 3.10 or 3.11 with a CUDA GPU for training the MMS-1B model. Install the listed packages with:
 
-### Consolidated Results Table
-
-| Approach | Model Architecture | Training Strategy | Trainable Params | Hardware | Training Time | Test CER (%) ↓ | Test WER (%) ↓ |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Approach 1** | Whisper-Tiny (Seq2Seq) | Full Fine-Tuning | 37.8M (100%) | Tesla T4 GPU | ~60 min (10 epochs) | **49.3%** | 101.9%* |
-| **Approach 2** | Meta MMS-1B (CTC) | Adapter Tuning | 0.2M (0.02%) | Tesla T4 GPU | ~7 min (3 epochs) | **15.5%** | 100.0%* |
-| **Approach 3** | Whisper-Tiny (Frozen Enc) | Decoder-Only Probe | 29.6M (78.3%) | Tesla T4 GPU | ~30 min (5 epochs) | **59.7%** | 100.8%* |
-
-> \* **Crucial Note on Khmer Evaluation Metrics (Section 5.C Rubric Compliance)**:  
-> Standard Word Error Rate (WER) splits predictions and targets on whitespace: `sentence.split(" ")`. Because Khmer is written without spaces between words (*scriptio continua*), an entire sentence is treated as a single token. A single erroneous character causes the entire sentence to be marked as an error, resulting in artificially inflated WER (~95–100%). **Character Error Rate (CER)** is the scientifically rigorous, universally accepted metric for Khmer ASR.
->
-> $$\text{CER} = \frac{S + D + I}{N} \times 100\%$$
-> *(where $S$ = Substitutions, $D$ = Deletions, $I$ = Insertions, $N$ = Total Reference Characters)*.
-
-### Comparison Figures
-
-#### 1. Learning Curves (`results/learning_curves.png`)
-Shows cross-entropy training loss reduction (from 2.31 to 1.47) and validation CER convergence over optimization steps.
-
-![Learning Curves](results/learning_curves.png)
-
-#### 2. Model Error Comparison Bar Chart (`results/metrics_comparison.png`)
-Side-by-side Character Error Rate (CER) comparison on the held-out test set.
-
-![Metrics Comparison](results/metrics_comparison.png)
-
-### Theoretical Reasoning: Why Did Meta MMS-1B Win?
-1. **Scale of Pre-training**: Meta MMS-1B was pre-trained on over 500,000 hours of speech across 1,400+ languages. Its acoustic encoder already possessed rich phonetic feature extractors for Austroasiatic tonal and vocalic nuances.
-2. **Inductive Bias of CTC**: Connectionist Temporal Classification enforces strict monotonic alignment between speech frames and character outputs. It completely avoids the autoregressive hallucination loops common in Seq2Seq decoders under low-data regimes.
-3. **Failure of Frozen Encoder (Approach 3)**: Approach 3 achieved 89.4% CER (5.8% worse than full fine-tuning). This proves that pre-trained multilingual acoustic encoders require gradient updates to specialize to Khmer's dense consonant subscript clusters (*cheung*).
-
----
-
-## 6. In-Depth Error Analysis & Failure Cases
-
-Visual and quantitative inspection of test set transcriptions revealed four recurring failure patterns:
-
-1. **Subscript Consonant (*Cheung*) Omissions**:
-   * *Example*: Reference `កម្ពុជា` (Kampuchea) $\rightarrow$ Predicted `កពជា`.
-   * *Cause*: The Khmer sub-glyph connector `U+17D2` (COENG) produces subtle acoustic stop closures that the model frequently skips under background noise.
-2. **Register Vowel Tone Shift (Series 1 vs. Series 2 Confusion)**:
-   * *Example*: Inherent vowel /ɑː/ shifted to /ɔː/.
-   * *Cause*: Consonants of different registers dictate the vowel quality. When audio reverberation obscures consonant onset acoustics, the decoder mispredicts the associated vowel.
-3. **Autoregressive Hallucination on Boundary Silence**:
-   * *Whisper Issue*: On recordings with prolonged trailing silence, the autoregressive decoder occasionally repeated the final word 3–4 times before hitting the `<|endoftranscript|>` token.
-4. **Loan Word and Administrative Jargon Deletions**:
-   * In specialized vocabulary (e.g., international treaties in FLEURS), infrequent compound words experienced higher deletion rates compared to everyday conversational phrases.
-
----
-
-## 7. Limitations & Future Work
-
-### Limitations of Current Study
-* **Dataset Scale**: Training was constrained to 1,000 utterances to ensure complete reproducibility within free Google Colab GPU timeout windows.
-* **Absence of External Language Model**: CTC predictions were decoded via greedy argmax rather than beam search with an external n-gram language model.
-
-### Roadmap for Future Work
-1. **Scale to OpenSLR SLR42**: Train on the full 100+ hour OpenSLR Khmer speech dataset on multi-GPU compute nodes.
-2. **External KenLM 5-Gram Rescoring**: Integrate a KenLM language model trained on Khmer Wikipedia and news corpora to rescore CTC beams and resolve grammatical ambiguities.
-3. **Dictionary Word Segmentation for True WER**: Implement `khmer-nltk` / `searn` tokenizers to benchmark true segmented Word Error Rate.
-4. **Quantization & Edge Deployment**: Quantize Whisper and MMS models into INT8 ONNX Runtime for offline mobile dictation on Android/iOS.
-
----
-
-## 8. Repository Structure
-
-```text
-khmer_asr/
-├── app.py                         # Interactive Gradio Web UI (microphone dictation & file upload)
-├── run_app.bat                    # 1-click Windows launcher for Web App
-├── requirements.txt               # Exact Python dependencies (PyTorch, Transformers, python-pptx)
-├── .gitignore                     # Ignores virtualenv and heavy model weights (>50MB)
-├── models/                        # Self-contained fine-tuned model (148 MB total)
-│   └── whisper-tiny-khmer/        # Complete model ready for local inference
-│       ├── model.safetensors      # Primary binary model weights (144.06 MB)
-│       ├── config.json            # Model architecture configuration
-│       ├── generation_config.json # Generation settings (Khmer language, transcribe task)
-│       ├── processor_config.json  # Audio spectrogram feature extractor config
-│       ├── tokenizer.json         # Khmer Unicode tokenizer vocabulary
-│       ├── tokenizer_config.json  # Tokenizer settings & special tokens
-│       └── trainer_state.json     # Training loss and evaluation metrics history
-├── notebooks/                     # Colab experiments
-│   └── khmer_asr_experiments.ipynb # Unified 3-approach experiment notebook for Colab T4
-├── results/                       # Evaluation deliverables complying with Section 5.C & 5.D
-│   ├── learning_curves.png        # Training vs. validation loss/CER curves
-│   ├── metrics_comparison.png     # CER comparison bar chart across 3 approaches
-│   ├── metrics_summary.json       # Structured metrics payload
-│   ├── summary_table.md           # Markdown comparative results table
-│   └── whisper_trainer_state_backup.json # Archived training log history
-├── samples/                       # Real test audio files for testing UI
-│   ├── sample_1.wav
-│   └── sample_2.wav
-├── slides/                        # Presentation materials complying with Section 6.2
-│   ├── generate_slides.py         # Automated PPTX slide generator
-│   ├── khmer_asr_presentation.pptx # 13-slide professional PowerPoint presentation
-│   └── presentation_outline.md    # Markdown slide-by-slide script and breakdown
-└── src/                           # Clean, modular source code
-    ├── __init__.py
-    ├── finetune_whisper.py        # Approach 1 & 3: Whisper fine-tuning & linear probe engine
-    ├── train_mms.py               # Approach 2: Meta MMS CTC training engine
-    ├── evaluate_and_plot.py       # Dynamic curve plotting and metrics extractor
-    └── test_inference.py          # Command-line testing utility on local audio
-```
-
----
-
-## 9. How to Run the Project
-
-### Option A: Interactive Web App (Recommended — No CLI Needed!)
-To test speech recognition with your microphone or sample audio files in your browser:
-1. Double-click **`run_app.bat`** (on Windows), or run:
-   ```bash
-   python app.py
-   ```
-2. Open **`http://127.0.0.1:7860`** in your browser.
-3. Speak in Khmer or select pre-loaded audio samples and click **Transcribe Speech**.
-
-### Option B: Google Colab GPU Training (All 3 Approaches)
-1. Upload **`notebooks/khmer_asr_experiments.ipynb`** to Google Colab.
-2. Select **Runtime > Change runtime type > T4 GPU**.
-3. Run through sections 1 to 7 to reproduce training for Whisper, MMS CTC, and the Frozen Encoder ablation.
-
-### Option C: Reproducing Locally via Command Line
-```powershell
-# 1. Install dependencies
+```bash
 pip install -r requirements.txt
-
-# 2. Run Approach 1: Whisper-Tiny Full Fine-Tuning
-python src/finetune_whisper.py --use-fleurs-train --skip-ddd --seed 42 --num-train-epochs 5
-
-# 3. Run Approach 3: Whisper Frozen Encoder Ablation (Linear Probe)
-python src/finetune_whisper.py --use-fleurs-train --skip-ddd --seed 42 --freeze-encoder
-
-# 4. Run Approach 2: Meta MMS CTC Training
-python src/train_mms.py --seed 42
-
-# 5. Generate Figures and Metrics Summary
-python src/evaluate_and_plot.py
-
-# 6. Test Model Inference on Audio
-python src/test_inference.py --audio "samples/sample_1.wav"
-
-# 7. Generate Presentation Slide Deck
-python slides/generate_slides.py
 ```
 
----
+The commands below use Google Colab with a T4 GPU. They keep the same seed and FLEURS subset in both training scripts.
 
-## 10. Model Weights Download Links
+### Matched rerun
 
-In compliance with **Section 6.1 and Submission Checklist Item 5** (*"Model weight files over 50 MB are hosted externally with working download links in the README"*):
+```bash
+# Whisper-Tiny: fixed 1,000 train / 200 validation / 200 test examples
+python src/finetune_whisper.py \
+  --output-dir ./models/whisper-tiny-khmer-reproduce \
+  --model-name openai/whisper-tiny \
+  --use-fleurs-train --skip-ddd \
+  --max-train-samples 1000 --max-eval-samples 200 --max-test-samples 200 \
+  --seed 42 --num-train-epochs 3 --learning-rate 1e-5 \
+  --warmup-steps 35 --per-device-train-batch-size 1 \
+  --per-device-eval-batch-size 4 --gradient-accumulation-steps 8 \
+  --eval-steps 118 --save-steps 118 --fp16
 
-* **Trained Whisper-Tiny Khmer Weights (`model.safetensors`, 144.06 MB)**:
-  * Local copy: Pre-packaged in [`models/whisper-tiny-khmer/`](models/whisper-tiny-khmer)
-  * External Download: [Hugging Face Hub Repository](https://huggingface.co/Seypa-47/whisper-tiny-khmer) *(or download directly via Hugging Face API)*
-* **Direct Python 1-Line Downloader**:
-  ```python
-  from transformers import WhisperForConditionalGeneration, WhisperProcessor
-  # Downloads the pre-trained weights directly
-  processor = WhisperProcessor.from_pretrained("models/whisper-tiny-khmer")
-  model = WhisperForConditionalGeneration.from_pretrained("models/whisper-tiny-khmer")
-  ```
-* **Meta MMS-1B Khmer Weights**: Downloaded dynamically on-demand from `facebook/mms-1b-all` with target language `khm`.
+# MMS CTC: uses the same shuffled train subset and first 200 validation/test rows
+python src/train_mms.py \
+  --output-dir ./models/mms-khmer-ctc \
+  --model-id facebook/mms-1b-all --target-lang khm \
+  --max-train-samples 1000 --max-eval-samples 200 --max-test-samples 200 \
+  --seed 42 --num-train-epochs 15 --learning-rate 5e-5 \
+  --unfreeze-top-layers 4 --apply-spec-augment --lr-scheduler-type cosine \
+  --warmup-steps 50 --per-device-train-batch-size 1 \
+  --per-device-eval-batch-size 1 --gradient-accumulation-steps 8 --fp16
 
----
+# Score Whisper on the same 200 test examples and save every prediction
+python src/evaluate_saved_whisper.py --max-samples 200
+python src/analyze_saved_predictions.py
 
-## 11. Citations & References
+# Build tables and figures from the saved metrics
+python src/evaluate_and_plot.py
+```
 
-1. **OpenAI Whisper**: Radford, A., Kim, J. W., Xu, T., Brockman, G., McLeavey, C., & Sutskever, I. (2023). *Robust Speech Recognition via Large-Scale Weak Supervision*. International Conference on Machine Learning (ICML).
-2. **Meta MMS**: Pratap, V., et al. (2023). *Scaling Speech Technology to 1,000+ Languages*. Meta AI Research.
-3. **Google FLEURS**: Conneau, A., et al. (2023). *FLEURS: Few-shot Learning Evaluation of Universal Representations of Speech*. IEEE SLT.
-4. **Hugging Face Transformers**: Wolf, T., et al. (2020). *Transformers: State-of-the-Art Natural Language Processing*. EMNLP.
-5. **Connectionist Temporal Classification**: Graves, A., et al. (2006). *Connectionist Temporal Classification: Labelling Unsegmented Sequence Data with Recurrent Neural Networks*. ICML.
+The Whisper reproduction command writes to a new directory. The MMS command uses `models/mms-khmer-ctc` and would overwrite the saved MMS model if run locally; choose a different output directory to preserve it. The two training scripts now select the same seed-42 raw training rows, but they apply different length filters, so matching the retained examples requires a shared precomputed subset. `src/train_mms.py` now saves trainer state for future learning-curve plots.
 
----
+### Inference demo
 
-## 12. AI Assistance Disclosure
+Run `python app.py`, then open `http://127.0.0.1:7860`. The Windows launcher is `run_app.bat`. The saved app model files are ignored by Git; the model download link below must work for another user to run the demo.
 
-In compliance with **Section 5.E and Section 6.1**:
-* **Tools Used**: Antigravity AI Assistant.
-* **Scope of Use**:
-  * Developing modular evaluation and plotting routines (`src/evaluate_and_plot.py`).
-  * Creating the interactive Gradio testing UI (`app.py`) and automated PowerPoint slide builder (`slides/generate_slides.py`).
-  * Structuring documentation, error analyses, and presentation outlines to strictly align with course rubric requirements.
-* **Verification**: All PyTorch tensor computations, model training pipelines, audio preprocessing parameters, and metric computations were manually inspected, executed, and verified on local hardware and Google Colab.
+## Repository map
 
----
+- `src/finetune_whisper.py`: Whisper training and evaluation pipeline.
+- `src/train_mms.py`: MMS CTC training pipeline.
+- `src/evaluate_saved_whisper.py`: Auditable Whisper scoring on the first N test rows.
+- `src/evaluate_and_plot.py`: Generates the summary table, JSON, and figures from saved results.
+- `notebooks/khmer_asr_experiments.ipynb`: Colab workflow.
+- `results/`: Saved scores, predictions, and figures.
+- `slides/khmer_asr_presentation.pptx`: 13-slide final project presentation.
+- `output/khmer_asr_teacher_progress_short.pptx`: 9-slide progress review for the lecturer.
+- `app.py`: Gradio inference interface.
 
-## 13. Submission Checklist Verification
+## Model weights
 
-Before submitting, every item from **Section 9 (Page 8)** has been verified:
+Large model files are excluded from Git by `.gitignore`. The reported scores come from fine-tuned checkpoints stored locally under `models/`; cloning this repository alone does not reproduce those scores or the saved-model demo. Place the fine-tuned MMS checkpoint in `models/mms-khmer-ctc` and the Whisper checkpoint in `models/whisper-tiny-khmer` to use those versions in the app. Without local MMS weights, the app loads the public `facebook/mms-1b-all` base model, which is a different checkpoint. Whisper weights are also expected at [Hugging Face: Seypa-47/whisper-tiny-khmer](https://huggingface.co/Seypa-47/whisper-tiny-khmer), but that link returned HTTP 401 during this review; access must be made public or an authorized download method supplied before submission.
 
-| # | Checklist Item | Status | Verification Reference |
-| :-: | :--- | :-: | :--- |
-| 1 | Topic approved by lecturer | [x] Confirmed | Section 3.2: Khmer Speech Recognition approved direction |
-| 2 | Compare at least two (ideally three) distinct DL approaches | [x] Confirmed | 3 Approaches: Seq2Seq vs. CTC vs. Frozen Encoder |
-| 3 | Same train / val / test split and identical preprocessing | [x] Confirmed | Google FLEURS `km_kh` (1000/200/200) across all models |
-| 4 | Implemented in PyTorch with random seeds set | [x] Confirmed | `torch.manual_seed(42)` in `src/finetune_whisper.py` & `src/train_mms.py` |
-| 5 | Model weights > 50 MB hosted externally with links | [x] Confirmed | Section 10 download links provided in README |
-| 6 | Repository contains README, requirements, src, results, slides | [x] Confirmed | All folders present and fully populated |
-| 7 | README explains how to run, citations, and AI-use note | [x] Confirmed | Sections 9, 11, and 12 fully documented |
-| 8 | Single results table & at least two figures in README & slides | [x] Confirmed | Table in Section 5 & Slide 8; Figures embedded |
-| 9 | Training/validation curves shown for every approach | [x] Confirmed | `results/learning_curves.png` & Slide 9 |
-| 10 | Hyperparameter tuning documented for best approach | [x] Confirmed | Section 4 tuning matrix documented |
-| 11 | Error analysis and limitations included | [x] Confirmed | Sections 6 and 7 detailed in README & Slides |
-| 12 | Regular commit history across project period | [x] Confirmed | Structured git repository with meaningful commit history |
-| 13 | Able to explain and modify every line of code during Q&A | [x] Confirmed | Modular code architecture ready for oral defense |
+## References
+
+1. Radford, A. et al. (2023). *Robust Speech Recognition via Large-Scale Weak Supervision*. ICML.
+2. Pratap, V. et al. (2023). *Scaling Speech Technology to 1,000+ Languages*. Meta AI Research.
+3. Conneau, A. et al. (2023). *FLEURS: Few-shot Learning Evaluation of Universal Representations of Speech*. IEEE SLT.
+4. Graves, A. et al. (2006). *Connectionist Temporal Classification: Labelling Unsegmented Sequence Data with Recurrent Neural Networks*. ICML.
+5. Wolf, T. et al. (2020). *Transformers: State-of-the-Art Natural Language Processing*. EMNLP.
+
+## AI assistance disclosure
+
+**Tools used:** Antigravity AI Assistant and Codex AI assistant. **Scope:** project review, debugging support, evaluation/error-analysis code, and documentation/presentation edits. **Verification:** the student must personally verify the training runs, understand and be able to modify the submitted code, and add any other tools used. Training results are reported only when backed by saved logs or predictions.
+
+## Submission readiness checklist
+
+- [x] Topic approval: confirmed by the lecturer (per student).
+- [x] Two distinct trained deep learning architectures are present.
+- [ ] Re-run both approaches using the same train, validation, and test subsets.
+- [ ] Save curves and trainer state for both approaches.
+- [ ] Retain prediction examples and complete error analysis for both approaches.
+- [ ] Run and document at least one learning-rate and one regularization comparison.
+- [ ] Verify the external Whisper weight link works without private access.
+- [x] Add the student name to the project materials.
+- [x] README, requirements, source code, results, and slides are present.
+- [ ] Review slide claims against the final rerun results and rehearse the 10-minute presentation/Q&A.

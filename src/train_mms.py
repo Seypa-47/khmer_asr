@@ -145,8 +145,12 @@ def build_compute_metrics(processor: AutoProcessor):
         pred_str = [normalize_khmer_text(t) for t in pred_str]
         label_str = [normalize_khmer_text(t) for t in label_str]
 
+        # Khmer spaces are not reliable word boundaries. Keep conventional
+        # WER for reference, but compute the comparison CER without whitespace.
+        cer_pred = [re.sub(r"\s+", "", text) for text in pred_str]
+        cer_ref = [re.sub(r"\s+", "", text) for text in label_str]
         wer = 100 * wer_metric.compute(predictions=pred_str, references=label_str)
-        cer = 100 * cer_metric.compute(predictions=pred_str, references=label_str)
+        cer = 100 * cer_metric.compute(predictions=cer_pred, references=cer_ref)
 
         return {"wer": wer, "cer": cer}
 
@@ -228,6 +232,9 @@ def main() -> None:
     if torch.cuda.is_available():
         torch.cuda.empty_cache()
 
+    # Match Whisper's deterministic FLEURS subset: shuffle the official train
+    # split with the same seed, then take the same requested number of rows.
+    raw_train = raw_train.shuffle(seed=args.seed)
     if args.max_train_samples:
         raw_train = raw_train.select(range(min(args.max_train_samples, len(raw_train))))
     if args.max_eval_samples:
@@ -288,6 +295,7 @@ def main() -> None:
         trainer.train()
         trainer.save_model(args.output_dir)
         processor.save_pretrained(args.output_dir)
+        trainer.save_state()
 
     print("Evaluating Approach 2 on FLEURS km_kh held-out test set...")
     test_metrics = trainer.evaluate(eval_dataset=test_data, metric_key_prefix="test")
