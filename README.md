@@ -69,7 +69,7 @@ Use `notebooks/khmer_asr_experiments.ipynb` on a Google Colab GPU for the contro
 # One shared list of eligible official FLEURS rows for both models.
 python src/matched_fleurs.py --output results/matched_fleurs_split.json \
   --seed 42 --train-candidates 1000 --validation-candidates 200 \
-  --test-start 200 --test-candidates 200 --max-duration-seconds 10
+  --test-start 200 --test-candidates 200 --max-duration-seconds 15
 
 # Whisper-Tiny: train, validate, and test on the shared row list.
 python src/finetune_whisper.py \
@@ -81,7 +81,7 @@ python src/finetune_whisper.py \
   --seed 42 --num-train-epochs 3 --learning-rate 1e-5 --weight-decay 0 \
   --warmup-steps 35 --per-device-train-batch-size 1 \
   --per-device-eval-batch-size 4 --gradient-accumulation-steps 8 \
-  --eval-steps 118 --save-steps 118 --fp16
+  --eval-steps 67 --save-steps 67 --fp16
 
 # MMS CTC: use the identical row list and a new checkpoint folder.
 python src/train_mms.py \
@@ -105,7 +105,7 @@ python src/evaluate_saved_mms.py --model-dir models/mms-khmer-ctc-matched \
 python src/plot_matched_results.py
 ```
 
-The manifest removes recordings over 10 seconds and examples exceeding Whisper's label limit before either model trains. It records the exact retained indices. The new held-out test candidate rows start at index 200 because the earlier work repeatedly inspected rows 0–199. The matched output folders preserve the older local checkpoints. The Colab notebook includes three short MMS pilot runs: baseline, a lower learning rate, and weight decay. Pilot runs use validation only and save no large weights; the chosen settings then go into the full MMS run. `--no-apply-spec-augment` is also available for a later regularization comparison. Save final checkpoints and evidence to Google Drive as shown in the notebook. Update the README and slides only when the new runs have finished.
+The manifest removes recordings over 15 seconds and examples exceeding Whisper's label limit before either model trains. It records the exact retained indices. The new held-out test candidate rows start at index 200 because the earlier work repeatedly inspected rows 0–199. The matched output folders preserve the older local checkpoints. The Colab notebook includes three short MMS pilot runs: baseline, a lower learning rate, and weight decay. Pilot runs use validation only and save no large weights; the chosen settings then go into the full MMS run. `--no-apply-spec-augment` is also available for a later regularization comparison. Save final checkpoints and evidence to Google Drive as shown in the notebook. Update the README and slides only when the new runs have finished.
 
 ### Inference demo
 

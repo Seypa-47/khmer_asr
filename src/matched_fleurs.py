@@ -53,7 +53,7 @@ def main() -> None:
     parser.add_argument("--validation-candidates", type=int, default=200)
     parser.add_argument("--test-candidates", type=int, default=200)
     parser.add_argument("--test-start", type=int, default=200, help="Skip earlier test rows already inspected in historical runs.")
-    parser.add_argument("--max-duration-seconds", type=float, default=10.0)
+    parser.add_argument("--max-duration-seconds", type=float, default=15.0)
     parser.add_argument("--whisper-max-label-tokens", type=int, default=448)
     args = parser.parse_args()
 
