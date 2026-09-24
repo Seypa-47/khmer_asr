@@ -6,7 +6,7 @@ Individual Deep Learning final project comparing a fine-tuned Whisper-Tiny Seq2S
 **Lecturer:** Mr. Soklong HIM  
 **Student:** Khemrak Pasey
 
-> **Experiment status:** The saved Whisper and MMS checkpoints were tested on the same first 200 FLEURS test rows. Their training examples and filtering were not identical or fully logged, so the scores are diagnostic rather than a controlled architecture comparison. The professor approved the topic, not these model results. A frozen-encoder checkpoint and MMS training history were not retained.
+> **Experiment status:** Historical checkpoints tested on the first 200 FLEURS test rows remain diagnostic because their training selections differed. A later controlled rerun used one saved 531/124/114 train/validation/test manifest for both architectures. Whisper-Tiny and MMS both completed training; MMS achieved 15.84% held-out test CER using its best validation checkpoint. The professor approved the topic and, according to the student, now expects performance above 80%, but did not define the metric or certify these results.
 
 ## Problem
 
@@ -61,7 +61,7 @@ Use Python 3.10 or 3.11 with a CUDA GPU for training the MMS-1B model. Install t
 pip install -r requirements.txt
 ```
 
-Use `notebooks/khmer_asr_experiments.ipynb` on a Google Colab GPU for the controlled rerun. The commands below prepare the same saved row list for both models. **These new runs have not yet been completed, and the historical scores above remain diagnostic.**
+The controlled rerun is complete. Use `notebooks/khmer_asr_experiments.ipynb` on a Google Colab GPU to reproduce it. The commands below prepare the same saved row list for both models. The historical scores above remain diagnostic.
 
 ### Matched rerun
 
@@ -90,7 +90,7 @@ python src/train_mms.py \
   --split-manifest results/matched_fleurs_split.json \
   --metrics-output results/mms_matched_metrics.json \
   --trainer-state-output results/mms_matched_trainer_state.json \
-  --seed 42 --num-train-epochs 15 --learning-rate 5e-5 --weight-decay 0 \
+  --seed 42 --num-train-epochs 15 --learning-rate 3e-5 --weight-decay 0 \
   --unfreeze-top-layers 4 --apply-spec-augment --lr-scheduler-type cosine \
   --warmup-steps 50 --per-device-train-batch-size 1 \
   --per-device-eval-batch-size 1 --gradient-accumulation-steps 8 --fp16
@@ -102,22 +102,24 @@ python src/evaluate_saved_whisper.py --model-dir models/whisper-tiny-khmer-match
 python src/evaluate_saved_mms.py --model-dir models/mms-khmer-ctc-matched \
   --split-manifest results/matched_fleurs_split.json \
   --output results/mms_matched_predictions.json --device cuda
-python src/plot_matched_results.py
+python src/plot_matched_results.py --completed
 ```
 
-The manifest removes recordings over 15 seconds and examples exceeding Whisper's label limit before either model trains. It records the exact retained indices. The new held-out test candidate rows start at index 200 because the earlier work repeatedly inspected rows 0–199. The matched output folders preserve the older local checkpoints. The Colab notebook includes three short MMS pilot runs: baseline, a lower learning rate, and weight decay. Pilot runs use validation only and save no large weights; the chosen settings then go into the full MMS run. `--no-apply-spec-augment` is also available for a later regularization comparison. Save final checkpoints and evidence to Google Drive as shown in the notebook. Update final slide claims only after reviewing the completed experiment evidence.
+The manifest removes recordings over 15 seconds and examples exceeding Whisper's label limit before either model trains. It records the exact retained indices. The new held-out test candidate rows start at index 200 because the earlier work repeatedly inspected rows 0–199. The matched output folders preserve the older local checkpoints. The Colab notebook includes three short MMS pilot runs: baseline, a lower learning rate, and weight decay. Pilot runs use validation only and save no large weights; the selected 3e-5 learning rate and zero weight decay went into the full MMS run. `--no-apply-spec-augment` is also available for a later regularization comparison. Final checkpoints and evidence are in Google Drive as shown in the notebook.
 
-### Interrupted matched run: verified test evidence
+### Completed matched run: verified test evidence
 
-The September 23 Colab run used one saved 531/124/114 train/validation/test manifest for both architectures. The manifest in `results/matched_fleurs_split.json` was regenerated locally and its train, validation, and test index hashes match the Drive copy exactly. Whisper-Tiny completed 3 epochs and scored **86.93% CER** on the 114 held-out clips. The 15-epoch MMS run stopped after step 800 of 1005. Its best complete checkpoint was step 300 (14.45% validation CER); scored once on the same 114 held-out clips, it reached **15.84% test CER**. These numbers are a matched-split comparison of a completed Whisper run and a *partial* MMS run, not final results for two completed experiments. CER uses NFC normalization and removes U+200B/U+FEFF and whitespace. It is an edit-distance rate, not a percentage of fully correct sentences.
+The September 23–24 Colab run used one saved 531/124/114 train/validation/test manifest for both architectures. The manifest in `results/matched_fleurs_split.json` was regenerated locally and its train, validation, and test index hashes match the Drive copy exactly. Whisper-Tiny completed 3 epochs and scored **86.93% CER** on the 114 held-out clips. The 15-epoch MMS run was interrupted at step 800, then resumed and completed at step 1005. Its best validation checkpoint remained step 300 (14.45% validation CER); scored once on the same 114 held-out clips, it reached **15.84% test CER**. The final-step validation CER was 14.70%, so the extra training did not improve the selected model. CER uses NFC normalization and removes U+200B/U+FEFF and whitespace. It is an edit-distance rate, not a percentage of fully correct sentences.
 
-See `results/mms_matched_best300_summary.json` and `results/mms_matched_best300_error_analysis.md` for the saved summary and observed failure patterns. The 26 references containing Latin letters scored 23.75% corpus CER, versus 13.03% for the other 88; this is a descriptive failure breakdown, not a separate headline test score. The 114 raw reference/prediction pairs are preserved in Google Drive at `MyDrive/khmer_asr_final_runs/results/mms_matched_best300_predictions.json`; they still need to be copied into this repository before submission. To repeat the interrupted-run evaluation, use section 7A of the Colab notebook or run `src/evaluate_saved_mms.py` with `--processor-id facebook/mms-1b-all`, the saved best checkpoint as `--model-dir`, and the shared split manifest. The professor's PDF does not specify a numerical accuracy threshold; any verbal 90–94% target needs a named metric and evaluation set.
+See `results/mms_matched_best300_summary.json` and `results/mms_matched_best300_error_analysis.md` for the saved summary and observed failure patterns. The 26 references containing Latin letters scored 23.75% corpus CER, versus 13.03% for the other 88; this is a descriptive failure breakdown, not a separate headline test score. The 114 raw reference/prediction pairs and full MMS trainer state are preserved in Google Drive under `MyDrive/khmer_asr_final_runs/results/`; they still need to be copied into this repository before submission. To repeat the test evaluation, use `src/evaluate_saved_mms.py` with `--processor-id facebook/mms-1b-all`, the best checkpoint as `--model-dir`, and the shared split manifest. The lecturer's above-80% target lacks a specified metric. One minus CER is 84.16% on the FLEURS test set, which clears 80% as character correctness under this scoring policy; it is not sentence accuracy and does not describe the separate recordings.
 
-![Matched held-out CER, with MMS labeled as a partial run](results/matched_partial_test_cer.png)
+![Matched held-out CER](results/matched_test_cer.png)
 
-![MMS test error by reference script](results/mms_partial_error_subgroups.png)
+![MMS test error by reference script](results/mms_error_subgroups.png)
 
-Regenerate these progress figures with `python src/plot_matched_results.py --partial`. They are explicitly labeled as partial-run evidence and do not replace the final training/validation curves required for submission.
+![MMS training and validation history](results/mms_matched_learning_curves.png)
+
+These completed-run figures can be regenerated with `python src/plot_matched_results.py --completed`. The plotted history is a four-decimal copy of the full Trainer state in Drive. The Whisper trainer state also remains in Drive for a combined curve figure before submission.
 
 ### User-recorded voice check
 
@@ -165,8 +167,8 @@ Large model files are excluded from Git by `.gitignore`. The reported scores com
 
 - [x] Topic approval: confirmed by the lecturer (per student).
 - [x] Two distinct trained deep learning architectures are present.
-- [x] Run both approaches using the same train, validation, and test subsets; MMS stopped early and its score is labeled partial.
-- [ ] Save curves and trainer state for both approaches.
+- [x] Run both approaches using the same train, validation, and test subsets; both runs completed.
+- [x] Save curves and trainer state for both approaches in Drive; the MMS curve and summary are also in this repository.
 - [ ] Retain prediction examples and complete error analysis for both approaches.
 - [x] Run and document MMS learning-rate and weight-decay pilot comparisons on validation data.
 - [ ] Verify the external Whisper weight link works without private access.

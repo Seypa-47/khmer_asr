@@ -1,12 +1,12 @@
 {
-  "status": "partial_training_run_evaluated_from_best_complete_checkpoint",
+  "status": "completed_training_run_evaluated_from_best_validation_checkpoint",
   "dataset": "google/fleurs km_kh",
   "split_manifest": "results/matched_fleurs_split.json",
   "train_examples": 531,
   "validation_examples": 124,
   "test_examples": 114,
   "checkpoint_step": 300,
-  "latest_complete_step": 800,
+  "latest_complete_step": 1005,
   "planned_total_steps": 1005,
   "best_validation_cer_percent": 14.454348349795229,
   "held_out_test_cer_percent_whitespace_removed": 15.842167255594816,
@@ -20,5 +20,6 @@
   "digit_reference_cer_percent": 15.99,
   "normalization": "NFC; remove U+200B/U+FEFF; remove whitespace",
   "full_predictions": "Google Drive: MyDrive/khmer_asr_final_runs/results/mms_matched_best300_predictions.json",
-  "note": "The 15-epoch run was interrupted. The test set was scored once using checkpoint-300, selected by validation CER. This is not a score for a completed final run."
+  "final_validation_cer_percent": 14.703284349152815,
+  "note": "The 15-epoch run was interrupted at step 800, resumed, and completed at step 1005. Checkpoint-300 remained the best on validation (14.45% CER), while the final step scored 14.70%. The held-out test set was scored once using checkpoint-300 before the resume. Since the selected checkpoint did not change, this remains the test score for the completed run."
 }

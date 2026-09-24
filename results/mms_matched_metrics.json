@@ -1,0 +1,22 @@
+{
+  "train_metrics": {
+    "train_runtime": 1179.9097,
+    "train_samples_per_second": 6.751,
+    "train_steps_per_second": 0.852,
+    "total_flos": 8.603339330426573e+18,
+    "train_loss": 0.728457977522665,
+    "epoch": 15.0
+  },
+  "train_examples": 531,
+  "validation_examples": 124,
+  "test_examples": 114,
+  "hardware": "Tesla T4",
+  "learning_rate": 3e-05,
+  "weight_decay": 0.0,
+  "spec_augment": true,
+  "split_manifest": "results/matched_fleurs_split.json",
+  "best_validation_cer_percent": 14.454348349795229,
+  "best_validation_checkpoint_step": 300,
+  "held_out_test_cer_percent": 15.842167255594816,
+  "note": "Exact training metrics copied from the completed Colab output. The test score was measured separately from the saved best checkpoint; it is not a train_mms.py test_metrics field because the resume run used --skip-test."
+}
