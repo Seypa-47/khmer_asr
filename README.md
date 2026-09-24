@@ -119,6 +119,12 @@ See `results/mms_matched_best300_summary.json` and `results/mms_matched_best300_
 
 Regenerate these progress figures with `python src/plot_matched_results.py --partial`. They are explicitly labeled as partial-run evidence and do not replace the final training/validation curves required for submission.
 
+### User-recorded voice check
+
+The saved MMS checkpoint-300 was also run without transcript correction on 11 separate Telegram recordings. Ten recordings could be matched to the student's previously pasted draft transcripts; one had no reference and was excluded from scoring. On those ten, CER was **23.74%** after NFC normalization and whitespace removal (**22.00%** when punctuation was also removed). The earlier app output scored 24.17% against the same drafts. This 0.43-point difference is too small to claim that the new checkpoint improved real-world speech recognition, especially because the exact spoken wording has not been independently verified. The error pattern remains visible in names, numbers, and ordinary Khmer words. See `results/user_recordings_checkpoint300_summary.json` for aggregate evidence. The audio and personal transcripts are excluded from this public repository.
+
+For another private recording check, run `src/evaluate_saved_mms_user_audio.py` with `--audio-dir`, `--model-dir`, and `--output`, then score only recordings with verified references using `src/score_user_audio.py`. Keep audio, raw predictions, and personal transcripts outside Git.
+
 ### Inference demo
 
 Run `python app.py`, then open `http://127.0.0.1:7860`. The Windows launcher is `run_app.bat`. The saved app model files are ignored by Git; the model download link below must work for another user to run the demo.
@@ -130,6 +136,7 @@ Run `python app.py`, then open `http://127.0.0.1:7860`. The Windows launcher is 
 - `src/matched_fleurs.py`: Saves one fixed FLEURS row selection for both approaches.
 - `src/evaluate_saved_whisper.py`: Auditable Whisper scoring on the first N test rows.
 - `src/evaluate_saved_mms.py`: Auditable MMS scoring on the same rows.
+- `src/evaluate_saved_mms_user_audio.py`: Raw checkpoint inference on private recordings.
 - `src/plot_matched_results.py`: Figures from completed matched runs.
 - `src/evaluate_and_plot.py`: Generates the summary table, JSON, and figures from saved results.
 - `notebooks/khmer_asr_experiments.ipynb`: Colab workflow.
