@@ -1,0 +1,18 @@
+{
+  "status": "partial_training_run_evaluated_from_best_complete_checkpoint",
+  "dataset": "google/fleurs km_kh",
+  "split_manifest": "matched_fleurs_split.json",
+  "train_examples": 531,
+  "validation_examples": 124,
+  "test_examples": 114,
+  "checkpoint_step": 300,
+  "latest_complete_step": 800,
+  "planned_total_steps": 1005,
+  "best_validation_cer_percent": 14.454348349795229,
+  "held_out_test_cer_percent_whitespace_removed": 15.842167255594816,
+  "test_examples_with_cer_at_least_20_percent": 34,
+  "test_examples_with_cer_at_least_30_percent": 10,
+  "normalization": "NFC; remove U+200B/U+FEFF; remove whitespace",
+  "full_predictions": "Google Drive: MyDrive/khmer_asr_final_runs/results/mms_matched_best300_predictions.json",
+  "note": "The 15-epoch run was interrupted. The test set was scored once using checkpoint-300, selected by validation CER. This is not a score for a completed final run."
+}

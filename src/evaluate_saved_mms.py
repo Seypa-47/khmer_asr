@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Re-score a saved MMS CTC checkpoint on the first N FLEURS test rows."""
+"""Re-score a saved MMS CTC checkpoint on selected FLEURS test rows."""
 
 from __future__ import annotations
 
@@ -31,6 +31,11 @@ def normalize(text: str) -> str:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model-dir", default="models/mms-khmer-ctc")
+    parser.add_argument(
+        "--processor-id",
+        default=None,
+        help="Processor source when a Trainer checkpoint lacks tokenizer files (e.g. facebook/mms-1b-all).",
+    )
     parser.add_argument("--max-samples", type=int, default=200)
     parser.add_argument("--split-manifest", default=None, help="Evaluate exactly the shared FLEURS test row indices.")
     parser.add_argument("--threads", type=int, default=4)
@@ -45,7 +50,9 @@ def main() -> None:
     if device == "cuda" and not torch.cuda.is_available():
         raise RuntimeError("CUDA was requested but is not available")
     processor = AutoProcessor.from_pretrained(
-        args.model_dir, target_lang="khm", local_files_only=True
+        args.processor_id or args.model_dir,
+        target_lang="khm",
+        local_files_only=args.processor_id is None,
     )
     model = Wav2Vec2ForCTC.from_pretrained(
         args.model_dir, local_files_only=True, low_cpu_mem_usage=True

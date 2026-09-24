@@ -105,7 +105,13 @@ python src/evaluate_saved_mms.py --model-dir models/mms-khmer-ctc-matched \
 python src/plot_matched_results.py
 ```
 
-The manifest removes recordings over 15 seconds and examples exceeding Whisper's label limit before either model trains. It records the exact retained indices. The new held-out test candidate rows start at index 200 because the earlier work repeatedly inspected rows 0–199. The matched output folders preserve the older local checkpoints. The Colab notebook includes three short MMS pilot runs: baseline, a lower learning rate, and weight decay. Pilot runs use validation only and save no large weights; the chosen settings then go into the full MMS run. `--no-apply-spec-augment` is also available for a later regularization comparison. Save final checkpoints and evidence to Google Drive as shown in the notebook. Update the README and slides only when the new runs have finished.
+The manifest removes recordings over 15 seconds and examples exceeding Whisper's label limit before either model trains. It records the exact retained indices. The new held-out test candidate rows start at index 200 because the earlier work repeatedly inspected rows 0–199. The matched output folders preserve the older local checkpoints. The Colab notebook includes three short MMS pilot runs: baseline, a lower learning rate, and weight decay. Pilot runs use validation only and save no large weights; the chosen settings then go into the full MMS run. `--no-apply-spec-augment` is also available for a later regularization comparison. Save final checkpoints and evidence to Google Drive as shown in the notebook. Update final slide claims only after reviewing the completed experiment evidence.
+
+### Interrupted matched run: verified test evidence
+
+The September 23 Colab run used one saved 531/124/114 train/validation/test manifest for both architectures. Whisper-Tiny completed 3 epochs and scored **86.93% CER** on the 114 held-out clips. The 15-epoch MMS run stopped after step 800 of 1005. Its best complete checkpoint was step 300 (14.45% validation CER); scored once on the same 114 held-out clips, it reached **15.84% test CER**. These numbers are a matched-split comparison of a completed Whisper run and a *partial* MMS run, not final results for two completed experiments. CER uses NFC normalization and removes U+200B/U+FEFF and whitespace. It is an edit-distance rate, not a percentage of fully correct sentences.
+
+See `results/mms_matched_best300_summary.json` and `results/mms_matched_best300_error_analysis.md` for the saved summary and observed failure patterns. The 114 raw reference/prediction pairs are preserved in Google Drive at `MyDrive/khmer_asr_final_runs/results/mms_matched_best300_predictions.json`; they still need to be copied into this repository before submission. To repeat the interrupted-run evaluation, use section 7A of the Colab notebook or run `src/evaluate_saved_mms.py` with `--processor-id facebook/mms-1b-all`, the saved best checkpoint as `--model-dir`, and the shared split manifest. The professor's PDF does not specify a numerical accuracy threshold; any verbal 90–94% target needs a named metric and evaluation set.
 
 ### Inference demo
 
@@ -146,10 +152,10 @@ Large model files are excluded from Git by `.gitignore`. The reported scores com
 
 - [x] Topic approval: confirmed by the lecturer (per student).
 - [x] Two distinct trained deep learning architectures are present.
-- [ ] Re-run both approaches using the same train, validation, and test subsets.
+- [x] Run both approaches using the same train, validation, and test subsets; MMS stopped early and its score is labeled partial.
 - [ ] Save curves and trainer state for both approaches.
 - [ ] Retain prediction examples and complete error analysis for both approaches.
-- [ ] Run and document at least one learning-rate and one regularization comparison.
+- [x] Run and document MMS learning-rate and weight-decay pilot comparisons on validation data.
 - [ ] Verify the external Whisper weight link works without private access.
 - [x] Add the student name to the project materials.
 - [x] README, requirements, source code, results, and slides are present.
