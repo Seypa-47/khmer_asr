@@ -12,6 +12,12 @@
   "held_out_test_cer_percent_whitespace_removed": 15.842167255594816,
   "test_examples_with_cer_at_least_20_percent": 34,
   "test_examples_with_cer_at_least_30_percent": 10,
+  "latin_reference_examples": 26,
+  "latin_reference_cer_percent": 23.75,
+  "no_latin_reference_examples": 88,
+  "no_latin_reference_cer_percent": 13.03,
+  "digit_reference_examples": 10,
+  "digit_reference_cer_percent": 15.99,
   "normalization": "NFC; remove U+200B/U+FEFF; remove whitespace",
   "full_predictions": "Google Drive: MyDrive/khmer_asr_final_runs/results/mms_matched_best300_predictions.json",
   "note": "The 15-epoch run was interrupted. The test set was scored once using checkpoint-300, selected by validation CER. This is not a score for a completed final run."

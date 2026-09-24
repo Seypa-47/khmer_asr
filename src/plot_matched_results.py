@@ -23,11 +23,61 @@ def series(state: dict, key: str) -> tuple[list[float], list[float]]:
     return [p[0] for p in points], [p[1] for p in points]
 
 
+def plot_partial(directory: Path) -> None:
+    """Plot the interrupted-run comparison without implying MMS finished training."""
+    whisper = read_json(directory / "whisper_matched_metrics.json")
+    mms = read_json(directory / "mms_matched_best300_summary.json")
+    if whisper["test_examples"] != mms["test_examples"]:
+        raise ValueError("Partial comparison requires the same number of test examples")
+
+    values = [float(whisper["test_cer"]), float(mms["held_out_test_cer_percent_whitespace_removed"])]
+    figure, axis = plt.subplots(figsize=(8, 4.6), constrained_layout=True)
+    bars = axis.bar(
+        ["Whisper-Tiny\n(completed)", "MMS-1B CTC\n(partial, best step 300)"],
+        values,
+        color=["#26336b", "#187c75"],
+    )
+    axis.bar_label(bars, fmt="%.2f%%", padding=3)
+    axis.set(
+        title=f"CER on the same {whisper['test_examples']} held-out FLEURS clips",
+        ylabel="Character error rate (%) - lower is better",
+    )
+    axis.set_ylim(0, max(values) * 1.16)
+    axis.grid(axis="y", alpha=0.25)
+    figure.savefig(directory / "matched_partial_test_cer.png", dpi=180)
+    plt.close(figure)
+
+    groups = [
+        ("References with Latin letters", mms["latin_reference_examples"], mms["latin_reference_cer_percent"]),
+        ("References without Latin letters", mms["no_latin_reference_examples"], mms["no_latin_reference_cer_percent"]),
+    ]
+    figure, axis = plt.subplots(figsize=(9, 4.2), constrained_layout=True)
+    bars = axis.barh(
+        [f"{label} (n={count})" for label, count, _ in groups],
+        [value for _, _, value in groups],
+        color=["#ad5a34", "#187c75"],
+    )
+    axis.bar_label(bars, labels=[f"{value:.2f}%" for _, _, value in groups], padding=4)
+    axis.set(
+        title="MMS errors by reference script (partial run)",
+        xlabel="Corpus character error rate (%) - lower is better",
+    )
+    axis.set_xlim(0, max(value for _, _, value in groups) * 1.18)
+    axis.grid(axis="x", alpha=0.25)
+    figure.savefig(directory / "mms_partial_error_subgroups.png", dpi=180)
+    plt.close(figure)
+    print(f"Saved partial-run figures in {directory}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--results-dir", type=Path, default=Path("results"))
+    parser.add_argument("--partial", action="store_true", help="Plot the saved interrupted MMS checkpoint result.")
     args = parser.parse_args()
     directory = args.results_dir
+    if args.partial:
+        plot_partial(directory)
+        return
     names = ("whisper", "mms")
     states = {name: read_json(directory / f"{name}_matched_trainer_state.json") for name in names}
     metrics = {name: read_json(directory / f"{name}_matched_metrics.json") for name in names}
