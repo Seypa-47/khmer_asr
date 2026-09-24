@@ -8,11 +8,14 @@ rules are applied before either model sees a row.
 from __future__ import annotations
 
 import argparse
+import io
 import json
 import random
 import re
 import unicodedata
 from pathlib import Path
+
+import soundfile as sf
 
 DATASET = "google/fleurs"
 CONFIG = "km_kh"
@@ -57,7 +60,7 @@ def main() -> None:
     parser.add_argument("--whisper-max-label-tokens", type=int, default=448)
     args = parser.parse_args()
 
-    from datasets import Audio, load_dataset
+    from datasets import load_dataset
     from transformers import WhisperTokenizer
 
     fleurs = load_dataset(DATASET, CONFIG)
@@ -71,7 +74,9 @@ def main() -> None:
     }
     indices = {}
     for split in SPLITS:
-        dataset = fleurs[split].cast_column("audio", Audio(sampling_rate=16_000))
+        dataset = fleurs[split]
+        audio_column = dataset.data.column("audio")
+        text_column = dataset.data.column("transcription")
         candidates = list(range(len(dataset)))
         if split == "train":
             random.Random(args.seed).shuffle(candidates)
@@ -80,10 +85,12 @@ def main() -> None:
         candidates = candidates[: candidate_limits[split]]
         kept = []
         for index in candidates:
-            example = dataset[index]
-            audio = example["audio"]
-            duration = len(audio["array"]) / audio["sampling_rate"]
-            label_length = len(tokenizer(normalize_text(example["transcription"])).input_ids)
+            record = audio_column[index].as_py()
+            if record["bytes"] is None:
+                raise ValueError(f"FLEURS {split} row {index} has no embedded audio bytes")
+            with sf.SoundFile(io.BytesIO(record["bytes"])) as audio_file:
+                duration = len(audio_file) / audio_file.samplerate
+            label_length = len(tokenizer(normalize_text(text_column[index].as_py())).input_ids)
             if duration <= args.max_duration_seconds and label_length < args.whisper_max_label_tokens:
                 kept.append(index)
         if not kept:

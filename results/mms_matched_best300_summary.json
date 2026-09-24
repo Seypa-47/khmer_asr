@@ -1,7 +1,7 @@
 {
   "status": "partial_training_run_evaluated_from_best_complete_checkpoint",
   "dataset": "google/fleurs km_kh",
-  "split_manifest": "matched_fleurs_split.json",
+  "split_manifest": "results/matched_fleurs_split.json",
   "train_examples": 531,
   "validation_examples": 124,
   "test_examples": 114,
