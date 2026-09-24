@@ -28,10 +28,19 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 LOCAL_WHISPER_PATH = os.path.join(PROJECT_ROOT, "models", "whisper-tiny-khmer")
 RETRAINED_WHISPER_PATH = os.path.join(PROJECT_ROOT, "models", "whisper-tiny-khmer-warmup35-b4")
 LOCAL_MMS_PATH = os.path.join(PROJECT_ROOT, "models", "mms-khmer-ctc")
+MATCHED_MMS_PATH = os.path.join(PROJECT_ROOT, "models", "mms-khmer-ctc-matched")
 HIGH_ACCURACY_MODEL_ID = "sengtha/whisper-base-khmer"
 SAMPLES_DIR = os.path.join(PROJECT_ROOT, "samples")
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+
+
+def mms_checkpoint_label():
+    if os.path.isfile(os.path.join(MATCHED_MMS_PATH, "model.safetensors")):
+        return "MMS-1B · matched-run checkpoint"
+    if os.path.isfile(os.path.join(LOCAL_MMS_PATH, "model.safetensors")):
+        return "MMS-1B · older local checkpoint"
+    return "MMS-1B · public base model"
 
 print(f"[*] Initializing Khmer ASR on {DEVICE.upper()}...")
 # Cache models in memory on demand
@@ -59,10 +68,11 @@ def get_model_and_processor(model_choice: str):
         return MODELS[model_choice]
 
     if "MMS-1B" in model_choice:
-        if os.path.exists(LOCAL_MMS_PATH):
-            print(f"[*] Loading Meta MMS-1B Khmer CTC (Version 2.0) from {LOCAL_MMS_PATH}...")
-            proc = AutoProcessor.from_pretrained(LOCAL_MMS_PATH)
-            mdl = Wav2Vec2ForCTC.from_pretrained(LOCAL_MMS_PATH).to(DEVICE)
+        local_path = MATCHED_MMS_PATH if os.path.isfile(os.path.join(MATCHED_MMS_PATH, "model.safetensors")) else LOCAL_MMS_PATH
+        if os.path.isfile(os.path.join(local_path, "model.safetensors")):
+            print(f"[*] Loading Meta MMS-1B Khmer CTC from {local_path}...")
+            proc = AutoProcessor.from_pretrained(local_path)
+            mdl = Wav2Vec2ForCTC.from_pretrained(local_path).to(DEVICE)
         else:
             print("[*] Loading base Meta MMS-1B with Khmer adapter...")
             proc = AutoProcessor.from_pretrained("facebook/mms-1b-all", target_lang="khm")
@@ -86,8 +96,8 @@ def get_model_and_processor(model_choice: str):
         MODELS[model_choice] = ("whisper", proc, mdl)
         return "whisper", proc, mdl
 
-# Pre-load Version 2.0 MMS model as default
-DEFAULT_MODEL_NAME = "🏆 Approach 2: Meta MMS-1B Khmer CTC (Version 2.0 · 15 Epochs)"
+# Pre-load the best available local MMS model as default.
+DEFAULT_MODEL_NAME = "🏆 Approach 2: Meta MMS-1B Khmer CTC (Local Checkpoint)"
 print("[*] Pre-warming Meta MMS-1B model...")
 get_model_and_processor(DEFAULT_MODEL_NAME)
 print("[*] Models ready!")
@@ -157,7 +167,8 @@ def transcribe_audio(audio_path, model_choice):
 
     elapsed = time.time() - t0
     timer_str = f"⏱️ រយៈពេល៖ {elapsed:.2f}s (សំឡេង {duration:.1f}s)"
-    status_str = f"🚀 {model_choice.split('(')[0].strip()} · {DEVICE.upper()}"
+    source = mms_checkpoint_label() if mtype == "mms" else model_choice.split("(")[0].strip()
+    status_str = f"🚀 {source} · {DEVICE.upper()}"
 
     return prediction, timer_str, status_str
 
@@ -315,7 +326,7 @@ def build_app():
                     container=False,
                 )
                 model_status = gr.Textbox(
-                    value="Meta MMS-1B CTC (Version 2.0 · 15 Epochs)",
+                    value=mms_checkpoint_label(),
                     interactive=False,
                     scale=1,
                     container=False,
@@ -325,12 +336,12 @@ def build_app():
             with gr.Row():
                 model_selector = gr.Dropdown(
                     choices=[
-                        "🏆 Approach 2: Meta MMS-1B Khmer CTC (Version 2.0 · 15 Epochs)",
+                        DEFAULT_MODEL_NAME,
                         "🧪 Approach 1: Whisper-Tiny Khmer (Version 1.0)",
                         "🧪 Whisper-Tiny Khmer (35-Step Warmup Retrain)",
                         "⚡ Khmer Whisper Base (Reference Model)",
                     ],
-                    value="🏆 Approach 2: Meta MMS-1B Khmer CTC (Version 2.0 · 15 Epochs)",
+                    value=DEFAULT_MODEL_NAME,
                     label="🧠 ជ្រើសរើសម៉ូឌែល ASR (ASR Model Architecture)",
                     interactive=True,
                 )

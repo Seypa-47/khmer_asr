@@ -129,7 +129,7 @@ For another private recording check, run `src/evaluate_saved_mms_user_audio.py` 
 
 ### Inference demo
 
-Run `python app.py`, then open `http://127.0.0.1:7860`. The Windows launcher is `run_app.bat`. The saved app model files are ignored by Git; the model download link below must work for another user to run the demo.
+Run `python app.py`, then open `http://127.0.0.1:7860`. The Windows launcher is `run_app.bat`. The app prefers `models/mms-khmer-ctc-matched` when installed; otherwise the current local demo loads the older `models/mms-khmer-ctc` checkpoint, not the matched-run checkpoint behind the 15.84% FLEURS CER. Do not present a live demo result as a direct demonstration of the new test score until the selected checkpoint is installed for the app. Saved model files are ignored by Git.
 
 ## Repository map
 
@@ -149,7 +149,7 @@ Run `python app.py`, then open `http://127.0.0.1:7860`. The Windows launcher is 
 
 ## Model weights
 
-Large model files are excluded from Git by `.gitignore`. The reported scores come from fine-tuned checkpoints stored locally under `models/`; cloning this repository alone does not reproduce those scores or the saved-model demo. Place the fine-tuned MMS checkpoint in `models/mms-khmer-ctc` and the Whisper checkpoint in `models/whisper-tiny-khmer` to use those versions in the app. Without local MMS weights, the app loads the public `facebook/mms-1b-all` base model, which is a different checkpoint. Whisper weights are also expected at [Hugging Face: Seypa-47/whisper-tiny-khmer](https://huggingface.co/Seypa-47/whisper-tiny-khmer), but that link returned HTTP 401 during this review; access must be made public or an authorized download method supplied before submission.
+Large model files are excluded from Git by `.gitignore`. The matched-run MMS score comes from checkpoint-300 in Google Drive at `MyDrive/khmer_asr_final_runs/mms-khmer-ctc-matched/checkpoint-300/`; the older diagnostic checkpoints are stored locally under `models/`. After training completed, Trainer loaded the best validation weights into the top-level Drive folder `mms-khmer-ctc-matched`, which also contains the processor files. Copy that whole top-level folder to `models/mms-khmer-ctc-matched` for the app; the app prefers it over the older local model. Cloning this repository alone does not reproduce the saved-model demo. The app falls back to the public `facebook/mms-1b-all` base model if no local MMS folder exists. Whisper weights are also expected at [Hugging Face: Seypa-47/whisper-tiny-khmer](https://huggingface.co/Seypa-47/whisper-tiny-khmer), but that link returned HTTP 401 during this review; access must be made public or an authorized download method supplied before submission.
 
 ## References
 
