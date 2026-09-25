@@ -1,0 +1,21 @@
+{
+  "train_metrics": {
+    "train_runtime": 1415.0822,
+    "train_samples_per_second": 1.876,
+    "train_steps_per_second": 0.237,
+    "total_flos": 2.8677797768088576e+18,
+    "train_loss": 4.3001975216082675,
+    "epoch": 5.0
+  },
+  "train_examples": 531,
+  "validation_examples": 124,
+  "test_examples": 114,
+  "hardware": "Tesla T4",
+  "learning_rate": 3e-05,
+  "weight_decay": 0.0,
+  "spec_augment": true,
+  "split_manifest": "results/matched_fleurs_split.json",
+  "selection_metric": "wer_icu",
+  "trainable_parameters": 194712,
+  "total_parameters": 964843288
+}

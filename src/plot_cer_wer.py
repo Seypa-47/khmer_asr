@@ -35,11 +35,13 @@ def main() -> None:
         values = [models[name][key] for name, _, _ in approaches]
         bars = ax.bar(labels, values, color=colors, width=0.54)
         ax.bar_label(bars, labels=[f"{value:.2f}%" for value in values], padding=4)
+        ax.axhline(20, color="#ad3930", linestyle="--", linewidth=1.4, label="Target: below 20%")
         ax.set_ylim(0, max(115, max(values) * 1.13))
         ax.set_ylabel("Error rate (%)")
         ax.set_title(f"{title}\n{subtitle}")
         ax.grid(axis="y", alpha=0.2)
         ax.set_axisbelow(True)
+        ax.legend(loc="upper right", frameon=False, fontsize=8)
     fig.suptitle("Matched FLEURS Khmer test: 114 clips", fontsize=14, fontweight="bold")
     args.output.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(args.output, dpi=180)

@@ -1,0 +1,55 @@
+{
+  "dataset": "google/fleurs km_kh held-out test",
+  "manifest": "results/matched_fleurs_split.json",
+  "test_examples": 114,
+  "cer_policy": "NFC; remove U+200B/U+FEFF and all whitespace; punctuation retained",
+  "wer_policy": "NFC; remove U+200B/U+FEFF; ICU km_KH word breaks; discard punctuation and whitespace segments; corpus edit distance / reference words",
+  "icu_version": "77.1",
+  "pyicu_wheels_version": "2.15.2",
+  "models": {
+    "whisper_tiny": {
+      "prediction_file": "results/whisper_matched_predictions.json",
+      "test_examples": 114,
+      "cer_percent": 86.7575298670705,
+      "cer_reference_characters": 11886,
+      "cer_substitutions": 7562,
+      "cer_deletions": 2106,
+      "cer_insertions": 644,
+      "wer_percent_icu_segmented": 106.2700964630225,
+      "wer_reference_words": 2488,
+      "wer_substitutions": 1506,
+      "wer_deletions": 979,
+      "wer_insertions": 159
+    },
+    "mms_1b_ctc": {
+      "prediction_file": "results/mms_matched_best300_predictions.json",
+      "test_examples": 114,
+      "cer_percent": 15.842167255594816,
+      "cer_reference_characters": 11886,
+      "cer_substitutions": 986,
+      "cer_deletions": 595,
+      "cer_insertions": 302,
+      "wer_percent_icu_segmented": 67.16237942122186,
+      "wer_reference_words": 2488,
+      "wer_substitutions": 990,
+      "wer_deletions": 76,
+      "wer_insertions": 605
+    },
+    "mms_frozen_ctc": {
+      "prediction_file": "results/mms_frozen_predictions.json",
+      "test_examples": 114,
+      "cer_percent": 15.707555106848393,
+      "cer_reference_characters": 11886,
+      "cer_substitutions": 970,
+      "cer_deletions": 587,
+      "cer_insertions": 310,
+      "wer_percent_icu_segmented": 65.79581993569131,
+      "wer_reference_words": 2488,
+      "wer_substitutions": 975,
+      "wer_deletions": 83,
+      "wer_insertions": 579
+    }
+  },
+  "comparison_complete": true,
+  "third_approach_complete": true
+}
