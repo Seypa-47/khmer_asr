@@ -1,0 +1,48 @@
+{
+  "purpose": "External-model validation probe for selecting a next experiment; not a student-trained project approach or a held-out test result",
+  "model": "seanghay/Qwen3-ASR-0.6B-Khmer",
+  "model_card": "https://huggingface.co/seanghay/Qwen3-ASR-0.6B-Khmer",
+  "dataset": "google/fleurs km_kh validation",
+  "split_manifest": "results/matched_fleurs_split.json",
+  "validation_examples": 124,
+  "inference_hardware": "Tesla T4",
+  "inference_dtype": "float16",
+  "cer_policy": "NFC; remove U+200B/U+FEFF and all whitespace; punctuation retained",
+  "wer_policy": "NFC; remove U+200B/U+FEFF; ICU km_KH word breaks; discard punctuation and whitespace segments; corpus edit distance / reference words",
+  "metrics": {
+    "cer_percent": 14.285714285714285,
+    "cer_reference_characters": 12453,
+    "cer_character_errors": 1779,
+    "wer_percent_icu_segmented": 32.07193705507681,
+    "wer_reference_words": 2669,
+    "wer_word_errors": 856
+  },
+  "diagnostic_subgroups": {
+    "mixed_script_or_ascii_digits": {
+      "examples": 33,
+      "reference_characters": 3454,
+      "character_errors": 888,
+      "cer_percent": 25.70932252460915,
+      "reference_words": 752,
+      "word_errors": 365,
+      "wer_percent": 48.537234042553195
+    },
+    "khmer_only_reference": {
+      "examples": 91,
+      "reference_characters": 8999,
+      "character_errors": 891,
+      "cer_percent": 9.901100122235803,
+      "reference_words": 1917,
+      "word_errors": 491,
+      "wer_percent": 25.612936880542513
+    }
+  },
+  "subgroup_definition": "The mixed group has at least one ASCII letter A-Z/a-z or ASCII digit 0-9 in the reference; all other references are in the second group. Groups were assigned from references only.",
+  "source_script": "src/probe_qwen_validation.py",
+  "source_notebook": "notebooks/qwen_validation_probe.ipynb",
+  "notes": [
+    "The external model was trained by its publisher on DDD Khmer speech. It is not counted among the project's three student-trained approaches.",
+    "This score is on validation clips and must not be placed in the held-out test comparison chart.",
+    "The author's published CER used a different evaluation set and normalization policy; it is not directly comparable with this result."
+  ]
+}
