@@ -11,8 +11,8 @@ from pathlib import Path
 from jiwer import cer, process_characters
 
 ROOT = Path(__file__).resolve().parents[1]
-INPUT = ROOT / "results/whisper_test_predictions.json"
-OUTPUT = ROOT / "results/error_analysis.md"
+INPUT = ROOT / "results/diagnostic/whisper_test_predictions.json"
+OUTPUT = ROOT / "results/diagnostic/error_analysis.md"
 
 
 def norm(text: str) -> str:

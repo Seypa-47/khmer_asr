@@ -20,6 +20,7 @@ hf_cache/
 
 # Local voice evaluations can contain names and other personal details.
 local_eval/
+local_archive/
 logs/
 
 # IDE
@@ -32,6 +33,5 @@ logs/
 .codex-finalizer/
 .chart-data-*/
 
-# Local assistant instructions and the unsent lecturer message
+# Local assistant instructions
 .claude/
-output/teacher_progress_message.md

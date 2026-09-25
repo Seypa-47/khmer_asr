@@ -40,7 +40,7 @@ def main() -> None:
     parser.add_argument("--split-manifest", default=None, help="Evaluate exactly the shared FLEURS test row indices.")
     parser.add_argument("--threads", type=int, default=4)
     parser.add_argument("--device", choices=("cpu", "cuda", "auto"), default="auto")
-    parser.add_argument("--output", default="results/mms_test_predictions.json")
+    parser.add_argument("--output", default="results/diagnostic/mms_test_predictions.json")
     args = parser.parse_args()
 
     torch.set_num_threads(args.threads)

@@ -14,7 +14,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[1]
-RESULTS = ROOT / "results"
+RESULTS = ROOT / "results" / "diagnostic"
 
 
 def read_json(path: Path) -> dict:
@@ -167,7 +167,7 @@ def main() -> None:
         "> MMS training history was not saved, so its training/validation learning curve cannot be reconstructed from the available files. The frozen-encoder run also has no saved checkpoint or metrics and is excluded.",
     ]
     (RESULTS / "summary_table.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print("Updated results/metrics_summary.json, summary_table.md, and comparison figures.")
+    print("Updated diagnostic results in results/diagnostic/.")
 
 
 if __name__ == "__main__":

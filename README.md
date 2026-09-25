@@ -29,7 +29,18 @@ The MMS run is **not adapter-only tuning**. The saved MMS weights contain about 
 
 The original Whisper training arguments show 3 epochs, learning rate `1e-5`, 500 warmup steps, batch size 8, and gradient accumulation 1. It ended after 354 updates, before warmup finished. The MMS arguments show 15 epochs, learning rate `5e-5`, 50 warmup steps, batch size 1, and gradient accumulation 8. A separate Whisper rerun with 35 warmup steps is documented below. The repository still does not retain a learning-rate and regularization sweep.
 
-## Results
+## Final controlled comparison
+
+Both approaches used the same saved 531/124/114 FLEURS train/validation/test manifest. Test CER uses NFC text, removes U+200B/U+FEFF and whitespace, and is lower when recognition is better.
+
+| Fine-tuned approach | Held-out test clips | Test CER |
+|---|---:|---:|
+| Whisper-Tiny encoder-decoder | 114 | 86.93% |
+| Meta MMS-1B encoder with CTC, best validation checkpoint | 114 | **15.84%** |
+
+These are character error rates on this selected FLEURS test set, not sentence accuracy or a verified score on personal recordings. The split manifest, saved metrics, figures, and error analysis are in [`results/`](results/README.md). Large checkpoints are linked below.
+
+## Earlier diagnostic runs
 
 All listed checkpoints were scored on the same first 200 examples of the FLEURS test split. CER applies NFC normalization, removes U+200B and U+FEFF, and removes whitespace before scoring. The 35-step-warmup Whisper rerun used the seed-42 shuffled first 1,000 training rows (941 retained after label filtering) and first 200 validation rows (189 retained).
 
@@ -43,13 +54,13 @@ The Whisper rerun saved only 59 fewer character edits over 26,763 reference char
 
 ### Figures and learning-curve evidence
 
-![Saved Whisper learning history](results/learning_curves.png)
+![Saved Whisper learning history](results/diagnostic/learning_curves.png)
 
-![Shared-test CER diagnostic](results/metrics_comparison.png)
+![Shared-test CER diagnostic](results/diagnostic/metrics_comparison.png)
 
-The original Whisper trainer state contains training loss and validation logs. Its historical validation CER retained spaces, while the post-hoc test CER removes whitespace; the two CER series therefore use different text policies. The warmup rerun's trainer state is saved in `results/whisper_warmup35_trainer_state.json`, with validation CER of 88.54%, 86.71%, and 83.62% after epochs one through three. MMS trainer history was not retained, so its learning curve cannot be reconstructed. The current figure shows the original Whisper history only.
+The original Whisper trainer state contains training loss and validation logs. Its historical validation CER retained spaces, while the post-hoc test CER removes whitespace; the two CER series therefore use different text policies. The warmup rerun's trainer state is saved in `results/diagnostic/whisper_warmup35_trainer_state.json`, with validation CER of 88.54%, 86.71%, and 83.62% after epochs one through three. MMS trainer history was not retained, so its learning curve cannot be reconstructed. The current figure shows the original Whisper history only.
 
-`results/error_analysis.md` reports 13,424 substitutions, 8,741 deletions, and 286 insertions across the 200 Whisper examples, plus five high-error examples. Several outputs show repeated-token decoding failures. The report avoids assigning an acoustic cause without listening to each audio clip. MMS per-example predictions were not saved, so the current error analysis covers Whisper only.
+`results/diagnostic/error_analysis.md` reports 13,424 substitutions, 8,741 deletions, and 286 insertions across the 200 Whisper examples, plus five high-error examples. Several outputs show repeated-token decoding failures. The report avoids assigning an acoustic cause without listening to each audio clip. MMS per-example predictions were not saved for this earlier run, so this diagnostic error analysis covers Whisper only.
 
 ## Training and evaluation
 
@@ -121,11 +132,9 @@ See `results/mms_matched_best300_summary.json` and `results/mms_matched_best300_
 
 These completed-run figures can be regenerated with `python src/plot_matched_results.py --completed`. The plotted history is a four-decimal copy of the full Trainer state in Drive. The Whisper trainer state also remains in Drive for a combined curve figure before submission.
 
-### User-recorded voice check
+### Private voice checks
 
-The saved MMS checkpoint-300 was also run without transcript correction on 11 separate Telegram recordings. Ten recordings could be matched to the student's previously pasted draft transcripts; one had no reference and was excluded from scoring. On those ten, CER was **23.74%** after NFC normalization and whitespace removal (**22.00%** when punctuation was also removed). The earlier app output scored 24.17% against the same drafts. This 0.43-point difference is too small to claim that the new checkpoint improved real-world speech recognition, especially because the exact spoken wording has not been independently verified. The error pattern remains visible in names, numbers, and ordinary Khmer words. See `results/user_recordings_checkpoint300_summary.json` for aggregate evidence. The audio and personal transcripts are excluded from this public repository.
-
-For another private recording check, run `src/evaluate_saved_mms_user_audio.py` with `--audio-dir`, `--model-dir`, and `--output`, then score only recordings with verified references using `src/score_user_audio.py`. Keep audio, raw predictions, and personal transcripts outside Git.
+Personal recordings and their outputs are kept outside Git. They do not have verified exact spoken references, so no accuracy percentage is claimed for them. For a private check, run `src/evaluate_saved_mms_user_audio.py` with `--audio-dir`, `--model-dir`, and `--output`; score only recordings with verified references using `src/score_user_audio.py`.
 
 ### Inference demo
 
@@ -140,11 +149,10 @@ Run `python app.py`, then open `http://127.0.0.1:7860`. The Windows launcher is 
 - `src/evaluate_saved_mms.py`: Auditable MMS scoring on the same rows.
 - `src/evaluate_saved_mms_user_audio.py`: Raw checkpoint inference on private recordings.
 - `src/plot_matched_results.py`: Figures from completed matched runs.
-- `src/evaluate_and_plot.py`: Generates the summary table, JSON, and figures from saved results.
+- `src/evaluate_and_plot.py`: Regenerates figures from the earlier diagnostic runs.
 - `notebooks/khmer_asr_experiments.ipynb`: Colab workflow.
-- `results/`: Saved scores, predictions, and figures.
+- `results/`: Final matched-run evidence and figures, with earlier runs in `results/diagnostic/`.
 - `slides/khmer_asr_presentation.pptx`: 13-slide final project presentation.
-- `output/khmer_asr_teacher_progress_short.pptx`: 9-slide progress review for the lecturer.
 - `app.py`: Gradio inference interface.
 
 ## Model weights

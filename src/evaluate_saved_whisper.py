@@ -41,7 +41,7 @@ def main() -> None:
     parser.add_argument("--split-manifest", default=None, help="Evaluate exactly the shared FLEURS row indices.")
     parser.add_argument("--split", choices=("validation", "test"), default="test")
     parser.add_argument("--max-length", type=int, default=225)
-    parser.add_argument("--output", default="results/whisper_test_predictions.json")
+    parser.add_argument("--output", default="results/diagnostic/whisper_test_predictions.json")
     parser.add_argument("--threads", type=int, default=4)
     parser.add_argument("--device", choices=("cpu", "cuda", "auto"), default="cpu")
     parser.add_argument("--batch-size", type=int, default=1)
