@@ -1,0 +1,31 @@
+{
+  "purpose": "public FLEURS validation failure analysis; no personal recordings or held-out test",
+  "source": "models\\qwen_lora_local_v1\\epoch-1\\validation_predictions.json",
+  "all": {
+    "clips": 124,
+    "reference_characters": 12453,
+    "character_errors": 1816,
+    "cer_percent": 14.582831446237854,
+    "reference_words": 2669,
+    "word_errors": 908,
+    "wer_percent": 34.02023229674035
+  },
+  "references_with_ascii_letters_or_digits": {
+    "clips": 33,
+    "reference_characters": 3454,
+    "character_errors": 825,
+    "cer_percent": 23.88535031847134,
+    "reference_words": 752,
+    "word_errors": 360,
+    "wer_percent": 47.87234042553192
+  },
+  "other_references": {
+    "clips": 91,
+    "reference_characters": 8999,
+    "character_errors": 991,
+    "cer_percent": 11.012334703855984,
+    "reference_words": 1917,
+    "word_errors": 548,
+    "wer_percent": 28.586332811684922
+  }
+}

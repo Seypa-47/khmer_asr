@@ -28,3 +28,5 @@ Recompute the final metrics from the prediction pairs with `python src/score_mat
 `diagnostic/` contains **earlier exploratory runs** that did not share identical training examples. Those files are retained for audit and are not the final architecture comparison. Personal recordings, draft transcripts, and their raw model outputs are excluded from the repository.
 
 `diagnostic/qwen_public_validation_summary.json` records a separate external-model probe on the **validation** split. The publisher-trained checkpoint achieved 14.29% CER and 32.07% ICU Khmer WER on 124 clips. It is neither a student-trained approach nor a held-out test result, so it is excluded from the final three-approach table and figures. The new student LoRA run defined in `src/train_qwen_lora.py` must be evaluated separately before any result is added here.
+
+`diagnostic/qwen_lora_validation_v1.json` records the first student-owned adapter's **validation** score: 14.45% CER and 33.12% ICU Khmer WER after one epoch on 531 train clips. Both are slightly worse than the publisher checkpoint. This adapter is retained for audit and is not promoted to the held-out test comparison.

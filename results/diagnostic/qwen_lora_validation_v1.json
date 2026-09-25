@@ -1,0 +1,38 @@
+{
+  "purpose": "Student-trained Qwen LoRA follow-up; validation only, not a held-out test result",
+  "base_model": "seanghay/Qwen3-ASR-0.6B-Khmer",
+  "source_script": "src/train_qwen_lora.py",
+  "split_manifest": "results/matched_fleurs_split.json",
+  "hardware": "Google Colab Tesla T4",
+  "training_examples": 531,
+  "validation_examples": 124,
+  "epochs": 1,
+  "optimizer_steps": 133,
+  "gradient_accumulation": 4,
+  "learning_rate": 0.0001,
+  "lora": {
+    "rank": 8,
+    "alpha": 16,
+    "dropout": 0.05,
+    "target_modules": ["q_proj", "v_proj"],
+    "trainable_parameters": 1662976
+  },
+  "mean_train_loss": 0.21308254534571577,
+  "validation_metrics": {
+    "cer_percent": 14.454348349795229,
+    "wer_percent_icu_segmented": 33.12101910828025,
+    "cer_reference_characters": 12453,
+    "cer_errors": 1800,
+    "wer_reference_words": 2669,
+    "wer_errors": 884
+  },
+  "public_base_validation_metrics": {
+    "cer_percent": 14.285714285714285,
+    "wer_percent_icu_segmented": 32.07193705507681,
+    "cer_errors": 1779,
+    "wer_errors": 856
+  },
+  "decision": "The first LoRA run is worse than its base checkpoint on both validation metrics; do not choose it for held-out test evaluation or call it an improvement.",
+  "checkpoint_storage": "Colab runtime /content/qwen_lora_v1/epoch-1; Drive mount failed twice. Identical local run saves adapters under models/qwen_lora_local_v1 (gitignored).",
+  "test_used": false
+}
