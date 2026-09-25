@@ -40,6 +40,8 @@ Both approaches used the same saved 531/124/114 FLEURS train/validation/test man
 
 Both rates divide edit operations by the reference length, measured in characters or ICU-segmented words. A WER above 100% is possible when a model inserts extra words. Whisper's earlier Trainer log reported 86.93% CER from decoded labels; the 86.76% above comes from rescoring its saved checkpoint against the same raw FLEURS references used for MMS. These are test-set error rates, not sentence accuracy or verified scores on personal recordings. Exact edit counts and prediction pairs are in [`results/`](results/README.md). Large checkpoints are linked below.
 
+The lecturer evaluates both CER and WER. If the reported above-80% target applies to each metric as an error-rate threshold, each must be below 20%; the MMS checkpoint meets that threshold for CER but not WER. The completed MMS run selected its best checkpoint using validation CER. Its old Trainer `eval_wer` used whitespace and is not the Khmer-segmented WER above. The updated training script logs `eval_cer` and `eval_wer_icu` for future runs and can select a checkpoint using `--selection-metric wer_icu`; this change does not alter the completed checkpoint or its reported scores. Because training labels omit spaces, the validation WER uses word breaks on decoded labels, while final test WER uses the original FLEURS references. Keep this distinction in mind when comparing their values.
+
 ![Matched CER and Khmer-segmented WER](results/matched_cer_wer.png)
 
 ## Earlier diagnostic runs
@@ -147,7 +149,7 @@ Personal recordings and their outputs are kept outside Git. They do not have ver
 
 ### Inference demo
 
-Run `python app.py`, then open `http://127.0.0.1:7860`. The Windows launcher is `run_app.bat`. The app prefers `models/mms-khmer-ctc-matched` when installed; otherwise the current local demo loads the older `models/mms-khmer-ctc` checkpoint, not the matched-run checkpoint behind the 15.84% FLEURS CER. Do not present a live demo result as a direct demonstration of the new test score until the selected checkpoint is installed for the app. Saved model files are ignored by Git.
+Run `python app.py`, then open `http://127.0.0.1:7860`. The Windows launcher is `run_app.bat`. The app prefers `models/mms-khmer-ctc-matched` when installed; this workspace currently has that model file, so a newly started local demo loads the matched-run model. Other clones need to download the shared weights first. Saved model files are ignored by Git.
 
 ## Repository map
 

@@ -24,6 +24,7 @@ from typing import Any
 import numpy as np
 import torch
 from datasets import Audio, Dataset, load_dataset
+from jiwer import process_words
 from transformers import (
     AutoProcessor,
     Trainer,
@@ -34,8 +35,10 @@ from transformers import (
 
 try:
     from .matched_fleurs import load_manifest, select_manifest_split
+    from .score_matched_cer_wer import word_tokens
 except ImportError:  # Direct execution: python src/train_mms.py
     from matched_fleurs import load_manifest, select_manifest_split
+    from score_matched_cer_wer import word_tokens
 
 try:
     import evaluate
@@ -85,6 +88,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--resume-from-checkpoint", default=None, help="Resume a saved Trainer checkpoint after interruption.")
     parser.add_argument("--skip-test", action="store_true", help="Use validation only during hyperparameter tuning.")
     parser.add_argument("--tuning-only", action="store_true", help="Save validation history without large pilot checkpoints.")
+    parser.add_argument(
+        "--selection-metric",
+        choices=("cer", "wer_icu"),
+        default="cer",
+        help="Validation metric used to select the best checkpoint; both CER and Khmer-segmented WER are logged.",
+    )
     parser.add_argument("--num-train-epochs", type=float, default=15.0)
     parser.add_argument("--learning-rate", type=float, default=5e-5)
     parser.add_argument("--weight-decay", type=float, default=0.0, help="Weight decay regularization.")
@@ -144,7 +153,6 @@ def prepare_dataset(batch: dict[str, Any], processor: AutoProcessor, vocab_size:
 
 
 def build_compute_metrics(processor: AutoProcessor):
-    wer_metric = evaluate.load("wer")
     cer_metric = evaluate.load("cer")
 
     def compute_metrics(pred):
@@ -159,14 +167,16 @@ def build_compute_metrics(processor: AutoProcessor):
         pred_str = [normalize_khmer_text(t) for t in pred_str]
         label_str = [normalize_khmer_text(t) for t in label_str]
 
-        # Khmer spaces are not reliable word boundaries. Keep conventional
-        # WER for reference, but compute the comparison CER without whitespace.
+        # Training labels omit spaces because the khm adapter has no space token.
+        # Match the final comparison's ICU Khmer word-break policy for WER.
         cer_pred = [re.sub(r"\s+", "", text) for text in pred_str]
         cer_ref = [re.sub(r"\s+", "", text) for text in label_str]
-        wer = 100 * wer_metric.compute(predictions=pred_str, references=label_str)
         cer = 100 * cer_metric.compute(predictions=cer_pred, references=cer_ref)
+        segmented_pred = [" ".join(word_tokens(text)) for text in pred_str]
+        segmented_ref = [" ".join(word_tokens(text)) for text in label_str]
+        wer_icu = 100 * process_words(segmented_ref, segmented_pred).wer
 
-        return {"wer": wer, "cer": cer}
+        return {"wer_icu": wer_icu, "cer": cer}
 
     return compute_metrics
 
@@ -299,7 +309,7 @@ def main() -> None:
         save_total_limit=2,
         logging_steps=args.logging_steps,
         load_best_model_at_end=not args.tuning_only,
-        metric_for_best_model="cer",
+        metric_for_best_model=args.selection_metric,
         greater_is_better=False,
         report_to=["tensorboard"],
         seed=args.seed,
@@ -354,6 +364,7 @@ def main() -> None:
         "weight_decay": args.weight_decay,
         "spec_augment": args.apply_spec_augment,
         "split_manifest": args.split_manifest,
+        "selection_metric": args.selection_metric,
     })
     with metrics_path.open("w", encoding="utf-8") as f:
         json.dump(report, f, indent=2)
