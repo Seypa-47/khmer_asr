@@ -29,7 +29,6 @@ LOCAL_WHISPER_PATH = os.path.join(PROJECT_ROOT, "models", "whisper-tiny-khmer")
 RETRAINED_WHISPER_PATH = os.path.join(PROJECT_ROOT, "models", "whisper-tiny-khmer-warmup35-b4")
 LOCAL_MMS_PATH = os.path.join(PROJECT_ROOT, "models", "mms-khmer-ctc")
 MATCHED_MMS_PATH = os.path.join(PROJECT_ROOT, "models", "mms-khmer-ctc-matched")
-HIGH_ACCURACY_MODEL_ID = "sengtha/whisper-base-khmer"
 SAMPLES_DIR = os.path.join(PROJECT_ROOT, "samples")
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
@@ -80,13 +79,6 @@ def get_model_and_processor(model_choice: str):
         mdl.eval()
         MODELS[model_choice] = ("mms", proc, mdl)
         return "mms", proc, mdl
-    elif "Whisper-Base" in model_choice or "High Accuracy" in model_choice:
-        print(f"[*] Loading Khmer Whisper Base...")
-        proc = WhisperProcessor.from_pretrained(HIGH_ACCURACY_MODEL_ID, language="Khmer", task="transcribe")
-        mdl = WhisperForConditionalGeneration.from_pretrained(HIGH_ACCURACY_MODEL_ID).to(DEVICE)
-        mdl.eval()
-        MODELS[model_choice] = ("whisper", proc, mdl)
-        return "whisper", proc, mdl
     else:
         whisper_path = RETRAINED_WHISPER_PATH if "35-Step Warmup" in model_choice else LOCAL_WHISPER_PATH
         print(f"[*] Loading Whisper Tiny from {whisper_path}...")
@@ -107,8 +99,6 @@ SAMPLE_METADATA = {
     "sample_2.wav": "នៅក្នុងប្រទេសកម្ពុជា មុខម្ហូបតាមដងផ្លូវមានប្រជាប្រិយភាពយ៉ាងខ្លាំង ហើយយើងអាចរកទិញមុខម្ហូបទាំងនោះដូចជា៖ នំបញ្ចុក ចេកចៀន បុកល្ហុង គុយទាវ ពងទាកូន បបរ នំប៉័ងដាក់សាច់ និងមានប្រភេទផ្សេងៗជាច្រើនទៀត។",
 }
 
-
-KHMER_SYSTEM_PROMPT = "ភាសាខ្មែរ អក្សរខ្មែរ ខ្ញុំឈ្មោះ ខ្ញុំមានអាយុម្ភៃឆ្នាំ ម្ភៃមួយឆ្នាំ សាមសិបឆ្នាំ ចូលចិត្តលេងកីឡា លេងបៀ ធ្វើការងារ និងរស់នៅក្នុងប្រទេសកម្ពុជា។"
 
 def normalize_khmer_text(text: str) -> str:
     """Pure deep learning text normalization: NFC Unicode and whitespace cleanup only.
@@ -149,13 +139,6 @@ def transcribe_audio(audio_path, model_choice):
             "language": "khmer",
             "task": "transcribe",
         }
-        if "Whisper-Base" in model_choice or "High Accuracy" in model_choice:
-            try:
-                prompt_ids = processor.get_prompt_ids(KHMER_SYSTEM_PROMPT, return_tensors="pt").to(DEVICE)
-                gen_kwargs["prompt_ids"] = prompt_ids
-            except Exception:
-                pass
-
         with torch.no_grad():
             predicted_ids = model.generate(
                 input_features,
@@ -339,7 +322,6 @@ def build_app():
                         DEFAULT_MODEL_NAME,
                         "🧪 Approach 1: Whisper-Tiny Khmer (Version 1.0)",
                         "🧪 Whisper-Tiny Khmer (35-Step Warmup Retrain)",
-                        "⚡ Khmer Whisper Base (Reference Model)",
                     ],
                     value=DEFAULT_MODEL_NAME,
                     label="🧠 ជ្រើសរើសម៉ូឌែល ASR (ASR Model Architecture)",

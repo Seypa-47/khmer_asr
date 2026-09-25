@@ -15,7 +15,7 @@ import av
 from gradio_client import Client, handle_file
 
 
-DEFAULT_MODEL = "🏆 Approach 2: Meta MMS-1B Khmer CTC (Version 2.0 · 15 Epochs)"
+DEFAULT_MODEL = "🏆 Approach 2: Meta MMS-1B Khmer CTC (Local Checkpoint)"
 
 
 def main() -> None:
