@@ -5,6 +5,7 @@ datasets
 torchcodec
 evaluate
 jiwer
+pyicu-wheels==2.15.2
 accelerate
 tensorboard
 soundfile

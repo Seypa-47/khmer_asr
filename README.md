@@ -6,11 +6,11 @@ Individual Deep Learning final project comparing a fine-tuned Whisper-Tiny Seq2S
 **Lecturer:** Mr. Soklong HIM  
 **Student:** Khemrak Pasey
 
-> **Experiment status:** Historical checkpoints tested on the first 200 FLEURS test rows remain diagnostic because their training selections differed. A later controlled rerun used one saved 531/124/114 train/validation/test manifest for both architectures. Whisper-Tiny and MMS both completed training; MMS achieved 15.84% held-out test CER using its best validation checkpoint. The professor approved the topic and, according to the student, now expects performance above 80%, but did not define the metric or certify these results.
+> **Experiment status:** Historical checkpoints tested on the first 200 FLEURS test rows remain diagnostic because their training selections differed. A controlled rerun used one saved 531/124/114 train/validation/test manifest for both architectures. The final matched comparison includes both CER and Khmer-segmented WER on all 114 held-out clips. The professor approved the topic and, according to the student, expects performance above 80%, but has not specified how that target is scored or certified these results.
 
 ## Problem
 
-Given a 16 kHz Khmer speech waveform, predict its Khmer Unicode transcript. Khmer text uses spaces mainly at phrase boundaries, so this project reports character error rate (CER) after NFC normalization and whitespace removal. Standard unsegmented word error rate is not used as the primary metric.
+Given a 16 kHz Khmer speech waveform, predict its Khmer Unicode transcript. The final comparison reports both character error rate (CER) and word error rate (WER) on the same held-out clips. Khmer spaces mainly mark phrase boundaries, so WER uses ICU's Khmer word-break dictionary on both references and predictions. Lower error rates are better. The metric policy and exact edit counts are saved in `results/matched_cer_wer_summary.json`.
 
 ## Data
 
@@ -31,14 +31,16 @@ The original Whisper training arguments show 3 epochs, learning rate `1e-5`, 500
 
 ## Final controlled comparison
 
-Both approaches used the same saved 531/124/114 FLEURS train/validation/test manifest. Test CER uses NFC text, removes U+200B/U+FEFF and whitespace, and is lower when recognition is better.
+Both approaches used the same saved 531/124/114 FLEURS train/validation/test manifest. CER uses NFC text with U+200B/U+FEFF and whitespace removed. WER uses NFC text, removes U+200B/U+FEFF, applies [ICU `km_KH` dictionary word breaks](https://unicode-org.github.io/icu/userguide/boundaryanalysis/), and excludes punctuation-only segments. The same policy is applied to both models. The previously logged raw whitespace WER for Whisper is not comparable to this Khmer-segmented WER.
 
-| Fine-tuned approach | Held-out test clips | Test CER |
-|---|---:|---:|
-| Whisper-Tiny encoder-decoder | 114 | 86.93% |
-| Meta MMS-1B encoder with CTC, best validation checkpoint | 114 | **15.84%** |
+| Fine-tuned approach | Held-out test clips | Test CER | Khmer-segmented test WER |
+|---|---:|---:|---:|
+| Whisper-Tiny encoder-decoder | 114 | 86.76% | 106.27% |
+| Meta MMS-1B encoder with CTC, best validation checkpoint | 114 | **15.84%** | **67.16%** |
 
-These are character error rates on this selected FLEURS test set, not sentence accuracy or a verified score on personal recordings. The split manifest, saved metrics, figures, and error analysis are in [`results/`](results/README.md). Large checkpoints are linked below.
+Both rates divide edit operations by the reference length, measured in characters or ICU-segmented words. A WER above 100% is possible when a model inserts extra words. Whisper's earlier Trainer log reported 86.93% CER from decoded labels; the 86.76% above comes from rescoring its saved checkpoint against the same raw FLEURS references used for MMS. These are test-set error rates, not sentence accuracy or verified scores on personal recordings. Exact edit counts and prediction pairs are in [`results/`](results/README.md). Large checkpoints are linked below.
+
+![Matched CER and Khmer-segmented WER](results/matched_cer_wer.png)
 
 ## Earlier diagnostic runs
 
@@ -111,8 +113,15 @@ python src/evaluate_saved_whisper.py --model-dir models/whisper-tiny-khmer-match
   --split-manifest results/matched_fleurs_split.json \
   --output results/whisper_matched_predictions.json --device cuda
 python src/evaluate_saved_mms.py --model-dir models/mms-khmer-ctc-matched \
+  --processor-id facebook/mms-1b-all \
   --split-manifest results/matched_fleurs_split.json \
-  --output results/mms_matched_predictions.json --device cuda
+  --output results/mms_matched_best300_predictions.json --device cuda
+# Compare both error rates from the saved predictions on the identical clips.
+python src/score_matched_cer_wer.py \
+  --whisper results/whisper_matched_predictions.json \
+  --mms results/mms_matched_best300_predictions.json \
+  --output results/matched_cer_wer_summary.json
+python src/plot_cer_wer.py
 python src/plot_matched_results.py --completed
 ```
 
@@ -120,9 +129,9 @@ The manifest removes recordings over 15 seconds and examples exceeding Whisper's
 
 ### Completed matched run: verified test evidence
 
-The September 23–24 Colab run used one saved 531/124/114 train/validation/test manifest for both architectures. The manifest in `results/matched_fleurs_split.json` was regenerated locally and its train, validation, and test index hashes match the Drive copy exactly. Whisper-Tiny completed 3 epochs and scored **86.93% CER** on the 114 held-out clips. The 15-epoch MMS run was interrupted at step 800, then resumed and completed at step 1005. Its best validation checkpoint remained step 300 (14.45% validation CER); scored once on the same 114 held-out clips, it reached **15.84% test CER**. The final-step validation CER was 14.70%, so the extra training did not improve the selected model. CER uses NFC normalization and removes U+200B/U+FEFF and whitespace. It is an edit-distance rate, not a percentage of fully correct sentences.
+The September 23–24 Colab run used one saved 531/124/114 train/validation/test manifest for both architectures. The manifest in `results/matched_fleurs_split.json` was regenerated locally and its train, validation, and test index hashes match the Drive copy exactly. Whisper-Tiny completed 3 epochs; its Trainer log reported 86.93% test CER. Rescoring the saved checkpoint against the shared raw references gave **86.76% CER and 106.27% WER**. The 15-epoch MMS run was interrupted at step 800, then resumed and completed at step 1005. Its best validation checkpoint remained step 300 (14.45% validation CER); it reached **15.84% test CER and 67.16% WER**. The final-step validation CER was 14.70%, so the extra training did not improve the selected model. WER was computed later from saved predictions with ICU Khmer word segmentation. Neither result is a percentage of fully correct sentences.
 
-See `results/mms_matched_best300_summary.json` and `results/mms_matched_best300_error_analysis.md` for the saved summary and observed failure patterns. The 26 references containing Latin letters scored 23.75% corpus CER, versus 13.03% for the other 88; this is a descriptive failure breakdown, not a separate headline test score. The 114 raw reference/prediction pairs and full MMS trainer state are preserved in Google Drive under `MyDrive/khmer_asr_final_runs/results/`; they still need to be copied into this repository before submission. To repeat the test evaluation, use `src/evaluate_saved_mms.py` with `--processor-id facebook/mms-1b-all`, the best checkpoint as `--model-dir`, and the shared split manifest. The lecturer's above-80% target lacks a specified metric. One minus CER is 84.16% on the FLEURS test set, which clears 80% as character correctness under this scoring policy; it is not sentence accuracy and does not describe the separate recordings.
+See `results/matched_cer_wer_summary.json` and `results/mms_matched_best300_error_analysis.md` for exact counts and observed failure patterns. The 26 MMS references containing Latin letters scored 23.75% corpus CER, versus 13.03% for the other 88; this is a descriptive failure breakdown. Both sets of 114 public FLEURS reference/prediction pairs are retained in this repository and Drive. To repeat MMS inference, use `src/evaluate_saved_mms.py` with `--processor-id facebook/mms-1b-all`, the best checkpoint as `--model-dir`, and the shared split manifest. The lecturer's above-80% target needs a named metric: if it means CER below 20%, MMS meets it on FLEURS; if it means WER below 20%, neither model meets it under the stated segmentation policy.
 
 ![Matched held-out CER](results/matched_test_cer.png)
 
@@ -147,12 +156,14 @@ Run `python app.py`, then open `http://127.0.0.1:7860`. The Windows launcher is 
 - `src/matched_fleurs.py`: Saves one fixed FLEURS row selection for both approaches.
 - `src/evaluate_saved_whisper.py`: Auditable Whisper scoring on the first N test rows.
 - `src/evaluate_saved_mms.py`: Auditable MMS scoring on the same rows.
+- `src/score_matched_cer_wer.py`: Matched corpus CER and ICU Khmer-segmented WER from saved predictions.
+- `src/plot_cer_wer.py`: CER and WER figure from the audited score summary.
 - `src/evaluate_saved_mms_user_audio.py`: Raw checkpoint inference on private recordings.
 - `src/plot_matched_results.py`: Figures from completed matched runs.
 - `src/evaluate_and_plot.py`: Regenerates figures from the earlier diagnostic runs.
 - `notebooks/khmer_asr_experiments.ipynb`: Colab workflow.
 - `results/`: Final matched-run evidence and figures, with earlier runs in `results/diagnostic/`.
-- `slides/khmer_asr_presentation.pptx`: 13-slide final project presentation.
+- `slides/khmer_asr_presentation_cer_wer.pptx`: 12-slide final project presentation in the student's chosen design.
 - `app.py`: Gradio inference interface.
 
 ## Model weights
@@ -177,9 +188,9 @@ Large model files are excluded from Git by `.gitignore`. The matched-run MMS sco
 - [x] Two distinct trained deep learning architectures are present.
 - [x] Run both approaches using the same train, validation, and test subsets; both runs completed.
 - [x] Save curves and trainer state for both approaches in Drive; the MMS curve and summary are also in this repository.
-- [ ] Retain prediction examples and complete error analysis for both approaches.
+- [x] Retain prediction pairs and compute matched CER and Khmer-segmented WER for both approaches.
 - [x] Run and document MMS learning-rate and weight-decay pilot comparisons on validation data.
 - [x] Share the matched MMS and Whisper checkpoint folders through viewer links.
 - [x] Add the student name to the project materials.
 - [x] README, requirements, source code, results, and slides are present.
-- [ ] Review slide claims against the final rerun results and rehearse the 10-minute presentation/Q&A.
+- [ ] Rehearse the 10-minute presentation/Q&A and confirm the professor's exact 80% metric definition.
