@@ -42,6 +42,10 @@ Both rates divide edit operations by the reference length, measured in character
 
 The lecturer evaluates both CER and WER. If the reported above-80% target applies to each metric as an error-rate threshold, each must be below 20%; the MMS checkpoint meets that threshold for CER but not WER. The completed MMS run selected its best checkpoint using validation CER. Its old Trainer `eval_wer` used whitespace and is not the Khmer-segmented WER above. The updated training script logs `eval_cer` and `eval_wer_icu` for future runs and can select a checkpoint using `--selection-metric wer_icu`; this change does not alter the completed checkpoint or its reported scores. Because training labels omit spaces, the validation WER uses word breaks on decoded labels, while final test WER uses the original FLEURS references. Keep this distinction in mind when comparing their values.
 
+### Third approach in progress
+
+The lecturer suggested a third approach. `notebooks/mms_frozen_third_approach.ipynb` prepares a controlled **frozen MMS encoder + trained CTC head** run on the same manifest. This differs from the existing MMS run, which trains the top four encoder layers and head. Its validation checkpoint will be chosen by ICU-segmented WER, then CER and WER will be measured on the same held-out test clips as the first two approaches. No third-approach score is reported until that training and evaluation actually complete. The October 9 submission deadline is provided by the student.
+
 ![Matched CER and Khmer-segmented WER](results/matched_cer_wer.png)
 
 ## Earlier diagnostic runs
@@ -164,6 +168,7 @@ Run `python app.py`, then open `http://127.0.0.1:7860`. The Windows launcher is 
 - `src/plot_matched_results.py`: Figures from completed matched runs.
 - `src/evaluate_and_plot.py`: Regenerates figures from the earlier diagnostic runs.
 - `notebooks/khmer_asr_experiments.ipynb`: Colab workflow.
+- `notebooks/mms_frozen_third_approach.ipynb`: isolated Colab workflow for the proposed third training strategy.
 - `results/`: Final matched-run evidence and figures, with earlier runs in `results/diagnostic/`.
 - `slides/khmer_asr_presentation_cer_wer.pptx`: 12-slide final project presentation in the student's chosen design.
 - `app.py`: Gradio inference interface.

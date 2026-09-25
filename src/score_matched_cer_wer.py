@@ -100,15 +100,16 @@ def main() -> None:
     parser.add_argument("--manifest", type=Path, default=Path("results/matched_fleurs_split.json"))
     parser.add_argument("--whisper", type=Path)
     parser.add_argument("--mms", type=Path)
+    parser.add_argument("--frozen-mms", type=Path, help="Optional third approach: frozen MMS encoder with trained CTC head.")
     parser.add_argument("--output", type=Path, default=Path("results/matched_cer_wer_summary.json"))
     args = parser.parse_args()
-    if not args.whisper and not args.mms:
+    if not args.whisper and not args.mms and not args.frozen_mms:
         parser.error("Provide at least one saved prediction file")
     manifest = json.loads(args.manifest.read_text(encoding="utf-8"))
     expected_indices = manifest["indices"]["test"]
     models = {}
     shared_references = None
-    for name, path in (("whisper_tiny", args.whisper), ("mms_1b_ctc", args.mms)):
+    for name, path in (("whisper_tiny", args.whisper), ("mms_1b_ctc", args.mms), ("mms_frozen_ctc", args.frozen_mms)):
         if path is None:
             continue
         models[name], references = score(path, expected_indices)
@@ -124,7 +125,8 @@ def main() -> None:
         "icu_version": icu.ICU_VERSION,
         "pyicu_wheels_version": version("pyicu-wheels"),
         "models": models,
-        "comparison_complete": len(models) == 2,
+        "comparison_complete": "whisper_tiny" in models and "mms_1b_ctc" in models,
+        "third_approach_complete": "mms_frozen_ctc" in models,
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

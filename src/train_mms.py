@@ -242,7 +242,7 @@ def main() -> None:
         print(f"Deep Fine-Tuning: Unfroze top {unfreeze_n}/{total_layers} Transformer layers + LM head/adapter.")
     else:
         model.freeze_base_model()
-        print("Base model frozen. Only LM head / adapter is trainable.")
+        print("Base speech encoder and adapter frozen. Only the CTC output head is trainable.")
 
     trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
     total_params = sum(p.numel() for p in model.parameters())
@@ -365,6 +365,8 @@ def main() -> None:
         "spec_augment": args.apply_spec_augment,
         "split_manifest": args.split_manifest,
         "selection_metric": args.selection_metric,
+        "trainable_parameters": trainable_params,
+        "total_parameters": total_params,
     })
     with metrics_path.open("w", encoding="utf-8") as f:
         json.dump(report, f, indent=2)

@@ -18,15 +18,21 @@ def main() -> None:
     if not data.get("comparison_complete"):
         raise ValueError("Both models must be scored before plotting")
     models = data["models"]
-    labels = ["Whisper-Tiny\nSeq2Seq", "MMS-1B\nCTC"]
-    colors = ["#232e66", "#19856e"]
+    approaches = [
+        ("whisper_tiny", "Whisper-Tiny\nSeq2Seq", "#232e66"),
+        ("mms_1b_ctc", "MMS-1B\nTop 4 tuned", "#19856e"),
+    ]
+    if "mms_frozen_ctc" in models:
+        approaches.append(("mms_frozen_ctc", "MMS-1B\nHead only", "#dd8b36"))
+    labels = [label for _, label, _ in approaches]
+    colors = [color for _, _, color in approaches]
     metrics = [
         ("CER", "cer_percent", "Characters, spaces removed"),
         ("WER", "wer_percent_icu_segmented", "ICU Khmer word breaks"),
     ]
     fig, axes = plt.subplots(1, 2, figsize=(10, 4), layout="constrained")
     for ax, (title, key, subtitle) in zip(axes, metrics):
-        values = [models["whisper_tiny"][key], models["mms_1b_ctc"][key]]
+        values = [models[name][key] for name, _, _ in approaches]
         bars = ax.bar(labels, values, color=colors, width=0.54)
         ax.bar_label(bars, labels=[f"{value:.2f}%" for value in values], padding=4)
         ax.set_ylim(0, max(115, max(values) * 1.13))
