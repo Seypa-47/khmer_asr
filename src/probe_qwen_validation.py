@@ -61,9 +61,10 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--model", default="seanghay/Qwen3-ASR-0.6B-Khmer")
     parser.add_argument("--save-every", type=int, default=10)
+    parser.add_argument("--batch-size", type=int, default=4)
     args = parser.parse_args()
-    if args.save_every < 1:
-        parser.error("--save-every must be positive")
+    if args.save_every < 1 or args.batch_size < 1:
+        parser.error("--save-every and --batch-size must be positive")
     if not torch.cuda.is_available():
         raise RuntimeError("Select a GPU runtime for the Qwen validation probe")
 
@@ -105,29 +106,38 @@ def main() -> None:
         args.model,
         dtype=torch.float16,
         device_map="cuda:0",
-        max_inference_batch_size=1,
+        max_inference_batch_size=args.batch_size,
         max_new_tokens=256,
     )
-    for position in range(completed, len(indices)):
-        index = indices[position]
-        reference = str(text_column[index].as_py())
-        record = audio_column[index].as_py()
-        if record["bytes"] is None:
-            raise ValueError(f"Missing embedded audio for validation index {index}")
-        audio, sample_rate = sf.read(io.BytesIO(record["bytes"]), dtype="float32")
-        if audio.ndim == 2:
-            audio = audio.mean(axis=1)
-        waveform = np.ascontiguousarray(audio, dtype=np.float32)
-        prediction = model.transcribe(audio=(waveform, sample_rate))[0].text
-        result["examples"].append(
-            {
-                "validation_index": index,
-                "reference": reference,
-                "hypothesis": str(prediction),
-            }
-        )
-        if (position + 1) % args.save_every == 0 or position + 1 == len(indices):
+    last_saved = completed
+    for position in range(completed, len(indices), args.batch_size):
+        batch_indices = indices[position : position + args.batch_size]
+        batch_audio = []
+        batch_references = []
+        for index in batch_indices:
+            batch_references.append(str(text_column[index].as_py()))
+            record = audio_column[index].as_py()
+            if record["bytes"] is None:
+                raise ValueError(f"Missing embedded audio for validation index {index}")
+            audio, sample_rate = sf.read(io.BytesIO(record["bytes"]), dtype="float32")
+            if audio.ndim == 2:
+                audio = audio.mean(axis=1)
+            waveform = np.ascontiguousarray(audio, dtype=np.float32)
+            batch_audio.append((waveform, sample_rate))
+        predictions = model.transcribe(audio=batch_audio)
+        if len(predictions) != len(batch_indices):
+            raise RuntimeError("Qwen returned the wrong number of batch predictions")
+        for index, reference, prediction in zip(batch_indices, batch_references, predictions):
+            result["examples"].append(
+                {
+                    "validation_index": index,
+                    "reference": reference,
+                    "hypothesis": str(prediction.text),
+                }
+            )
+        if len(result["examples"]) - last_saved >= args.save_every or len(result["examples"]) == len(indices):
             save(args.output, result)
+            last_saved = len(result["examples"])
 
 
 if __name__ == "__main__":
