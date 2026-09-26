@@ -194,7 +194,10 @@ def main() -> None:
             if not torch.isfinite(loss):
                 raise FloatingPointError(f"Nonfinite loss at epoch {epoch}, example {position}")
             loss_sum += float(loss.detach())
-            scaler.scale(loss / args.grad_acc).backward()
+            # Average the final partial group over its actual number of clips.
+            group_start = ((position - 1) // args.grad_acc) * args.grad_acc
+            group_size = min(args.grad_acc, len(order) - group_start)
+            scaler.scale(loss / group_size).backward()
             if position % args.grad_acc == 0 or position == len(order):
                 scaler.unscale_(optimizer)
                 torch.nn.utils.clip_grad_norm_((p for p in model.parameters() if p.requires_grad), 1.0)
