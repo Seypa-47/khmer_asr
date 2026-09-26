@@ -4,6 +4,7 @@ Khmer Automatic Speech Recognition (ASR)
 Ultra-Clean, Minimalist Voice Dictation UI (CADT IDRI Inspired).
 """
 
+import gc
 import os
 import re
 import sys
@@ -29,6 +30,12 @@ LOCAL_WHISPER_PATH = os.path.join(PROJECT_ROOT, "models", "whisper-tiny-khmer")
 RETRAINED_WHISPER_PATH = os.path.join(PROJECT_ROOT, "models", "whisper-tiny-khmer-warmup35-b4")
 LOCAL_MMS_PATH = os.path.join(PROJECT_ROOT, "models", "mms-khmer-ctc")
 MATCHED_MMS_PATH = os.path.join(PROJECT_ROOT, "models", "mms-khmer-ctc-matched")
+QWEN_ADAPTER_PATH = os.path.join(PROJECT_ROOT, "models", "qwen_lora_expanded_local_v2", "epoch-1")
+QWEN_BASE_MODEL = "seanghay/Qwen3-ASR-0.6B-Khmer"
+QWEN_MODEL_NAME = "Qwen3-ASR · Student LoRA (883 clips, epoch 1)"
+MMS_MODEL_NAME = "🏆 Approach 2: Meta MMS-1B Khmer CTC (Local Checkpoint)"
+HAS_QWEN_ADAPTER = os.path.isfile(os.path.join(QWEN_ADAPTER_PATH, "adapter_model.safetensors"))
+DEFAULT_MODEL_NAME = QWEN_MODEL_NAME if HAS_QWEN_ADAPTER else MMS_MODEL_NAME
 SAMPLES_DIR = os.path.join(PROJECT_ROOT, "samples")
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
@@ -66,7 +73,31 @@ def get_model_and_processor(model_choice: str):
     if model_choice in MODELS:
         return MODELS[model_choice]
 
-    if "MMS-1B" in model_choice:
+    # Keep one model resident so switching fits the laptop's 6 GB GPU.
+    MODELS.clear()
+    gc.collect()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+
+    if model_choice == QWEN_MODEL_NAME:
+        from peft import PeftModel
+        from qwen_asr import Qwen3ASRModel
+
+        if not HAS_QWEN_ADAPTER:
+            raise FileNotFoundError(f"Student Qwen adapter missing: {QWEN_ADAPTER_PATH}")
+        print(f"[*] Loading Qwen base and student adapter from {QWEN_ADAPTER_PATH}...")
+        wrapper = Qwen3ASRModel.from_pretrained(
+            QWEN_BASE_MODEL,
+            dtype=torch.float16 if DEVICE == "cuda" else torch.float32,
+            device_map="cuda:0" if DEVICE == "cuda" else "cpu",
+            max_inference_batch_size=1,
+            max_new_tokens=256,
+        )
+        wrapper.model = PeftModel.from_pretrained(wrapper.model, QWEN_ADAPTER_PATH, is_trainable=False)
+        wrapper.model.eval()
+        MODELS[model_choice] = ("qwen", wrapper.processor, wrapper)
+        return MODELS[model_choice]
+    elif "MMS-1B" in model_choice:
         local_path = MATCHED_MMS_PATH if os.path.isfile(os.path.join(MATCHED_MMS_PATH, "model.safetensors")) else LOCAL_MMS_PATH
         if os.path.isfile(os.path.join(local_path, "model.safetensors")):
             print(f"[*] Loading Meta MMS-1B Khmer CTC from {local_path}...")
@@ -87,12 +118,6 @@ def get_model_and_processor(model_choice: str):
         mdl.eval()
         MODELS[model_choice] = ("whisper", proc, mdl)
         return "whisper", proc, mdl
-
-# Pre-load the best available local MMS model as default.
-DEFAULT_MODEL_NAME = "🏆 Approach 2: Meta MMS-1B Khmer CTC (Local Checkpoint)"
-print("[*] Pre-warming Meta MMS-1B model...")
-get_model_and_processor(DEFAULT_MODEL_NAME)
-print("[*] Models ready!")
 
 SAMPLE_METADATA = {
     "sample_1.wav": "មុខម្ហូបតាមដងផ្លូវ គឺជាមុខម្ហូបមួយមានភាពសម្បូរបែប និងមានភាពងាយស្រួល ដែលគេពេញនិយមក្នុងការបរិភោគ ថែមទាំងមានតម្លៃសមរម្យ។",
@@ -122,7 +147,11 @@ def transcribe_audio(audio_path, model_choice):
     audio_array, sr = load_audio_file(audio_path, target_sr=16000)
     duration = len(audio_array) / 16000.0
 
-    if mtype == "mms":
+    if mtype == "qwen":
+        with torch.inference_mode():
+            results = model.transcribe(audio=(np.ascontiguousarray(audio_array, dtype=np.float32), sr))
+        raw_text = results[0].text
+    elif mtype == "mms":
         inputs = processor(audio_array, sampling_rate=16000, return_tensors="pt").input_values.to(DEVICE)
         with torch.no_grad():
             logits = model(inputs).logits
@@ -309,7 +338,7 @@ def build_app():
                     container=False,
                 )
                 model_status = gr.Textbox(
-                    value=mms_checkpoint_label(),
+                    value=QWEN_MODEL_NAME if HAS_QWEN_ADAPTER else mms_checkpoint_label(),
                     interactive=False,
                     scale=1,
                     container=False,
@@ -319,7 +348,8 @@ def build_app():
             with gr.Row():
                 model_selector = gr.Dropdown(
                     choices=[
-                        DEFAULT_MODEL_NAME,
+                        *([QWEN_MODEL_NAME] if HAS_QWEN_ADAPTER else []),
+                        MMS_MODEL_NAME,
                         "🧪 Approach 1: Whisper-Tiny Khmer (Version 1.0)",
                         "🧪 Whisper-Tiny Khmer (35-Step Warmup Retrain)",
                     ],
@@ -367,12 +397,15 @@ def build_app():
                 fn=transcribe_audio,
                 inputs=[audio_input, model_selector],
                 outputs=[transcript_box, timer_display, model_status],
+                concurrency_limit=1,
             )
 
     return demo
 
 
 if __name__ == "__main__":
+    get_model_and_processor(DEFAULT_MODEL_NAME)
+    print("[*] Models ready!")
     app = build_app()
     print("[*] Launching CADT-style minimalist UI at http://127.0.0.1:7860 ...")
-    app.launch(server_port=7860, css=CUSTOM_CSS, theme=gr.themes.Soft(), share=False)
+    app.launch(server_name="127.0.0.1", server_port=7860, css=CUSTOM_CSS, theme=gr.themes.Soft(), share=False)

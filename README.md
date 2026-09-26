@@ -169,7 +169,7 @@ Personal recordings and their outputs are kept outside Git. They do not have ver
 
 ### Inference demo
 
-Run `python app.py`, then open `http://127.0.0.1:7860`. The Windows launcher is `run_app.bat`. The app prefers `models/mms-khmer-ctc-matched` when installed; this workspace currently has that model file, so a newly started local demo loads the matched-run model. Other clones need to download the shared weights first. Saved model files are ignored by Git.
+Run `python app.py`, then open `http://127.0.0.1:7860`. The Windows launcher is `run_app.bat`. When `models/qwen_lora_expanded_local_v2/epoch-1/adapter_model.safetensors` is installed, the app defaults to that student Qwen LoRA adapter on the publisher's Khmer base model. This optional path requires `qwen-asr` and `peft` (install with `python -m pip install qwen-asr==0.0.6 peft==0.21.0`). It is an experimental validation-selected checkpoint, not a model that has met the WER target. Otherwise, the default is MMS, preferring `models/mms-khmer-ctc-matched` when installed. The dropdown also retains the MMS and Whisper options; switching releases the previous model to fit GPU memory. Other clones need the appropriate weights first. Saved model files are ignored by Git. The demo listens only on localhost.
 
 ## Repository map
 
