@@ -1,63 +1,71 @@
 # Khmer ASR presentation rehearsal script
 
-Presentation date: 16 October 2026. Target length: about 10 minutes.
+Presentation date: 16 October 2026. Target length: about 10–12 minutes.
 
 ## Slide 1
 
-Good morning. I am Khemrak Pasey. This project transcribes Khmer speech into Khmer Unicode text. I will compare three trained model checkpoints: Whisper-Tiny, Meta MMS-1B, and a Qwen3-ASR LoRA model. I will explain the data and scoring policy first, then show the held-out results and their limits.
+Good morning. I am Khemrak Pasey. My project is Khmer automatic speech recognition: converting spoken Khmer into written Khmer. I compare three checkpoints that I adapted from publicly pretrained models. I will explain why I chose them, how I trained them, and what their shared held-out test results do and do not show.
 
 ## Slide 2
 
-The input is a single Khmer speech waveform sampled at 16 kilohertz. The output is a Khmer Unicode transcript. Speech recognition can fail at the acoustic, spelling, or text-generation stage, so I report measured edit errors rather than subjective accuracy on a few examples. A model that seems fluent on a demo clip can still make many word errors across a held-out test set.
+The user problem is getting usable Khmer text from recorded speech. People need transcripts for captions, interviews, and notes, but manual transcription requires repeated listening, typing, and proofreading. My project evaluates whether an adapted speech-recognition model can produce a more accurate first transcript of a short Khmer utterance. I compare three saved approaches by counting remaining character and word errors on held-out utterances. I measure transcription error, not the amount of human time saved.
 
 ## Slide 3
 
-FLEURS supplies the Khmer km_kh speech data. Whisper and MMS used the same saved row manifest: 531 training clips, 124 validation clips, and 114 held-out test clips. The Qwen LoRA run used 16,720 effective training clips, including public data beyond that 531-clip selection. All three are scored on the same 114 held-out FLEURS clips. This gives a common test set, but it does not isolate architecture as the reason for performance differences.
+The data source is FLEURS Khmer. An utterance is a short audio recording with a reference transcript. Whisper and MMS trained on the same 531 selected utterances. All three approaches used the same 124 utterances for validation and the same 114 held-out utterances for the final test. The Qwen adapter used 16,720 effective training examples. That count includes repeated FLEURS training examples and additional public Khmer speech, so it is not a count of unique utterances. This makes the comparison descriptive rather than a controlled architecture experiment.
 
 ## Slide 4
 
-CER is the number of character substitutions, deletions, and insertions divided by the number of reference characters. We normalize Unicode and remove whitespace and zero-width marks for CER. Khmer spaces usually separate phrases rather than every word, so whitespace-based WER would misrepresent word errors. We use ICU Khmer word breaks for both references and predictions, then compute corpus-level edit distance. A WER over 100 percent can happen when there are enough insertions.
+Character error rate and word error rate use the same edit-distance formula: substitutions plus deletions plus insertions, divided by reference units, times 100 percent. For CER, the units are characters after Unicode normalization and removal of whitespace and zero-width marks. For WER, the units are Khmer word tokens found by ICU on both reference and prediction. We sum errors over the whole corpus before dividing. Lower is better; WER can exceed 100 percent if there are many insertions.
 
 ## Slide 5
 
-Whisper-Tiny is an encoder-decoder Transformer that generates text. The project fully fine-tuned its checkpoint. Meta MMS-1B uses a Wav2Vec 2.0 speech encoder with a CTC output; the selected run tuned the top four Transformer layers and the CTC head or adapter. Qwen3-ASR 0.6B is a speech-to-text generation model; the student trained a LoRA adapter on a larger public corpus. These are the three checkpoints I am presenting today. The older head-only MMS ablation remains in the repository but is not part of this lineup.
+These are not three untouched Hugging Face models, and I did not train them from random initialization. Approach 1 started with openai/whisper-tiny and I fully fine-tuned its weights on 531 FLEURS utterances. Approach 2 started with facebook/mms-1b-all and I trained its top four speech encoder layers plus the CTC output on the same 531 utterances; validation selected checkpoint step 300. Approach 3 started with the publisher-trained seanghay Qwen3-ASR 0.6B Khmer checkpoint. I trained a LoRA adapter on a larger corpus with 16,720 effective examples; validation selected epoch 1. The base checkpoints and training datasets differ.
 
 ## Slide 6
 
-Whisper and MMS trained on the same 531 selected FLEURS training clips. The matched Whisper run completed three epochs. The MMS run tuned its top four Transformer layers and selected checkpoint step 300 by validation CER. The latest Qwen run used 16,720 effective clips with LoRA and selected epoch 1 based on the lowest validation WER. This difference in training data is a major limitation when comparing the models. The observed result reflects both model choice and training recipe.
+I chose the three approaches to cover different model families and training methods. Whisper-Tiny is a small encoder-decoder baseline trained with full fine-tuning. MMS-1B is a much larger multilingual acoustic encoder with CTC output, and I tuned only its upper layers and output. Qwen3-ASR is a Khmer-adapted generative starting point for a parameter-efficient LoRA experiment. This makes the comparison useful for exploring practical approaches. Because Qwen had much more training data and a Khmer-specific starting checkpoint, the test scores cannot isolate architecture as the cause of the difference.
 
 ## Slide 7
 
-Validation is for model selection; the held-out test is for the final reported score. For Qwen, epoch 1 was the selected checkpoint because it had the lowest WER on the 124 validation clips. Its validation scores were 12.42 percent CER and 27.99 percent WER. After selecting it, the project ran one local held-out evaluation on the fixed 114 test clips. All three test scores use the same CER and ICU Khmer WER policy. We should not mix validation and test numbers in one ranking.
+On the same 114 held-out utterances, Whisper-Tiny scored 86.76 percent CER and 106.27 percent WER. MMS-1B scored 15.84 percent CER and 67.16 percent WER. Qwen3-ASR LoRA scored 13.71 percent CER and 33.40 percent WER. Qwen has the lowest observed error. The training examples column is essential: Qwen used 16,720 effective examples, while Whisper and MMS used 531. The Qwen base checkpoint was also already adapted for Khmer before my LoRA training. These are shared-test measurements, not a controlled comparison of architectures.
 
 ## Slide 8
 
-This is the main result. On the same 114 held-out Khmer FLEURS clips, the Qwen LoRA checkpoint scored 13.71 percent CER and 33.40 percent word error rate. MMS-1B scored 15.84 percent CER and 67.16 percent WER. Whisper-Tiny scored 86.76 percent CER and 106.27 percent WER. Lower values mean fewer edit errors. The Qwen model had the lowest observed error on this test set, but it also had far more training examples, so the chart does not establish a pure architectural advantage.
+The Qwen adapter ran for three epochs. I selected epoch 1 because it had the lowest WER on the 124 validation utterances: 12.42 percent CER and 27.99 percent WER. That validation WER missed the planned below-25-percent goal. After selection, I evaluated the saved adapter once on 114 held-out test utterances, obtaining 13.71 percent CER and 33.40 percent WER. Validation and test use different utterances, so the difference is descriptive. Only test values appear in the three-model result table.
 
 ## Slide 9
 
-The Qwen checkpoint has the best observed scores in this selected lineup. The newer validation goal was WER below 25 percent, but the selected Qwen checkpoint reached 27.99 percent, so it missed that goal. All three held-out test WER values are above 20 percent. Two MMS and Qwen test CER values are below 20 percent; Whisper is not. The model comparison is useful descriptively, but Qwen had a much larger training corpus and a different training recipe, so the results do not isolate architecture as the cause.
+The table needs interpretation. Whisper made 2,644 word edits across 2,488 reference words, so WER exceeds 100 percent and this saved checkpoint is not reliable on the shared test. MMS improved greatly at the character level but still had 67.16 percent word error rate. Its 1,671 word edits include 605 insertions; character accuracy does not guarantee the right word tokens under ICU segmentation. Qwen made 831 word edits, 840 fewer than MMS, but it used far more effective training examples and started from a Khmer-adapted published checkpoint. I cannot say architecture or LoRA alone caused the difference. These are text edit patterns; I have not verified acoustic causes by listening.
 
 ## Slide 10
 
-There are four main limits. First, Qwen used substantially more training data than Whisper and MMS. Second, the reported test scores measure a fixed set of 114 public FLEURS clips, which is a small slice of possible speakers, microphones, and topics. Third, Khmer word error rates depend on a consistent segmentation policy; the project uses ICU for both references and predictions. Fourth, the local demo can transcribe personal audio, but without a verified exact spoken reference we should not assign those recordings a score.
+A closer saved analysis of MMS finds 23.75 percent character error on 26 test references containing Latin letters, compared with 13.03 percent on the other 88. Names and mixed-script material may be difficult, but this association does not prove an acoustic cause. The Qwen comparison is confounded by 31.5 times as many effective training examples and a publisher-trained Khmer base. The 114 FLEURS test utterances are also a limited sample; everyday recordings could differ. Finally, ICU Khmer segmentation is a documented scoring choice and may affect WER. The next work is to listen to difficult utterances and classify errors, then run a comparison with matched training data if architecture is the question.
 
 ## Slide 11
 
-The main takeaway is measured progress, with a clear remaining gap. Qwen3-ASR gave the lowest character and word errors among the three selected models on the fixed held-out test clips. Its CER was 13.71 percent and WER was 33.40 percent. The word-error target remains unmet. A next experiment should use a fixed evaluation policy, audit audio and transcript alignment, and change one justified training factor at a time. I can now show a short local demo, while keeping demo impressions separate from the measured test results.
+The main result is that Qwen3-ASR achieved the lowest observed error in the chosen lineup on the fixed 114-utterance test: 13.71 percent CER and 33.40 percent ICU Khmer WER. The Qwen validation goal of below 25 percent WER remains unmet. The unequal training data and different starting checkpoints prevent a claim that Qwen architecture alone is better. The strongest next step is a listening-based error audit followed by a matched-data experiment. Thank you.
+
+## Live demo cue (after Slide 11, if time allows)
+
+I will now demonstrate the selected Qwen adapter on one short Khmer utterance. I prepared the Colab runtime and checked that the exact epoch-1 adapter loads before this presentation. I will upload an audio file and run inference live. This example shows how the system produces a transcript; it is not part of the 114-utterance test and does not change the reported CER or WER. I will play the audio, then show the generated text and the time taken. If the network or Colab runtime is unavailable, I will use the same saved adapter in my local app.
 
 ## Slide 12
 
-The data source is FLEURS. Whisper and MMS are described in their original research papers. The Qwen checkpoint is based on a published Khmer ASR model with a student-trained LoRA adapter. The project README discloses AI assistance in review, debugging, analysis, documentation, and presentation preparation. The student should verify and understand the code and all scores before presenting.
+The data source is FLEURS. The starting model families are described in the original Whisper and MMS papers and the Qwen Khmer model page. The project repository contains saved prediction pairs, scoring policy, training configuration, and result summaries. AI assistance supported review, analysis, code, documentation, and this presentation; I am responsible for verifying and explaining the submitted work.
 
 ## Likely lecturer questions
 
-**Why is Khmer WER different from space-separated WER?** Khmer spaces often mark phrases. This project uses ICU Khmer word boundaries for both references and predictions.
+**Why these three models?** They represent a small encoder-decoder model, a large CTC speech encoder, and a Khmer-adapted generative model with LoRA. The training data differ, so the scores do not isolate architecture.
 
-**Is Qwen architecturally better than MMS?** Qwen had lower observed error on the shared test clips, but it also used much more training data. This experiment cannot isolate architecture.
+**Did you train all three?** Yes. Each started from a public pretrained checkpoint. I fully fine-tuned Whisper, partially fine-tuned MMS, and trained a LoRA adapter for Qwen. None started from random weights.
 
-**Did any model meet the WER target?** No. Qwen validation WER was 27.99%, above the newer <25% goal. Its held-out test WER was 33.40%.
+**What is an utterance?** One short audio recording with a reference transcript.
 
-**Why can Whisper WER exceed 100%?** WER divides all word substitutions, deletions, and insertions by the number of reference words. Many insertions can push it above 100%.
+**What do CER and WER mean?** Both use (substitutions + deletions + insertions) divided by reference units. CER uses characters; WER uses ICU-segmented Khmer words.
 
-**Can the demo prove real-world accuracy?** No. A demo shows an output for a recording. Scoring requires a verified exact spoken reference and a representative test set.
+**Did Qwen meet the goal?** No. Its selected validation WER was 27.99%, above the planned <25% target. Its held-out test WER was 33.40%.
+
+**Is Qwen architecture better?** This experiment cannot establish that. Qwen used a larger effective training set and a Khmer-adapted starting checkpoint.
+
+**What errors deserve further review?** MMS had more character errors on the 26 references containing Latin letters. Listening is needed before assigning acoustic causes.
