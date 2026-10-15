@@ -1,0 +1,14 @@
+# Python 3.12. Install the CUDA build first:
+# uv pip install --python ~/khmer-asr-runtime/bin/python torch==2.8.0 torchaudio==2.8.0 --index-url https://download.pytorch.org/whl/cu128
+# Then install this file into the same environment.
+torch==2.8.0
+torchaudio==2.8.0
+qwen-asr==0.0.6
+transformers==4.57.6
+accelerate==1.12.0
+peft==0.21.0
+datasets==5.0.1
+jiwer==4.0.0
+av==18.1.0
+gradio==6.17.3
+# Evaluation calls the existing Windows ICU 77.1 scorer via run_qwen_wsl.sh.

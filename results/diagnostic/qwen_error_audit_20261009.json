@@ -1,0 +1,5329 @@
+{
+  "purpose": "validation-only error diagnosis; training strategy selection",
+  "test_used": false,
+  "references_modified": false,
+  "source_zip": "selected_adapter_and_results(1).zip",
+  "source_sha256": "b6e0a3e139b5ea328754d9114b5e7350a228442ddbbbd4ecd6151fe6d915fc2f",
+  "verified_metrics": {
+    "evaluated_examples": 124,
+    "cer_percent": 12.599373644904844,
+    "wer_percent_icu_segmented": 29.261895841139,
+    "cer_reference_characters": 12453,
+    "wer_reference_words": 2669,
+    "cer_errors": 1569,
+    "wer_errors": 781,
+    "icu_version": "77.1"
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "optimizer_steps": 208,
+      "mean_train_loss": 0.21265550553199447,
+      "evaluated_examples": 124,
+      "cer_percent": 12.599373644904844,
+      "wer_percent_icu_segmented": 29.261895841139,
+      "cer_reference_characters": 12453,
+      "wer_reference_words": 2669,
+      "cer_errors": 1569,
+      "wer_errors": 781,
+      "icu_version": "77.1"
+    },
+    {
+      "epoch": 2,
+      "optimizer_steps": 416,
+      "mean_train_loss": 0.1529416836293048,
+      "evaluated_examples": 124,
+      "cer_percent": 12.784068096041116,
+      "wer_percent_icu_segmented": 29.449231922068194,
+      "cer_reference_characters": 12453,
+      "wer_reference_words": 2669,
+      "cer_errors": 1592,
+      "wer_errors": 786,
+      "icu_version": "77.1"
+    },
+    {
+      "epoch": 3,
+      "optimizer_steps": 624,
+      "mean_train_loss": 0.12465543092535926,
+      "evaluated_examples": 124,
+      "cer_percent": 12.607403838432507,
+      "wer_percent_icu_segmented": 30.83551892094417,
+      "cer_reference_characters": 12453,
+      "wer_reference_words": 2669,
+      "cer_errors": 1570,
+      "wer_errors": 823,
+      "icu_version": "77.1"
+    }
+  ],
+  "word_edit_totals": {
+    "substitutions": 477,
+    "deletions": 85,
+    "insertions": 219,
+    "hits": 2107
+  },
+  "max_word_errors_for_strictly_below_20": 533,
+  "minimum_errors_to_remove": 248,
+  "cohorts": {
+    "latin_in_reference": {
+      "evaluated_examples": 26,
+      "cer_percent": 24.542897327707454,
+      "wer_percent_icu_segmented": 48.05194805194805,
+      "cer_reference_characters": 2844,
+      "wer_reference_words": 616,
+      "cer_errors": 698,
+      "wer_errors": 296,
+      "icu_version": "77.1"
+    },
+    "digits_in_reference": {
+      "evaluated_examples": 10,
+      "cer_percent": 25.240847784200387,
+      "wer_percent_icu_segmented": 44.91525423728814,
+      "cer_reference_characters": 1038,
+      "wer_reference_words": 236,
+      "cer_errors": 262,
+      "wer_errors": 106,
+      "icu_version": "77.1"
+    },
+    "neither_latin_nor_digits": {
+      "evaluated_examples": 91,
+      "cer_percent": 8.978775419491054,
+      "wer_percent_icu_segmented": 23.317683881064163,
+      "cer_reference_characters": 8999,
+      "wer_reference_words": 1917,
+      "cer_errors": 808,
+      "wer_errors": 447,
+      "icu_version": "77.1"
+    }
+  },
+  "cohort_note": "Latin and digit cohorts overlap; descriptive association, not causal attribution.",
+  "frequent_edits": [
+    {
+      "type": "insert",
+      "reference": "",
+      "hypothesis": "សា",
+      "occurrences": 5
+    },
+    {
+      "type": "insert",
+      "reference": "",
+      "hypothesis": "មិន",
+      "occurrences": 4
+    },
+    {
+      "type": "substitute",
+      "reference": "ស្រាបៀ",
+      "hypothesis": "ប៊ី",
+      "occurrences": 4
+    },
+    {
+      "type": "substitute",
+      "reference": "អង់តាក់ទិក",
+      "hypothesis": "អង់គ្លេស",
+      "occurrences": 3
+    },
+    {
+      "type": "insert",
+      "reference": "",
+      "hypothesis": "ថ្ងៃ",
+      "occurrences": 3
+    },
+    {
+      "type": "substitute",
+      "reference": "នឹង",
+      "hypothesis": "និង",
+      "occurrences": 3
+    },
+    {
+      "type": "substitute",
+      "reference": "ត្រូវ",
+      "hypothesis": "ទៅ",
+      "occurrences": 3
+    },
+    {
+      "type": "insert",
+      "reference": "",
+      "hypothesis": "កាល",
+      "occurrences": 3
+    },
+    {
+      "type": "delete",
+      "reference": "kundalini yoga",
+      "hypothesis": "",
+      "occurrences": 2
+    },
+    {
+      "type": "substitute",
+      "reference": "ទំ",
+      "hypothesis": "ទំនប់ទឹក",
+      "occurrences": 2
+    },
+    {
+      "type": "delete",
+      "reference": "នប ទឹក",
+      "hypothesis": "",
+      "occurrences": 2
+    },
+    {
+      "type": "insert",
+      "reference": "",
+      "hypothesis": "អ្នក",
+      "occurrences": 2
+    },
+    {
+      "type": "insert",
+      "reference": "",
+      "hypothesis": "បុណ្យ នៅ",
+      "occurrences": 2
+    },
+    {
+      "type": "substitute",
+      "reference": "ថ្ងៃឈប់",
+      "hypothesis": "ឈុត",
+      "occurrences": 2
+    },
+    {
+      "type": "substitute",
+      "reference": "សាស នា គ្រី",
+      "hypothesis": "សាសនា គ្រឹ ស្ដី",
+      "occurrences": 2
+    },
+    {
+      "type": "delete",
+      "reference": "ស្ទ",
+      "hypothesis": "",
+      "occurrences": 2
+    },
+    {
+      "type": "substitute",
+      "reference": "ឃី",
+      "hypothesis": "ហ្គិ",
+      "occurrences": 2
+    },
+    {
+      "type": "insert",
+      "reference": "",
+      "hypothesis": "team",
+      "occurrences": 2
+    },
+    {
+      "type": "substitute",
+      "reference": "ផ្លាស់",
+      "hypothesis": "ផ្លាស់ប្ដូរ",
+      "occurrences": 2
+    },
+    {
+      "type": "delete",
+      "reference": "ប្តូរ",
+      "hypothesis": "",
+      "occurrences": 2
+    },
+    {
+      "type": "substitute",
+      "reference": "ព្រៃឈើ ធំ ៗ",
+      "hypothesis": "ព្រៃ ឈើ ធំៗ",
+      "occurrences": 2
+    },
+    {
+      "type": "substitute",
+      "reference": "នៃ",
+      "hypothesis": "នៅ",
+      "occurrences": 2
+    },
+    {
+      "type": "substitute",
+      "reference": "ផ លិ ត កន្តឹ ង",
+      "hypothesis": "ផលិត កណ្ដឹង ទ្វារ wi fi",
+      "occurrences": 2
+    },
+    {
+      "type": "delete",
+      "reference": "ទ្វារ wifi",
+      "hypothesis": "",
+      "occurrences": 2
+    },
+    {
+      "type": "insert",
+      "reference": "",
+      "hypothesis": "ថ្ម",
+      "occurrences": 2
+    },
+    {
+      "type": "substitute",
+      "reference": "ព្រះគ្រីស្ទ",
+      "hypothesis": "គ្រឹះ",
+      "occurrences": 2
+    },
+    {
+      "type": "substitute",
+      "reference": "បុក",
+      "hypothesis": "មុខ",
+      "occurrences": 2
+    },
+    {
+      "type": "delete",
+      "reference": "អ្នក",
+      "hypothesis": "",
+      "occurrences": 2
+    },
+    {
+      "type": "insert",
+      "reference": "",
+      "hypothesis": "ស្រង់",
+      "occurrences": 2
+    },
+    {
+      "type": "substitute",
+      "reference": "ស្រងក្លិន",
+      "hypothesis": "ក្លិន",
+      "occurrences": 2
+    },
+    {
+      "type": "insert",
+      "reference": "",
+      "hypothesis": "ចំនួន 16",
+      "occurrences": 2
+    },
+    {
+      "type": "substitute",
+      "reference": "ចំនួន18ប៉ុណ្ណោះ",
+      "hypothesis": "ប៉ុណ្ណោះ",
+      "occurrences": 2
+    },
+    {
+      "type": "delete",
+      "reference": "ស៍",
+      "hypothesis": "",
+      "occurrences": 2
+    },
+    {
+      "type": "substitute",
+      "reference": "ក្ដី",
+      "hypothesis": "ក្តី",
+      "occurrences": 2
+    },
+    {
+      "type": "insert",
+      "reference": "",
+      "hypothesis": "បន្ទាយ",
+      "occurrences": 2
+    },
+    {
+      "type": "substitute",
+      "reference": "ឲ្យ",
+      "hypothesis": "ឱ្យ",
+      "occurrences": 2
+    },
+    {
+      "type": "substitute",
+      "reference": "លម្អិត",
+      "hypothesis": "លំអិត",
+      "occurrences": 2
+    },
+    {
+      "type": "delete",
+      "reference": "ទេ",
+      "hypothesis": "",
+      "occurrences": 2
+    },
+    {
+      "type": "insert",
+      "reference": "",
+      "hypothesis": "ការ ដាំ",
+      "occurrences": 1
+    },
+    {
+      "type": "substitute",
+      "reference": "កាលដើមឡើយ",
+      "hypothesis": "ឡើង",
+      "occurrences": 1
+    }
+  ],
+  "review_queue": [
+    {
+      "validation_index": 47,
+      "reference": "កីឡាករលេងគ្រីឃីតលោក រ៉ប់ប៊ីន យូថាផា robin uthappa បានវាយគ្រាប់គ្រីឃីតបានពិន្ទុខ្ពស់ជាងគេ គឺបាន 70 ពិន្ទុ រ៉ាន់ ដោយកូនគ្រាប់បាល់ 41គ្រាប់ប៉ុណ្ណោះ ដោយវាយបាន11ដងនៃពិន្ទុបួន ហើយនិង2ដងនៃពិន្ទុប្រាំមួយ",
+      "hypothesis": "កីឡាករលេងគ្រីហ្គិតលូ រុបិនយូថាប់ បិណ្ឌវាយគ្រាប់គ្រីហ្គិតបានបន្លុះខ្ពស់ជាងគេ គឺបានចុះស៊ុបពិន្ទុ រ៉ាន់ ដោយកូនគ្រាប់បាល់ ផ្សែសមួយគ្រាប់ប៉ុណ្ណោះ ដោយវាបានដាំមួយដងនៃពិន្ទុបួន ហើយនៅពីរដងនៃពិន្ទុប្រាំមួយ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 248,
+      "substitutions": 14,
+      "deletions": 4,
+      "insertions": 9,
+      "hits": 28,
+      "word_errors": 27,
+      "reference_words": 46,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ឃី",
+          "hypothesis": "ហ្គិ"
+        },
+        {
+          "type": "substitute",
+          "reference": "លោក រ៉ប់ ប៊ី",
+          "hypothesis": "លូ រុ បិន"
+        },
+        {
+          "type": "delete",
+          "reference": "ន",
+          "hypothesis": ""
+        },
+        {
+          "type": "substitute",
+          "reference": "ថា ផា",
+          "hypothesis": "ថាប់ បិណ្ឌ"
+        },
+        {
+          "type": "delete",
+          "reference": "robin uthappa បាន",
+          "hypothesis": ""
+        },
+        {
+          "type": "substitute",
+          "reference": "ឃី",
+          "hypothesis": "ហ្គិ"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "បា"
+        },
+        {
+          "type": "substitute",
+          "reference": "បាន ពិន្ទុ",
+          "hypothesis": "នប ន្លុះ"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ចុះ"
+        },
+        {
+          "type": "substitute",
+          "reference": "70",
+          "hypothesis": "ស៊ុប"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ផ្សែ សមួយ"
+        },
+        {
+          "type": "substitute",
+          "reference": "41គ្រាប់",
+          "hypothesis": "គ្រាប់"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "វា បាន"
+        },
+        {
+          "type": "substitute",
+          "reference": "វាយ បាន11ដង",
+          "hypothesis": "ដាំ មួយដង"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ហើយ នៅ ពីរ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ហើយនិង2ដង",
+          "hypothesis": "ដង"
+        }
+      ],
+      "publisher_hypothesis": "កីឡាករលេងក្រីក្រល្លុះ រុបិនយូថផល បិណ្ឌវាយគ្រាប់ក្រីក្របានបន្ទុកខ្ពស់ជាងគេ គឺបានចុះសពន្ធទុកបុរាណ ដោយកូនគ្រាប់បាល់ផ្សែសមួយគ្រាប់ប៉ុណ្ណោះ ដោយវាបានដប់មួយដងនៃពិន្ទុបួន ហើយនិងពីរដងនៃពិន្ទុប្រាំមួយ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_47.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 2,
+      "reference": "ភាគខាងជើង ឬតំបន់ sentinel range មានភ្នំខ្ពស់ៗជាងគេនៃទ្វីបអង់តាក់ទិក គឺភ្នំ vinson massif ដែលមានកំពូលកម្ពស់ 4892 ម៉ែត្រ ភ្នំ mount vinson",
+      "hypothesis": "ភាគខ្លាំងជុំវិញតំបន់ ស៊ីនីីឡេល រ៉េន santiago river មានភ្នំខ្ពស់ៗជាងគេនៃទ្វីបអង់គ្លេស គឺភ្នំវិនសុនប៉ាន់ស៊ីហ្វ santiago valley ដែលមានកំពូលកំពស់ 125 ម៉ែត្រ ភ្នំប៉ាន់វិនសុន",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 185,
+      "substitutions": 11,
+      "deletions": 0,
+      "insertions": 13,
+      "hits": 16,
+      "word_errors": 24,
+      "reference_words": 27,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ខាងជើង ឬ",
+          "hypothesis": "ខ្លាំង ជុំវិញ"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ស៊ី នីី ឡេល រ៉េ ន"
+        },
+        {
+          "type": "substitute",
+          "reference": "sentinel range",
+          "hypothesis": "santiago river"
+        },
+        {
+          "type": "substitute",
+          "reference": "អង់តាក់ទិក",
+          "hypothesis": "អង់គ្លេស"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "វិ ន សុ នប៉ាន់ ស៊ី ហ្វ"
+        },
+        {
+          "type": "substitute",
+          "reference": "vinson massif",
+          "hypothesis": "santiago valley"
+        },
+        {
+          "type": "substitute",
+          "reference": "កម្ពស់ 4892",
+          "hypothesis": "កំពស់ 125"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ប៉ាន់ វិ"
+        },
+        {
+          "type": "substitute",
+          "reference": "mount vinson",
+          "hypothesis": "ន សុន"
+        }
+      ],
+      "publisher_hypothesis": "ភាគខាងជើងរាជតំបន់ ស៊ីនីឯណែលរេន មានភ្នំខ្ពស់ៗជាងគេនៃទ្វីបបង្កតែតិច គឺ ភ្នំវេនសុនបានស៊ីស ដែលមានកំពូលកំពស់ បួនពាន់ប្រាំបីរយកៅសិបពីរ ម៉ែត្រ ភ្នំបានវិនសន",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_2.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 149,
+      "reference": "អាជ្ញាធរមូលដ្ឋាន កំពុងផ្ដល់ការជូនដំណឹងដល់ពលរដ្ឋនៅក្បែររោងចក្រនោះ ឲ្យស្ថិតនៅក្នុងផ្ទះ បិទម៉ាស៊ីនត្រជាក់ មិនឲ្យទទួលទានទឹករ៉ូប៊ីណេឡើយ",
+      "hypothesis": "អាណាធំរដ្ឋានកំពុងផ្តល់ការជូនដំណឹងដល់ពលរដ្ឋដ៏បែបរន្តចក្រនោះ ឱ្យស្ថិតក្នុងផ្ទះ ទឹកប្រសិនប្រចាំ មិនឱ្យទទួលទានទឹករ៉ូប៊ីនេឡើយ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 150,
+      "substitutions": 15,
+      "deletions": 3,
+      "insertions": 4,
+      "hits": 9,
+      "word_errors": 22,
+      "reference_words": 27,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "អាណា ធំ"
+        },
+        {
+          "type": "substitute",
+          "reference": "អាជ្ញាធរ មូលដ្ឋាន កំពុង ផ្ដល់",
+          "hypothesis": "រដ្ឋា នកំ ពុង ផ្តល់"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ដ៏ បែ"
+        },
+        {
+          "type": "substitute",
+          "reference": "នៅ ក្បែរ រោងចក្រ",
+          "hypothesis": "បរ ន្ត ចក្រ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ឲ្យ ស្ថិតនៅ",
+          "hypothesis": "ឱ្យ ស្ថិត"
+        },
+        {
+          "type": "substitute",
+          "reference": "បិទ ម៉ាស៊ីន ត្រជាក់",
+          "hypothesis": "ទឹក ប្រសិន ប្រចាំ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ឲ្យ ទទួលទាន ទឹ",
+          "hypothesis": "ឱ្យ ទទួលទានទឹក រ៉ូប៊ីនេ"
+        },
+        {
+          "type": "delete",
+          "reference": "ក រ៉ូប៊ី ណេ",
+          "hypothesis": ""
+        }
+      ],
+      "publisher_hypothesis": "អាជ្ញាធរមូលដ្ឋានកំពុងផ្តល់ការជូនដំណឹងដល់ពលរដ្ឋដើម្បីរ៉ុញចាក់នោះឱ្យស្ថិតក្នុងផ្ទះ ទឹកដែលសិនត្រជាក់ មិនឱ្យទទួលទានទឹករកពិន័យឡើយ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_149.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 121,
+      "reference": "ការលាតសន្ធឹងរវាងទំនប់ ភ័ញមែរៀន point marion និង ហ្វ៊ែរម៉ន់ថ៍ fairmont ដែលបង្ហាញពីស្ថានភាពបើកបរដ៏លំបាកបំផុតនៅលើមហាវិថី បាហ្វហ្វាឡូ ភីតស៍ប៊ើហ្វ buffalo-pittsburgh ដែលត្រូវបានឆ្លងកាត់ជាញឹកញាប់តាមរយៈដីរាបស្មើ",
+      "hypothesis": "ការលេចសន្ធឹងរវាងទំនប់ point maryland និង fairmont ដែលបង្ហាញពីសន្តិភាពបើកបរដ៏លំបាកបំផុតនៅលើមហេវិថី buffalo pittsburgh ដែលត្រូវបានឆ្លងកាត់ជាញឹកញាប់តាមរយៈដីរាបស្មើ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 152,
+      "substitutions": 5,
+      "deletions": 13,
+      "insertions": 1,
+      "hits": 26,
+      "word_errors": 19,
+      "reference_words": 44,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "លេច"
+        },
+        {
+          "type": "substitute",
+          "reference": "លាតសន្ធឹង",
+          "hypothesis": "សន្ធឹង"
+        },
+        {
+          "type": "delete",
+          "reference": "ភ័ញ មែ រៀន",
+          "hypothesis": ""
+        },
+        {
+          "type": "substitute",
+          "reference": "marion",
+          "hypothesis": "maryland"
+        },
+        {
+          "type": "delete",
+          "reference": "ហ្វ៊ែ រម៉ន់ ថ៍",
+          "hypothesis": ""
+        },
+        {
+          "type": "substitute",
+          "reference": "ស្ថានភាព",
+          "hypothesis": "សន្តិភាព"
+        },
+        {
+          "type": "substitute",
+          "reference": "មហាវិថី បា",
+          "hypothesis": "មហេ វិថី"
+        },
+        {
+          "type": "delete",
+          "reference": "ហ្វ ហ្វា ឡូ ភី តស៍ ប៊ើ ហ្វ",
+          "hypothesis": ""
+        }
+      ],
+      "publisher_hypothesis": "ការលេចសន្ធឹងរវាងទំនប់ ផុយមេរៀន និងហ្វេមាន់ ដែលបង្ហាញពីសន្តិភាពបើកបរដ៏លំបាកបំផុតនៅលើមហាវិថី Buffalo Pizza ដែលត្រូវបានឆ្លងកាត់ជាញឹកញាប់តាមរយៈដីរាបស្មើ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_121.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 46,
+      "reference": "ស្រាបៀក្នុងស្រុកចម្បង គឺស្រាបៀម៉ាក number one វាមិនមែនជាស្រាបៀស្មុគស្មាញអីនោះទេ ប៉ុន្តែវាជាស្រាបៀបែបរីករាយនិងស្រស់ស្រាយ ស្រាបៀក្នុងស្រុកផ្សេងទៀតត្រូវបានគេហៅថា ម៉ានថា manta",
+      "hypothesis": "សាប៊ីក្នុងស្រុកចំបង គឺសាប៊ីម៉ាក ណាំវវន វាមិនមែនជាសាប៊ីស្មុគស្មាញអីនោះទេ ប៉ុន្តែវាជាសាប៊ីបែបរីករាយអក្សរស្រ័យ សាប៊ីក្នុងស្រុកផ្សេងទៀតត្រូវបានគេហៅថា ម៉ាន់តា",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 192,
+      "substitutions": 12,
+      "deletions": 1,
+      "insertions": 5,
+      "hits": 23,
+      "word_errors": 18,
+      "reference_words": 36,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "សា"
+        },
+        {
+          "type": "substitute",
+          "reference": "ស្រាបៀ",
+          "hypothesis": "ប៊ី"
+        },
+        {
+          "type": "substitute",
+          "reference": "ចម្បង",
+          "hypothesis": "ចំបង"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "សា"
+        },
+        {
+          "type": "substitute",
+          "reference": "ស្រាបៀ",
+          "hypothesis": "ប៊ី"
+        },
+        {
+          "type": "substitute",
+          "reference": "number one",
+          "hypothesis": "ណាំវ វន"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "សា"
+        },
+        {
+          "type": "substitute",
+          "reference": "ស្រាបៀ",
+          "hypothesis": "ប៊ី"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "សា"
+        },
+        {
+          "type": "substitute",
+          "reference": "ស្រាបៀ",
+          "hypothesis": "ប៊ី"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "អក្សរ"
+        },
+        {
+          "type": "substitute",
+          "reference": "និង ស្រស់ស្រាយ ស្រាបៀ",
+          "hypothesis": "ស្រ័យ សា ប៊ី"
+        },
+        {
+          "type": "substitute",
+          "reference": "ម៉ាន ថា",
+          "hypothesis": "ម៉ាន់ តា"
+        },
+        {
+          "type": "delete",
+          "reference": "manta",
+          "hypothesis": ""
+        }
+      ],
+      "publisher_hypothesis": "សាប៊ីក្នុងសុខចម្បងគឺសាប៊ីម៉ាក់ណឹមវវន់ វាមិនមែនជាសាប៊ីស្មុគស្មាញឯនោះទេ ប៉ុន្តែវាជាសាប៊ីបែបរីករាយ និងសាស្ត្រាយ សាប៊ីក្នុងសុខផ្សេងទៀតត្រូវបានគេហៅថា ម៉ាន់តា",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_46.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 57,
+      "reference": "ភាគខាងជើង ឬតំបន់ sentinel range មានភ្នំខ្ពស់ៗជាងគេនៃទ្វីបអង់តាក់ទិក គឺភ្នំ vinson massif ដែលមានកំពូលកម្ពស់ 4892 ម៉ែត្រ ភ្នំ mount vinson",
+      "hypothesis": "ភាគខាងជើង ឬតំបន់សែនឆ្នាំរ៉េង់ មានភ្នំខ្ពស់ៗជាងគេនៃទ្វីបអង់គ្លេសគឺភ្នំវែងស៊ីន ម៉ាស៊ីស ដែលមិនកំពុងកំពុះ 152 ម៉ែត្រភ្នំម៉ាន់វែងស៊ីន",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 169,
+      "substitutions": 11,
+      "deletions": 0,
+      "insertions": 6,
+      "hits": 16,
+      "word_errors": 17,
+      "reference_words": 27,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "សែន"
+        },
+        {
+          "type": "substitute",
+          "reference": "sentinel range",
+          "hypothesis": "ឆ្នាំ រ៉េង់"
+        },
+        {
+          "type": "substitute",
+          "reference": "អង់តាក់ទិក",
+          "hypothesis": "អង់គ្លេស"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "វែង ស៊ីន ម៉ា"
+        },
+        {
+          "type": "substitute",
+          "reference": "vinson massif",
+          "hypothesis": "ស៊ី ស"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "មិន"
+        },
+        {
+          "type": "substitute",
+          "reference": "មាន កំពូល កម្ពស់ 4892",
+          "hypothesis": "កំពុង កំ ពុះ 152"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ម៉ាន់"
+        },
+        {
+          "type": "substitute",
+          "reference": "mount vinson",
+          "hypothesis": "វែង ស៊ីន"
+        }
+      ],
+      "publisher_hypothesis": "ភាគខាងជើង ឬតំបន់សែនឆ្នាំរ៉ែង Range មានភ្នំខ្ពស់ៗជាងគេនៃទ្វីបអង្គតែតិច គឺភ្នំវេនសន ម៉ាស៊ីហ្វ ដែលមិនកម្ពស់កម្ពស់ បួនពាន់ប្រាំបីរយកៅសិបពីរ ម៉ែត្រ ភ្នំម៉ូនវេនសន",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_57.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 76,
+      "reference": "ពួកគេកំពុងព្យាយាមធ្វើការកំណត់ថា តើការធ្លាក់បុកនេះមានទំហំធំប៉ុណ្ណា ហើយថាតើផែនដីនឹងរងប៉ះពាល់ដោយសារការធ្លាក់បុកនេះយ៉ាងដូចម្តេចខ្លះ",
+      "hypothesis": "ពួកគេកំពុងព្យាយាមធ្វើការម្ដាស់ថា តើការធ្លាក់មុខនេះមានការបំផុសប៉ុណ្ណា ហើយថតាផែនដី និងរងផលប៉ះពាល់ ប្រសើរការធ្លាក់មុខនេះយ៉ាងបិណ្ឌដែលខ្លះ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 165,
+      "substitutions": 12,
+      "deletions": 1,
+      "insertions": 3,
+      "hits": 17,
+      "word_errors": 16,
+      "reference_words": 30,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ធ្វើ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ធ្វើការ កំណត់",
+          "hypothesis": "កា រម្ដាស់"
+        },
+        {
+          "type": "substitute",
+          "reference": "បុក",
+          "hypothesis": "មុខ"
+        },
+        {
+          "type": "substitute",
+          "reference": "មាន ទំហំ",
+          "hypothesis": "មានការ បំផុស"
+        },
+        {
+          "type": "delete",
+          "reference": "ធំ",
+          "hypothesis": ""
+        },
+        {
+          "type": "substitute",
+          "reference": "ថា តើ",
+          "hypothesis": "ថ តា"
+        },
+        {
+          "type": "substitute",
+          "reference": "នឹង",
+          "hypothesis": "និង"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ផល"
+        },
+        {
+          "type": "substitute",
+          "reference": "ដោយសារ",
+          "hypothesis": "ប្រសើរ"
+        },
+        {
+          "type": "substitute",
+          "reference": "បុក",
+          "hypothesis": "មុខ"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "យ៉ាង"
+        },
+        {
+          "type": "substitute",
+          "reference": "យ៉ាងដូច ម្តេច",
+          "hypothesis": "បិណ្ឌ ដែល"
+        }
+      ],
+      "publisher_hypothesis": "ពួកគេកំពុងព្យាយាមធ្វើការមិត្តថា តើការធ្លាក់មុខនេះមានផលិតផលប៉ុណ្ណា ហើយថតតាមផែនដី និងរងផលប៉ះពាល់ បើសារការធ្លាក់មុខនេះយ៉ាងមិននៅខ្លះ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_76.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 141,
+      "reference": "បើទោះបីជាមានការប្រើប្រាស់យ៉ាងទូលំទូលាយក្ដី ជាពិសេសក្នុងចំណោមពលរដ្ឋផ្សេងពីរូម៉ានី ពាក្យថា gypsy ជារឿយត្រូវគិតថាមានន័យមិនល្អ ដោយសារវាពាក់ព័ន្ធផ្នត់គំនិតអវិជ្ជមាន និងទស្សនៈមិនត្រឹមត្រូវរបស់ពលរដ្ឋរូម៉ានី",
+      "hypothesis": "បើទោះបីជាមានការប្រើប្រាស់យ៉ាងទូលំទូលាយក្តី ជាពិសេសក្នុងចំណោមពលរដ្ឋផ្សេងពីរោមនី បៀតហ្សាគីបស៊ី ជារោយត្រូវគិតថាមានន័យមិនល្អ ដោយសារវាពាក់ព័ន្ធផ្នុំកំណត់អវិជ្ជមាន និងទស្សនៈមិនត្រឹមត្រូវរបស់ពលរដ្ឋរោមនី",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 241,
+      "substitutions": 9,
+      "deletions": 0,
+      "insertions": 7,
+      "hits": 24,
+      "word_errors": 16,
+      "reference_words": 33,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ក្ដី",
+          "hypothesis": "ក្តី"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "រោម នី បៀ ត"
+        },
+        {
+          "type": "substitute",
+          "reference": "រូម៉ានី ពាក្យ ថា gypsy ជារឿយ",
+          "hypothesis": "ហ្សា គីប ស៊ី ជា រោយ"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ពាក់ ព័ន្ធ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ពាក់ព័ន្ធ ផ្នត់គំនិត",
+          "hypothesis": "ផ្នុំ កំណត់"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "រោម"
+        },
+        {
+          "type": "substitute",
+          "reference": "រូម៉ានី",
+          "hypothesis": "នី"
+        }
+      ],
+      "publisher_hypothesis": "បើទោះបីជាមានការប្រើប្រាស់យ៉ាងទូលំទូលាយក្តី ជាពិសេសក្នុងចំណោមពលរដ្ឋផ្សេងពីរមណី ពាក្យ Cambodia ជារោយត្រូវគិតថា មានន័យមិនល្អ ដោយសារវាពាក់ព័ន្ធផ្នត់គំនិតអវិជ្ជមាន និងទស្សនៈមិនត្រឹមត្រូវរបស់ពលរដ្ឋរមណី",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_141.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 14,
+      "reference": "អ្នកចម្រៀងល្បី ៗ នៅទូទាំងប្រទេសបានបង្ហាញបទចំរៀងផាចាន់ឬចម្រៀងធម្មជាតថា្វយដល់ជើងរបស់ស្ហ្រ៊ី ស្ហ៊ីយ៉ាំ shri shyam",
+      "hypothesis": "នាគចម្រៀងល្បីៗនៅទូទាំងប្រទេស បានបង្ហាញបទចម្រៀងផាចាន់ ឬចម្រៀងធម្មជាតិថ្វាយដ៏ជើងរបស់ sharif shamy",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 103,
+      "substitutions": 9,
+      "deletions": 5,
+      "insertions": 1,
+      "hits": 11,
+      "word_errors": 15,
+      "reference_words": 25,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "នាគ"
+        },
+        {
+          "type": "substitute",
+          "reference": "អ្នកចម្រៀង",
+          "hypothesis": "ចម្រៀង"
+        },
+        {
+          "type": "substitute",
+          "reference": "បទចំរៀង",
+          "hypothesis": "បទចម្រៀង"
+        },
+        {
+          "type": "substitute",
+          "reference": "ធម្ម ជា ត ថា្វយ ដល់ ជើ ងរ",
+          "hypothesis": "ធម្មជាតិ ថ្វាយ ដ៏ ជើង របស់ sharif shamy"
+        },
+        {
+          "type": "delete",
+          "reference": "បស់ស្ហ្រ៊ី ស្ហ៊ី យ៉ាំ shri shyam",
+          "hypothesis": ""
+        }
+      ],
+      "publisher_hypothesis": "នាគចម្រៀងល្បីៗនៅទូទាំងប្រទេស បានបង្ហាញបទចម្រៀងផាច័ន្ទ ឬចម្រៀងធម្មជាតិថ្វាយដ៏ជើងរបស់ ស៊ីរីក ស៊ីយ៉ាំ Shelley",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_14.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 95,
+      "reference": "សាហ្វារីស safaris ប្រហែលជាចំណុចទាក់ទាញភ្ញៀវទេសចរណ៍ដ៏អស្ចារ្យបំផុតនៅអាហ្វ្រិក និងជាការបញ្ជាក់ប្រាប់ដល់ភ្ញៀវទេសចរជាច្រើនទៀត",
+      "hypothesis": "សាហ្វារីស សាហ្វារីស សាហ្វារីស សាហ្វារីស stanford university ប្រហែលជាចំណុចទាក់ទាញភ្ញៀវទេសចរណ៍ដ៏អស្ចារ្យបំផុតនៅអាហ្វ្រិក នៅជាការបញ្ជាក់ដាប់ដល់ភ្ញៀវទេសចរណ៍ជាច្រើនទៀត",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 171,
+      "substitutions": 4,
+      "deletions": 1,
+      "insertions": 10,
+      "hits": 19,
+      "word_errors": 15,
+      "reference_words": 24,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "សា ហ្វា រីស សា ហ្វា រីស សា ហ្វា រីស stanford"
+        },
+        {
+          "type": "substitute",
+          "reference": "safaris",
+          "hypothesis": "university"
+        },
+        {
+          "type": "substitute",
+          "reference": "និង",
+          "hypothesis": "នៅជា"
+        },
+        {
+          "type": "delete",
+          "reference": "ជា",
+          "hypothesis": ""
+        },
+        {
+          "type": "substitute",
+          "reference": "ប្រាប់",
+          "hypothesis": "ដាប់"
+        },
+        {
+          "type": "substitute",
+          "reference": "ទេសចរ",
+          "hypothesis": "ទេសចរណ៍"
+        }
+      ],
+      "publisher_hypothesis": "សាស្វារីស ប្រហារជាចំណុចទាក់ទាញព្យាបាលទេសចរណ៍ដ៏អស្ចារ្យបំផុតនៅអាហ្វ្រិក នៅជាការបញ្ជាក់តាប់ដល់ភ្ញៀវទេសចរជាច្រើនទៀត",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_95.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 115,
+      "reference": "លោកវេជ្ជបណ្ឌិត moll គិតថា អ្នកជំងឺមួយចំនួនប្រហែលបានឆ្លងពួកសត្វល្អិតនៅក្នុងមន្ទីរពេទ្យ ហើយយ៉ាងហោចក្នុងនោះ ក៏មានបុគ្គលិកសុខាភិបាលពីរនាក់នៅក្នុងមន្ទីរពេទ្យដែរដែលបានឆ្លងជំងឺ",
+      "hypothesis": "លោភចាំដិតម៉ូនគណៈ អ្នកជំងឺមួយចំនួនប្រហែលបានឆ្លងពួកសាឡាក់នៅក្នុងបន្ទាយពេទ្យ ហើយយ៉ាងហោចក្នុងនោះក៏មានបុគ្គលិកសកម្មបានពីរនាក់នៅក្នុងបន្ទាយពេទ្យ ដែលដែលបានឆ្លងជំងឺ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 192,
+      "substitutions": 9,
+      "deletions": 0,
+      "insertions": 6,
+      "hits": 22,
+      "word_errors": 15,
+      "reference_words": 31,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "លោភ ចាំ"
+        },
+        {
+          "type": "substitute",
+          "reference": "លោក វេជ្ជបណ្ឌិត moll គិតថា",
+          "hypothesis": "ដិ ត ម៉ូន គណៈ"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "សា"
+        },
+        {
+          "type": "substitute",
+          "reference": "សត្វល្អិត",
+          "hypothesis": "ឡាក់"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "បន្ទាយ"
+        },
+        {
+          "type": "substitute",
+          "reference": "មន្ទីរពេទ្យ",
+          "hypothesis": "ពេទ្យ"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "សកម្ម"
+        },
+        {
+          "type": "substitute",
+          "reference": "សុខាភិបាល",
+          "hypothesis": "បាន"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "បន្ទាយ"
+        },
+        {
+          "type": "substitute",
+          "reference": "មន្ទីរពេទ្យ ដែរ",
+          "hypothesis": "ពេទ្យ ដែល"
+        }
+      ],
+      "publisher_hypothesis": "លំហិចម្តិចមូលគណៈ អ្នកជំងឺមួយចំនួនប្រហែលបានឆ្លងពួកសាលានៅក្នុងមន្ទីរពេទ្យ ហើយយ៉ាងហោចក្នុងនោះក៏មានបុគ្គលិកសក្ការបាល់ពីរនាក់នៅក្នុងមន្ទីរពេទ្យដែរដែលបានឆ្លងជំងឺ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_115.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 169,
+      "reference": "ពិន្ទុចុងក្រោយគឺជាពិន្ទុឈ្នះមួយពិន្ទុ គឺ២១ទល់និង២០ នៅចុងបញ្ចប់នៃការប្រកួតជ័យលាភីហ្គេមall blacksទាំង១៥។",
+      "hypothesis": "ពិន្ទុចុងក្រោយ គឺជាពិន្ទុឆ្នាំមួយពិន្ទុ គឺ ម្ភៃមួយ ទៅនឹង ម្ភៃ នៃចុងបញ្ចប់នៃការបង្កើតជ័យលាភីហ្គេម អូរប្លែកស្ទាំងដប់តាំង",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 149,
+      "substitutions": 7,
+      "deletions": 0,
+      "insertions": 8,
+      "hits": 9,
+      "word_errors": 15,
+      "reference_words": 16,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ឈ្នះ",
+          "hypothesis": "ឆ្នាំ"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "គឺ ម្ភៃ មួយ ទៅ"
+        },
+        {
+          "type": "substitute",
+          "reference": "គឺ២១ទល់ និង២០ នៅ",
+          "hypothesis": "នឹង ម្ភៃ នៃ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ការប្រកួត",
+          "hypothesis": "ការបង្កើត"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ហ្គេម អូរ ប្លែក ស្ទាំង"
+        },
+        {
+          "type": "substitute",
+          "reference": "ហ្គេមall blacksទាំង១៥",
+          "hypothesis": "ដប់ តាំង"
+        }
+      ],
+      "publisher_hypothesis": "ពិន្ទុចុងក្រោយ គឺជាពិន្ទុឆ្នាំ មួយពាន់បួនរយ គឺ ម្ភៃមួយ ទៅ ម្ភៃ នៃចុងបញ្ចប់នៃការប្រកួតជ័យលាភីហ្គេម ឱ្យប្លែកស្ទាំងដប់ប្រាំ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_169.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 3,
+      "reference": "ក្រពើទឹកប្រៃមិនសកម្មក្នុងការរស់នៅក្នុងមហាសមុទ្រនោះទេ ព្រោះជម្រកសំខាន់របស់ពួកវាស្ថិតនៅតាមដងទន្លេភាគខាងជើងនៃទីក្រុង រ៉កខាមថុន",
+      "hypothesis": "ប្រព្រឹត្តទឹកប្រៃមិនសកម្មនៅការណែនាំក្នុងមហាសមិទ្ធនោះទេ ព្រោះចំពោះសំខាន់របស់ពួកវា សុទ្ធតែតាមផ្តល់ទំនេរភាគខាងជើងនៃពិក្រុងរកខាងធន់",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 160,
+      "substitutions": 11,
+      "deletions": 0,
+      "insertions": 3,
+      "hits": 14,
+      "word_errors": 14,
+      "reference_words": 25,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ក្រពើ",
+          "hypothesis": "ប្រព្រឹត្ត"
+        },
+        {
+          "type": "substitute",
+          "reference": "ក្នុង ការរស់នៅ",
+          "hypothesis": "នៅ ការណែនាំ"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "មហា"
+        },
+        {
+          "type": "substitute",
+          "reference": "មហាសមុទ្រ",
+          "hypothesis": "សមិទ្ធ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ជម្រក",
+          "hypothesis": "ចំពោះ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ស្ថិតនៅ",
+          "hypothesis": "សុទ្ធតែ"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ផ្តល់"
+        },
+        {
+          "type": "substitute",
+          "reference": "ដងទន្លេ",
+          "hypothesis": "ទំនេរ"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ពិ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ទីក្រុង រ៉ក ខាម ថុន",
+          "hypothesis": "ក្រុង រក ខាង ធន់"
+        }
+      ],
+      "publisher_hypothesis": "ប្រព្រឹត្តទឹកប្រៃ មិនសកម្មនៅកាលរស់នៅក្នុងមហាសមិទ្ធិនោះទេ ព្រោះចំពោះសំខាន់ប៉ុស្តិ៍ពួកវា សុទ្ធតែតាមផ្តុំទន្លេ ភាគខឹងជើង នៃពីក្រុង រ៉ក់ ខាងធន់",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_3.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 74,
+      "reference": "បុណ្យណូអែល គឺជាថ្ងៃឈប់សម្រាកដ៏សំខាន់មួយនៅក្នុងសាសនាគ្រីស្ទ ហើយត្រូវបានគេអបអរជាថ្ងៃកំណើតរបស់ព្រះគ្រីស្ទ",
+      "hypothesis": "បុណ្យ noaa គឺជាថ្មឃើញសម្រាប់ដ៏មហន្តរាយមួយនៅក្នុងសាសនាគ្រឹស្ដី ហើយត្រូវបានគេអបអរជាថ្មកំណើតរបស់បេះគ្រឹះ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 120,
+      "substitutions": 9,
+      "deletions": 1,
+      "insertions": 4,
+      "hits": 11,
+      "word_errors": 14,
+      "reference_words": 21,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "បុណ្យ"
+        },
+        {
+          "type": "substitute",
+          "reference": "បុណ្យណូអែល",
+          "hypothesis": "noaa"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ថ្ម"
+        },
+        {
+          "type": "substitute",
+          "reference": "ថ្ងៃឈប់ សម្រាក",
+          "hypothesis": "ឃើញ សម្រាប់"
+        },
+        {
+          "type": "substitute",
+          "reference": "សំខាន់",
+          "hypothesis": "មហន្តរាយ"
+        },
+        {
+          "type": "substitute",
+          "reference": "សាស នា គ្រី",
+          "hypothesis": "សាសនា គ្រឹ ស្ដី"
+        },
+        {
+          "type": "delete",
+          "reference": "ស្ទ",
+          "hypothesis": ""
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ថ្ម"
+        },
+        {
+          "type": "substitute",
+          "reference": "ថ្ងៃកំណើត",
+          "hypothesis": "កំណើត"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "បេះ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ព្រះគ្រីស្ទ",
+          "hypothesis": "គ្រឹះ"
+        }
+      ],
+      "publisher_hypothesis": "បុណ្យលោអែ គឺជាថ្មឈើសម្រាកដ៏មហន្តរាយមួយនៅក្នុងសាសនាគ្រឹស្ត ហើយត្រូវបានគេអបអរជាថ្មកំណើតរបស់ព្រះគ្រឹស្ត",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_74.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 53,
+      "reference": "ជាធម្មតា វគ្គសិក្សានេះ នឹងនិយាយអំពីបញ្ហានានាដែលពិភាក្សានៅក្នុងទីនេះយ៉ាងល្អិតល្អន់ជាងមុន ជាទូទៅមានបញ្ចូលនូវបទពិសោធន៍ជាក់ស្ដែងផងដែរ",
+      "hypothesis": "ជាធម្មតា បរិស្ថាននេះនឹងនិយាយអំពីបញ្ហានេះនាដែលពិភាក្សានៅក្នុងទីវីនតែងប្រើប្រាស់នៅជាមុន ជាទូទៅមានបញ្ចូលតម្លៃភាសាដែលជាក់ស្តែងផងដែរ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 156,
+      "substitutions": 9,
+      "deletions": 0,
+      "insertions": 4,
+      "hits": 16,
+      "word_errors": 13,
+      "reference_words": 25,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "វគ្គសិក្សា",
+          "hypothesis": "បរិស្ថាន"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "នេះ"
+        },
+        {
+          "type": "substitute",
+          "reference": "នានា",
+          "hypothesis": "នា"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ទី វី"
+        },
+        {
+          "type": "substitute",
+          "reference": "ទីនេះ យ៉ាង ល្អិតល្អន់ ជាង",
+          "hypothesis": "ន តែង ប្រើប្រាស់ នៅជា"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "តម្លៃ"
+        },
+        {
+          "type": "substitute",
+          "reference": "នូវ បទពិសោធន៍ ជាក់ស្ដែង",
+          "hypothesis": "ភាសា ដែល ជាក់ស្តែង"
+        }
+      ],
+      "publisher_hypothesis": "ជាធម្មតា អារម្មណ៍អាពាហ៍សិក្សានេះនឹងនិយាយអំពីបញ្ហានានា ដែលពិភាក្សានៅក្នុងទីនេះយ៉ាងល្អិតល្អន់ ជាងមុន ជាទូទៅមានបញ្ចូលទម្រង់ពិសោធន៍ជាក់ស្តែងផងដែរ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_53.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 172,
+      "reference": "ដោយសារតែសិស្សនិស្សិតគឺជាទស្សនិកជនដែលធ្វើការរិះគន់ច្រើនជាគេ អ្នកសរសេរប្លក់ចាប់ផ្តើមព្យយាមកែលម្អការសរសេរដើម្បីចៀសវាងមតិរិះគន់",
+      "hypothesis": "ដោយសារតែសិស្សនិស្សិត គឺជាទូរស័ព្ទជនដែលធ្វើការរិះគន់ចានជាងគេ នៅសរសេរប្លក់ ចាប់ផ្តើមព្យាយាមកែលម្អការសរសេរ ដើម្បីជៀសវាងមតិអ្នកគុណ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 153,
+      "substitutions": 8,
+      "deletions": 3,
+      "insertions": 2,
+      "hits": 15,
+      "word_errors": 13,
+      "reference_words": 26,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ទូរស័ព្ទ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ទស្សនិកជន",
+          "hypothesis": "ជន"
+        },
+        {
+          "type": "substitute",
+          "reference": "ច្រើន ជា គេ",
+          "hypothesis": "ចាន ជាងគេ នៅ"
+        },
+        {
+          "type": "delete",
+          "reference": "អ្នក",
+          "hypothesis": ""
+        },
+        {
+          "type": "substitute",
+          "reference": "ចាប់ ផ្តើម",
+          "hypothesis": "ចាប់ផ្តើម ព្យាយាម"
+        },
+        {
+          "type": "delete",
+          "reference": "ព្យ យាម",
+          "hypothesis": ""
+        },
+        {
+          "type": "substitute",
+          "reference": "ចៀសវាង",
+          "hypothesis": "ជៀសវាង"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "អ្នក"
+        },
+        {
+          "type": "substitute",
+          "reference": "រិះគន់",
+          "hypothesis": "គុណ"
+        }
+      ],
+      "publisher_hypothesis": "ដោយសារតែសិស្សនិស្សិតគឺជាទូរស័ព្ទជនដែលធ្វើការរិះគន់កាន់តែងគេ និងសរសេរប្លក់ ចាប់ផ្តើមព្យាយាមកែលម្អការសរសេរ ដើម្បីជៀសវាងមតិនិគន់",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_172.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 8,
+      "reference": "ជាគោលការណ៍ព្រះពុទ្ធសាសនា ទីបេ tibetan គឺមានភាពសាមញ្ញណាស់ វាមានយូហ្កា គុនដាលីនី kundalini yoga ការធ្វើសមាធិ និងមាគ៌ានៃក្តីស្រឡាញ់ទាំងអស់",
+      "hypothesis": "ជាគោលការណ៍ដែលពុទ្ធសាសនាទីប៊េ គឺមានភាពសម្បត្តិណាស់ វាមានយូហ្គា គុម្ពដាលីនី ការធ្វើសមាធិ និងមេកៀននៃក្រីក្រស្រឡាញ់ទាំងអស់",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 142,
+      "substitutions": 9,
+      "deletions": 2,
+      "insertions": 1,
+      "hits": 19,
+      "word_errors": 12,
+      "reference_words": 30,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ព្រះពុទ្ធ សាសនា ទីបេ tibetan",
+          "hypothesis": "ដែល ពុទ្ធសាសនា ទី ប៊េ"
+        },
+        {
+          "type": "substitute",
+          "reference": "សាមញ្ញ",
+          "hypothesis": "សម្បត្តិ"
+        },
+        {
+          "type": "substitute",
+          "reference": "នយូហ្កា គុន",
+          "hypothesis": "នយូហ្គា គុម្ព"
+        },
+        {
+          "type": "delete",
+          "reference": "kundalini yoga",
+          "hypothesis": ""
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "មេ"
+        },
+        {
+          "type": "substitute",
+          "reference": "មាគ៌ា",
+          "hypothesis": "កៀន"
+        },
+        {
+          "type": "substitute",
+          "reference": "ក្តី",
+          "hypothesis": "ក្រីក្រ"
+        }
+      ],
+      "publisher_hypothesis": "ជាគោលការណ៍ដែលពុទ្ធសាសនាទីបេ គឺមានភាពសាមញ្ញណាស់ វាមានយូហ្គា គុណតាលានី ការធ្វើសមាធិ និងមេកៀននៃក្តីស្រឡាញ់ទាំងអស់",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_8.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 37,
+      "reference": "ដោយសារតែចម្ងាយឆ្ងាយពីទ្វីបហើយថនិកសត្វមិនអាចធ្វើដំណើរបាន ធ្វើឱ្យសត្វអណ្តើកយក្សក្លាយជាសត្វចិញ្ចឹមដ៏សំខាន់បំផុតនៅកាឡាបាហ្គូស",
+      "hypothesis": "ដោយសារតែចម្ងាយឈ្ងាយពីទ្វារ ហើយថ្លៅជាសត្វអាចធ្វើដំណើរបាន ធ្វើឱ្យសណ្តាប់យក្សថ្លៃជាសត្វចិញ្ចឹមដ៏សំខាន់បំផុតនៅកាឡាបារូស",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 138,
+      "substitutions": 10,
+      "deletions": 1,
+      "insertions": 1,
+      "hits": 16,
+      "word_errors": 12,
+      "reference_words": 27,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ឆ្ងាយ",
+          "hypothesis": "ឈ្ងាយ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ទ្វីប",
+          "hypothesis": "ទ្វារ"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ថ្លៅ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ថនិកសត្វ មិន",
+          "hypothesis": "ជា សត្វ"
+        },
+        {
+          "type": "substitute",
+          "reference": "សត្វ អណ្តើក យក្ស ក្លាយជា",
+          "hypothesis": "សណ្តាប់ យក្ស ថ្លៃ ជា"
+        },
+        {
+          "type": "substitute",
+          "reference": "កា",
+          "hypothesis": "កាឡា"
+        },
+        {
+          "type": "delete",
+          "reference": "ឡា",
+          "hypothesis": ""
+        },
+        {
+          "type": "substitute",
+          "reference": "ហ្គូស",
+          "hypothesis": "រូស"
+        }
+      ],
+      "publisher_hypothesis": "ដោយសារតែចម្ងាយឆ្ងាយពីទ្វារ ហើយថ្លៃចិត្តសត្វម្អិតធ្លាប់បាន ធ្វើឱ្យសត្វម្អិតយក្សក្លាយជាសត្វចិញ្ចឹមដ៏សំខាន់បំផុតនៅកាឡាបារូឌ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_37.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 43,
+      "reference": "បុណ្យណូអែល គឺជាថ្ងៃឈប់សម្រាកដ៏សំខាន់មួយនៅក្នុងសាសនាគ្រីស្ទ ហើយត្រូវបានគេអបអរជាថ្ងៃកំណើតរបស់ព្រះគ្រីស្ទ",
+      "hypothesis": "បុណ្យនៅឯគឺជាថ្ងៃឈុតសម្រាកដ៏សំខាន់មួយនៅក្នុងសាសនាគ្រឹស្ដី ហើយត្រូវបានគេអបអរជាថ្ងៃកំណើតរបស់ព្រះគ្រឹស្ដ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 125,
+      "substitutions": 6,
+      "deletions": 1,
+      "insertions": 5,
+      "hits": 14,
+      "word_errors": 12,
+      "reference_words": 21,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "បុណ្យ នៅ"
+        },
+        {
+          "type": "substitute",
+          "reference": "បុណ្យណូអែល",
+          "hypothesis": "ឯ"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ថ្ងៃ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ថ្ងៃឈប់",
+          "hypothesis": "ឈុត"
+        },
+        {
+          "type": "substitute",
+          "reference": "សាស នា គ្រី",
+          "hypothesis": "សាសនា គ្រឹ ស្ដី"
+        },
+        {
+          "type": "delete",
+          "reference": "ស្ទ",
+          "hypothesis": ""
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ព្រះ គ្រឹ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ព្រះគ្រីស្ទ",
+          "hypothesis": "ស្ដ"
+        }
+      ],
+      "publisher_hypothesis": "បុណ្យឯក គឺជាថ្ងៃជួបសម្រាកដ៏សំខាន់មួយនៅក្នុងសាសនាគ្រឹស្ត ហើយត្រូវបានគេអបអរជាថ្ងៃកំណើតរបស់ព្រះគ្រឹស្ត",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_43.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 49,
+      "reference": "សូមមេត្តាគោរពទីកន្លែងនេះដោយរក្សាសេចក្តីថ្លៃថ្នូរ ភាពស្មឹងស្មាធ និងការគោរពដែលសាកសម កុំលេងសើចអំពីការប្រល័យពូជាសាសន៍ ឬពួកណាស៊ីឲ្យសោះ",
+      "hypothesis": "សូមមេត្តា គោរពទីកន្លែងនេះដោយរក្សាសេចក្តីថ្លៃថ្នូរ ភាពស្មឹងស្ម័គ្រ និងការគោរពដែលស័ក្តិសម កម្លេងសើចអំពីការប្រឡាយពូជសាសន៍ ឬពួកណាស៊ីលសោះ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 164,
+      "substitutions": 7,
+      "deletions": 4,
+      "insertions": 1,
+      "hits": 20,
+      "word_errors": 12,
+      "reference_words": 31,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ស្មា",
+          "hypothesis": "ស្ម័គ្រ"
+        },
+        {
+          "type": "delete",
+          "reference": "ធ",
+          "hypothesis": ""
+        },
+        {
+          "type": "substitute",
+          "reference": "សាក សម កុំ",
+          "hypothesis": "ស័ក្តិសម កម្លេង សើច"
+        },
+        {
+          "type": "delete",
+          "reference": "លេងសើច",
+          "hypothesis": ""
+        },
+        {
+          "type": "substitute",
+          "reference": "ប្រល័យ ពូ",
+          "hypothesis": "ប្រឡាយ ពូជសាសន៍"
+        },
+        {
+          "type": "delete",
+          "reference": "ជា សាសន៍",
+          "hypothesis": ""
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ល"
+        },
+        {
+          "type": "substitute",
+          "reference": "ឲ្យសោះ",
+          "hypothesis": "សោះ"
+        }
+      ],
+      "publisher_hypothesis": "សូមមេត្តាគោរពទីកន្លែងនេះ ដោយរក្សាសេចក្តីថ្លៃថ្នូរ ភាពស្មឹងស្មាត និងការគោរពដែលស័ក្តិសម កម្លេងសើចអំពីការប្រល័យពូជសាសន៍ ឬពួកណាស៊ីលសោះ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_49.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 40,
+      "reference": "អ៊ីស្រាអែលទាមទារឱ្យមានវត្តមានយោធាជាបន្តនៅជ្រលងភ្នំសម្រាប់រយៈពេលដប់ឆ្នាំ ពេលដែលកិច្ចព្រមព្រៀងត្រូវបានចុះហត្ថលេខា ចំណែកឯប៉ាឡេស្ទីនយល់ព្រមឱ្យមានវត្តមានបែបនេះសម្រាប់រយៈពេលតែប្រាំឆ្នាំ ប៉ុណ្ណោះ",
+      "hypothesis": "israel ទាមទារឱ្យមានវត្តមានយោធាជាមិនទាន់នៅជ្រលងភ្នំសម្រាប់រយៈពេលដប់ឆ្នាំ ពេលដែលកិច្ចព្រមព្រៀងត្រូវបានចុះអត្តលេខា ចំណែកអបាលីស្តីនយល់ព្រមឱ្យមានវត្តមានបែបនេះសម្រាប់រយៈពេលតែប្រាំឆ្នាំប៉ុណ្ណោះ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 222,
+      "substitutions": 7,
+      "deletions": 0,
+      "insertions": 4,
+      "hits": 27,
+      "word_errors": 11,
+      "reference_words": 34,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "អ៊ីស្រាអែល",
+          "hypothesis": "israel"
+        },
+        {
+          "type": "substitute",
+          "reference": "បន្ត",
+          "hypothesis": "មិនទាន់"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ចុះ អត្ត"
+        },
+        {
+          "type": "substitute",
+          "reference": "ចុះហត្ថលេខា",
+          "hypothesis": "លេខា"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "អ បាលី"
+        },
+        {
+          "type": "substitute",
+          "reference": "ឯ ប៉ាឡេស្ទីន យល់ព្រម ឱ្យ",
+          "hypothesis": "ស្តី នយ ល់ ព្រមឱ្យ"
+        }
+      ],
+      "publisher_hypothesis": "ឥស្ត្រអេឡិចត្រូវទាមទារឱ្យមានវត្តមានយោធាជាបន្តនៅជ្រលងភ្នំសម្រាប់រយៈពេល ដប់ ឆ្នាំ ពេលដែលកិច្ចព្រមព្រៀងត្រូវបានចុះអត្តលិកា ចំណែកអបាលីស្ទីនយល់ព្រមឱ្យមានវត្តមានបែបនេះសម្រាប់រយៈពេលតែ ប្រាំ ឆ្នាំប៉ុណ្ណោះ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_40.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 90,
+      "reference": "បុណ្យណូអែល គឺជាថ្ងៃឈប់សម្រាកដ៏សំខាន់មួយនៅក្នុងសាសនាគ្រីស្ទ ហើយត្រូវបានគេអបអរជាថ្ងៃកំណើតរបស់ព្រះគ្រីស្ទ",
+      "hypothesis": "បុណ្យនៅឯក គឺជាថ្ងៃឈុតសម្រាកដ៏សំខាន់មួយនៅក្នុងសាសនាគ្រឹះ ហើយត្រូវបានគេអបអរជាថ្ងៃកំណើតរបស់ព្រះគ្រឹះ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 123,
+      "substitutions": 5,
+      "deletions": 2,
+      "insertions": 4,
+      "hits": 14,
+      "word_errors": 11,
+      "reference_words": 21,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "បុណ្យ នៅ"
+        },
+        {
+          "type": "substitute",
+          "reference": "បុណ្យណូអែល",
+          "hypothesis": "ឯក"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ថ្ងៃ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ថ្ងៃឈប់",
+          "hypothesis": "ឈុត"
+        },
+        {
+          "type": "substitute",
+          "reference": "សាស នា",
+          "hypothesis": "សាសនា គ្រឹះ"
+        },
+        {
+          "type": "delete",
+          "reference": "គ្រី ស្ទ",
+          "hypothesis": ""
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ព្រះ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ព្រះគ្រីស្ទ",
+          "hypothesis": "គ្រឹះ"
+        }
+      ],
+      "publisher_hypothesis": "ពូនឯកគឺជាថ្ងៃចុះសម្រាកដ៏សំខាន់មួយនៅក្នុងសាសនាគ្រិស្ត ហើយត្រូវបានគេអបអរជាថ្ងៃកំណត់របស់ព្រះគ្រឹះ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_90.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 111,
+      "reference": "ទូរសព្ទផ្កាយរណប ជាទូទៅមិនមែនជាការជំនួសទូរសព្ទចល័តទេព្រោះអ្នកត្រូវតែនៅខាងក្រៅអគារ ដោយអាចឲ្យផ្កាយរណបមើលបានច្បាស់ ដើម្បីហៅទូរសព្ទចេញបាន",
+      "hypothesis": "ទូរសព្ទកែវរណប់ ជាទូទៅមិនមែនជាការជំនួសទូរសព្ទចន្លេទេ ព្រោះអ្នកត្រូវតែនៅខាងក្រៅអគារ ដោយហាលឱ្យកែវរណប់មើលបានច្បាស់ ដើម្បីហៅទូរសព្ទចេញបាន",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 162,
+      "substitutions": 6,
+      "deletions": 0,
+      "insertions": 5,
+      "hits": 22,
+      "word_errors": 11,
+      "reference_words": 28,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "កែ វរ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ផ្កាយរណប",
+          "hypothesis": "ណប់"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ទូរ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ទូរសព្ទ ចល័ត",
+          "hypothesis": "សព្ទ ចន្លេ"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ហាល ឱ្យ"
+        },
+        {
+          "type": "substitute",
+          "reference": "អាច ឲ្យ ផ្កាយរណប",
+          "hypothesis": "កែ វរ ណប់"
+        }
+      ],
+      "publisher_hypothesis": "ទូរស័ព្ទកែរណ្តៅ ជាទូទៅមិនមែនជាការជំនួសទូរស័ព្ទចល័តទេ ព្រោះអ្នកត្រូវតែនៅខាងក្រៅអគារ ដោយហាត់ឱ្យកែរណ្តៅមើលបានច្បាស់ ដើម្បីហៅទូរស័ព្ទចេញបាន",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_111.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 35,
+      "reference": "បន្ទាប់ពីតក់ស្លុត និងបានឃើញភាពសាហាវឃោរឃៅនៃសង្គ្រាមក្នុងកំឡុងពេលនៃសង្គ្រាមលោកលើកទីមួយ ប្រជាជាតិជាច្រើនមិនចង់ជួបស្ថានភាពបែបនេះទៀតទេនៅពេលអនាគត",
+      "hypothesis": "បន្ទាប់ពីតក់ស្លុត ដែលបានឃើញភាពសាហាវឃោរឃៅនៃសង្គ្រាមក្នុងកំឡុងពេល ដែលសំខាន់ប្រូតេដូដូទីមួយ ប្រជាជាតិជាច្រើនមិនចាំងរួមស្ថានភាពបែបនេះទៀតទេនៅពេលអនាគត",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 182,
+      "substitutions": 6,
+      "deletions": 0,
+      "insertions": 4,
+      "hits": 18,
+      "word_errors": 10,
+      "reference_words": 24,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "និង",
+          "hypothesis": "ដែល"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ដែល សំខាន់ ប្រូ តេ"
+        },
+        {
+          "type": "substitute",
+          "reference": "នៃ សង្គ្រាមលោក លើកទីមួយ",
+          "hypothesis": "ដូ ដូ ទីមួយ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ចង់ ជួប",
+          "hypothesis": "ចាំង រួម"
+        }
+      ],
+      "publisher_hypothesis": "បន្ទាប់ពីតក់ស្លុត និងបានឃើញភាពសាហាវឃោរឃៅនៃសង្គ្រាមក្នុងកំឡុងពេលដែលសំខាន់ៗប្រជាជាតិជាច្រើនមិនចង់ជួបស្ថានភាពបែបនេះទៀតទេនៅពេលអនាគត",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_35.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 60,
+      "reference": "មានឆ្នេរជាច្រើនកកើតឡើង ដោយសារតែការញែកចេញនៃកំពង់ផែ អក់ឡឹនដ៍ auckland ទាំងពីរ ការពេញនិយមបំផុត គឺស្ថិតនៅក្នុងតំបន់ ឬផ្នែកចំនួនបី",
+      "hypothesis": "មានឆ្នេរជាច្រើនក៏កើតឡើងដោយសារតែការញែកចេញនៅកំពង់ផែ អុកឡឺនដ អុកឡឺនដ ទាំងពីរ ការពេញនិយមបំផុតគឺស្ថិតនៅក្នុងតំបន់នៅផ្នែកចំនួនបី",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 157,
+      "substitutions": 9,
+      "deletions": 0,
+      "insertions": 1,
+      "hits": 18,
+      "word_errors": 10,
+      "reference_words": 27,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "កកើត ឡើង",
+          "hypothesis": "ក៏ កើតឡើង"
+        },
+        {
+          "type": "substitute",
+          "reference": "នៃ",
+          "hypothesis": "នៅ"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "អុក"
+        },
+        {
+          "type": "substitute",
+          "reference": "អ ក់ ឡឹ នដ៍ auckland",
+          "hypothesis": "ឡឺ នដ អុក ឡឺ នដ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ឬ",
+          "hypothesis": "នៅ"
+        }
+      ],
+      "publisher_hypothesis": "មានឆ្នេរជាច្រើនក៏កើតឡើងដោយសារតែការញែកចេញនៃកំពង់ផែអកឡឺលិនទាំងពីរ ការពេញនិយមបំផុតគឺស្ទើរនៅក្នុងដំបង នៅផ្នែកចំនួនបី",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_60.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 164,
+      "reference": "នៅប្រទេសអ៊ីរ៉ង់ គ្រោះថ្នាក់ជើងអាកាសគឺជារឿងធម្មតាព្រោះយន្តហោះចាស់ៗ ហើយការថែទាំមិនបានល្អសម្រាប់ទាំងប្រតិបត្តិការស៊ីវិល និងប្រតិបត្តិការយោធា",
+      "hypothesis": "នៅប្រទេសអ៊ីរ៉ាន់ គោលដៅជាងអាកាសគឺជារឿងធម្មតា ព្រោះយន្តហោះចាស់ៗ ហើយការថែទាំមិនអាចល្អ ព្រមទាំងប្រតិបត្តិការស៊ីវិល និងប្រតិបត្តិការយោធា",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 164,
+      "substitutions": 5,
+      "deletions": 1,
+      "insertions": 4,
+      "hits": 20,
+      "word_errors": 10,
+      "reference_words": 26,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "អ៊ី រ៉ា ន់"
+        },
+        {
+          "type": "substitute",
+          "reference": "អ៊ីរ៉ង់ គ្រោះថ្នាក់ ជើងអាកាស",
+          "hypothesis": "គោលដៅ ជាង អាកាស"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "មិន"
+        },
+        {
+          "type": "substitute",
+          "reference": "មិនបាន",
+          "hypothesis": "អាច"
+        },
+        {
+          "type": "substitute",
+          "reference": "សម្រាប់",
+          "hypothesis": "ព្រមទាំង"
+        },
+        {
+          "type": "delete",
+          "reference": "ទាំង",
+          "hypothesis": ""
+        }
+      ],
+      "publisher_hypothesis": "នៅប្រទេសអ៊ីរ៉ុង គោលដៅជាងឱកាសគឺជារឿងធម្មតា ព្រោះយន្តហោះចាស់ៗ ហើយការថែទាំមិនអានល្អ ព្រមទាំងប្រតិបត្តិការស៊ីវិល និងប្រតិបត្តិការយោធា",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_164.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 0,
+      "reference": "កាលដើមឡើយសម្លៀកបំពាក់គឺធ្ងន់ទទួលឥទ្វិពលដោយវប្បធម៌byzantine នៅភាគខាងកើត។",
+      "hypothesis": "ការដាំឡើងសម្លៀកបំពាក់គឺធ្ងន់ ទទួលឥទ្ធិពលដោយវប្បធម៌ ប៉ៃសាន់ធាន នៅភាគខាងកើត",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 91,
+      "substitutions": 6,
+      "deletions": 0,
+      "insertions": 3,
+      "hits": 7,
+      "word_errors": 9,
+      "reference_words": 13,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ការ ដាំ"
+        },
+        {
+          "type": "substitute",
+          "reference": "កាលដើមឡើយ",
+          "hypothesis": "ឡើង"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ឥទ្ធិពល"
+        },
+        {
+          "type": "substitute",
+          "reference": "ឥ ទ្វិ ពល ដោយ វប្បធម៌byzantine",
+          "hypothesis": "ដោយ វប្បធម៌ ប៉ៃ សាន់ ធាន"
+        }
+      ],
+      "publisher_hypothesis": "ការដាំឡើងសម្លៀកបំពាក់គឺធ្ងន់ ទទួលឥទ្ធិពលដោយវប្បធម៌ប៉ៃសាន់ចេន នៅភាគខាងកើត",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_0.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 7,
+      "reference": "ព្រះពុទ្ធសាសនាទីបេ គឺផ្អែកទៅលើការបង្រៀនរបស់ព្រះពុទ្ធ ប៉ុន្តែវាត្រូវបានពង្រីកដោយមាគ៌ានៃមហាយាននៃសេចក្តីស្រឡាញ់ និងដោយប្រើបច្ចេកទេសជាច្រើនតាមការហាត់យូហ្ការបស់ឥណ្ឌា",
+      "hypothesis": "ព្រះពុទ្ធសាសនាបីប៊ែ គឺផ្អែកទៅលើការបង្រៀនរបស់ព្រះពុទ្ធ ប៉ុន្តែវាត្រូវបានពង្រីកដោយមាគ៌ានៃមហាយាននៃសេចក្តីត្រឡាញ និងដែលប្រព្រឹត្តទេសជាច្រើន ដោយតាមការហាត់យូហ្គារបស់ឥណ្ឌា",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 198,
+      "substitutions": 7,
+      "deletions": 0,
+      "insertions": 2,
+      "hits": 28,
+      "word_errors": 9,
+      "reference_words": 35,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "បី"
+        },
+        {
+          "type": "substitute",
+          "reference": "ទីបេ",
+          "hypothesis": "ប៊ែ"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ត្រ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ស្រឡាញ់",
+          "hypothesis": "ឡាញ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ដោយ ប្រើ បច្ចេកទេស",
+          "hypothesis": "ដែល ប្រព្រឹត្ត ទេស"
+        },
+        {
+          "type": "substitute",
+          "reference": "តាម",
+          "hypothesis": "ដោយតាម"
+        },
+        {
+          "type": "substitute",
+          "reference": "ហ្កា",
+          "hypothesis": "ហ្គា"
+        }
+      ],
+      "publisher_hypothesis": "ព្រះពុទ្ធសាសនាទីបេ គឺផ្អែកទៅលើការបង្រៀនរបស់ព្រះពុទ្ធ ប៉ុន្តែវាត្រូវបានពង្រីកដោយ មាគ៌ានិមហាយាន នៃសេចក្តីត្រឡាញ និងដែលប្រើបច្ចេកទេសជាច្រើនតាមការហាត់យូហ្គារបស់ឥណ្ឌា",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_7.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 96,
+      "reference": "ជាគោលការណ៍ព្រះពុទ្ធសាសនា ទីបេ tibetan គឺមានភាពសាមញ្ញណាស់ វាមានយូហ្កា គុនដាលីនី kundalini yoga ការធ្វើសមាធិ និងមាគ៌ានៃក្តីស្រឡាញ់ទាំងអស់",
+      "hypothesis": "ជាគោលការណ៍ព្រះពុទ្ធសាសនាទីប៊េ គឺមានភាពសាមញ្ញណាស់ វាមានយូហ្គាគុនដាលីនី ការធ្វើសមាធិ និងមិនគានិករីកស្រឡាញ់ទាំងអស់",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 133,
+      "substitutions": 6,
+      "deletions": 2,
+      "insertions": 1,
+      "hits": 22,
+      "word_errors": 9,
+      "reference_words": 30,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ទីបេ tibetan",
+          "hypothesis": "ទី ប៊េ"
+        },
+        {
+          "type": "substitute",
+          "reference": "នយូហ្កា",
+          "hypothesis": "នយូហ្គា"
+        },
+        {
+          "type": "delete",
+          "reference": "kundalini yoga",
+          "hypothesis": ""
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "មិន"
+        },
+        {
+          "type": "substitute",
+          "reference": "មាគ៌ា នៃ ក្តី",
+          "hypothesis": "គា និក រីក"
+        }
+      ],
+      "publisher_hypothesis": "ជាគោលការណ៍ ព្រះពុទ្ធសាសនាទីបេ គឺមានភាពសាមញ្ញណាស់ វាមានយូហ្គាគុណដាលីនី ការធ្វើសមាធិ និងមាគ៌ានិក្តីស្រឡាញ់ទាំងអស់",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_96.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 130,
+      "reference": "អាជ្ញាធរមូលដ្ឋាន កំពុងផ្ដល់ការជូនដំណឹងដល់ពលរដ្ឋនៅក្បែររោងចក្រនោះ ឲ្យស្ថិតនៅក្នុងផ្ទះ បិទម៉ាស៊ីនត្រជាក់ មិនឲ្យទទួលទានទឹករ៉ូប៊ីណេឡើយ",
+      "hypothesis": "អាជ្ញាធរមូលដ្ឋានកំពុងផ្តល់ការជូនអំណើរដល់ពលរដ្ឋនៅក្បែររោងចក្រនោះ ឱ្យស្ថិតនៅក្នុងផ្ទះ បិទម៉ាស៊ីនត្រជាក់ មិនឱ្យទទួលទានទឹកបរិនីឡើយ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 157,
+      "substitutions": 6,
+      "deletions": 1,
+      "insertions": 2,
+      "hits": 20,
+      "word_errors": 9,
+      "reference_words": 27,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ផ្ដល់",
+          "hypothesis": "ផ្តល់"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ជូន អំ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ជូនដំណឹង",
+          "hypothesis": "ណើរ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ឲ្យ",
+          "hypothesis": "ឱ្យ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ឲ្យ",
+          "hypothesis": "ឱ្យ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ក រ៉ូប៊ី",
+          "hypothesis": "កប រិនី"
+        },
+        {
+          "type": "delete",
+          "reference": "ណេ",
+          "hypothesis": ""
+        }
+      ],
+      "publisher_hypothesis": "អាជ្ញាធរមូលដ្ឋានកំពុងតភក្តិជូនអំណឹងដល់ពលរដ្ឋនៅក្បែររោងចក្រនោះ ឱ្យស្ថិតនៅក្នុងផ្ទះបិទម៉ាស៊ីនត្រជាក់ មិនឱ្យទទួលទានទឹករ៉ូប៊ីនេឡើយ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_130.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 158,
+      "reference": "ក្រុមអ្នកស្រាវជ្រាវបានលើកឡើងថា ទោះបីនេះជាកន្ទុយរបស់ដាយណូស័រវ័យក្មេងក៏ដោយតែគំរូបង្ហាញពីរោមដាយណូស័រពេញវ័យហើយក៏មិនមែនជារោមមាន់ដែរ",
+      "hypothesis": "ក្រុមអ្នកស្រាវជ្រាវបានដឹកឡើងថា ទោះបីនេះជាកន្ទុយរបស់ដែលនៅសល់វ័យក្នុងក៏ដោយ តែគំរូបង្ហាញពីរោមដែលនៅសល់ពេញវ័យ ហើយក៏មិនមែនជារោមមុនដែរ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 162,
+      "substitutions": 7,
+      "deletions": 0,
+      "insertions": 2,
+      "hits": 21,
+      "word_errors": 9,
+      "reference_words": 28,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ដឹក"
+        },
+        {
+          "type": "substitute",
+          "reference": "លើកឡើង",
+          "hypothesis": "ឡើង"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ដែល"
+        },
+        {
+          "type": "substitute",
+          "reference": "ដាយ ណូស័រ វ័យក្មេង",
+          "hypothesis": "នៅសល់ វ័យ ក្នុង"
+        },
+        {
+          "type": "substitute",
+          "reference": "ដាយ ណូស័រ",
+          "hypothesis": "ដែល នៅសល់"
+        },
+        {
+          "type": "substitute",
+          "reference": "មាន់",
+          "hypothesis": "មុន"
+        }
+      ],
+      "publisher_hypothesis": "ក្រុមអ្នកស្រាវជ្រាវបានដឹកឡើងថា ទោះបីនេះជាកន្ទុយរបស់អ្នកនៅសើរវ័យក្មេងក៏ដោយ តែគំរូបង្ហាញពីរោមដែលដុះសើរវិញវ័យ ហើយក៏មិនមានជារោមមុនដែរ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_158.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 21,
+      "reference": "ប្រសិនបើអ្នកទៅទស្សនាតំបន់អាក់ទិក ឬតំបន់អង់តាក់ទិកក្នុងរដូវរងា អ្នកនឹងជួបប្រទះនូវប៉ូលរាត្រី ដែលមានន័យថា ព្រះអាទិត្យនឹងមិនរះមកត្រង់ចំកណ្តាលមេឃនោះទេ",
+      "hypothesis": "ប្រសិនបើអ្នកទៅទស្សនាតំបន់អាទិត្យ ឬតំបន់អង់គ្លេសក្នុងរដូវរងា អ្នកនឹងជួបប្រទះនូវពោធិ៍រាត្រីដែលមានន័យថា ព្រះអាទិត្យនឹងមិនរះមកត្រង់ចុងកណ្តាលមេនោះទេ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 178,
+      "substitutions": 5,
+      "deletions": 3,
+      "insertions": 0,
+      "hits": 24,
+      "word_errors": 8,
+      "reference_words": 32,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "អាក់",
+          "hypothesis": "អាទិត្យ"
+        },
+        {
+          "type": "delete",
+          "reference": "ទិ ក",
+          "hypothesis": ""
+        },
+        {
+          "type": "substitute",
+          "reference": "អង់តាក់ទិក",
+          "hypothesis": "អង់គ្លេស"
+        },
+        {
+          "type": "substitute",
+          "reference": "ប៉ូល",
+          "hypothesis": "ពោធិ៍"
+        },
+        {
+          "type": "substitute",
+          "reference": "ចំ",
+          "hypothesis": "ចុង"
+        },
+        {
+          "type": "substitute",
+          "reference": "មេឃ",
+          "hypothesis": "មេនោះ"
+        },
+        {
+          "type": "delete",
+          "reference": "នោះ",
+          "hypothesis": ""
+        }
+      ],
+      "publisher_hypothesis": "ប្រសិនបើអ្នកទៅទស្សនាតំបន់អាទិត្យ ឬតំបន់អង្គតែអាទិត្យក្នុងរដូវរងារ អ្នកនឹងជួបប្រទះនូវពោធិ៍រាត្រីដែលមានន័យថាព្រះអាទិត្យនឹងមិនរះមកត្រង់ចុងកណ្តាលមេនោះទេ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_21.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 26,
+      "reference": "ពួកអារ៉ាប់ក៏បាននាំយកសាសនាអ៊ីស្លាមទៅកាន់ដីគោកដែរ ហើយវាចាប់ផ្ដើមសាយភាយខ្លាំងនៅតំបន់កូម៉ូរូស និងម៉ាយ៉ូតេ",
+      "hypothesis": "ពួកអារ៉ាប់ក៏បាននាំយកសាសនាឥស្លាមទៅកាន់ដីគោកដែរ ហើយវាចាប់ផ្តើមសាយភាយខ្លាំងនៅតំបន់គុមូរូស និងម៉ាយុទេ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 122,
+      "substitutions": 5,
+      "deletions": 3,
+      "insertions": 0,
+      "hits": 17,
+      "word_errors": 8,
+      "reference_words": 25,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "អ៊ី",
+          "hypothesis": "ឥស្លាម"
+        },
+        {
+          "type": "delete",
+          "reference": "ស្លាម",
+          "hypothesis": ""
+        },
+        {
+          "type": "substitute",
+          "reference": "ចាប់ផ្ដើម",
+          "hypothesis": "ចាប់ផ្តើម"
+        },
+        {
+          "type": "substitute",
+          "reference": "កូ",
+          "hypothesis": "គុមូ"
+        },
+        {
+          "type": "delete",
+          "reference": "ម៉ូ",
+          "hypothesis": ""
+        },
+        {
+          "type": "substitute",
+          "reference": "ម៉ា យ៉ូ",
+          "hypothesis": "ម៉ាយុ ទេ"
+        },
+        {
+          "type": "delete",
+          "reference": "តេ",
+          "hypothesis": ""
+        }
+      ],
+      "publisher_hypothesis": "ពួកអារ៉ាប់ក៏បាននាំយកសាសនាឥស្លាមទៅកាន់ដីគោកដែរ ហើយវាចាប់ផ្តើមសាយភាយខ្លាំងនៅតំបន់ កុម្មុរស និង ម៉ាយុទេ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_26.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 36,
+      "reference": "ទន្លេអាម៉ាហ្សូនគឺជាទន្លេដែលធំជាងគេនៅលើភពផែនដីដែលមានទទឹងប្រវែង 6 ម៉ាយល៍",
+      "hypothesis": "ទន្លេអាម៉ាស៉ូន amazone គឺជាទន្លេដែលធំជាងគេនៅលើភពហានដីដែលមានទទឹងប្រវែង 3.5 ម៉ាយ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 90,
+      "substitutions": 3,
+      "deletions": 1,
+      "insertions": 4,
+      "hits": 14,
+      "word_errors": 8,
+      "reference_words": 18,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "អា ម៉ាស៉ូ ន"
+        },
+        {
+          "type": "substitute",
+          "reference": "អាម៉ាហ្សូន",
+          "hypothesis": "amazone"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ភព"
+        },
+        {
+          "type": "substitute",
+          "reference": "ភពផែន",
+          "hypothesis": "ហាន"
+        },
+        {
+          "type": "substitute",
+          "reference": "6",
+          "hypothesis": "3.5"
+        },
+        {
+          "type": "delete",
+          "reference": "ល៍",
+          "hypothesis": ""
+        }
+      ],
+      "publisher_hypothesis": "ទន្លេអាម៉ាស់ គឺជាទន្លេដ៏អធ្យមជាងគេនៅលើភពផាន្តដីដែលមានទទឹងប្រវែង ដប់មួយ ម៉ែត្រ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_36.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 88,
+      "reference": "អ្នកវិទ្យាសាស្ត្រគិតថា ខ្លារខិនដើររកស៊ីចំណី សត្វជាចំណី ដោយការស្រងក្លិន ការហិតក្លិននៅតាមដីដែលវាធ្លាប់នៅ",
+      "hypothesis": "អ្នកវិទ្យាសាស្ត្រគិតថា ខារ៉ាហ្គឺន ដែលរកស៊ីចំណីសត្វជាចំណី ដោយការស្រង់ក្លិន ការហិតក្លិន នៅតាមដីដែលវាធ្លាប់នៅ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 128,
+      "substitutions": 6,
+      "deletions": 0,
+      "insertions": 2,
+      "hits": 16,
+      "word_errors": 8,
+      "reference_words": 22,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ខា"
+        },
+        {
+          "type": "substitute",
+          "reference": "ខ្លារខិន ដើររក ស៊ី ចំណី សត្វ",
+          "hypothesis": "រ៉ា ហ្គឺន ដែល រកស៊ី ចំណីសត្វ"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ស្រង់"
+        },
+        {
+          "type": "substitute",
+          "reference": "ស្រងក្លិន",
+          "hypothesis": "ក្លិន"
+        }
+      ],
+      "publisher_hypothesis": "អ្នកវិទ្យាសាស្ត្រគិតថា ខណៈកិនដើររកស៊ីចំណី សត្វជាចំណី ដោយការស្រង់ក្លិន ការហិតក្លិននៅតាមដីដែលវាធ្លាប់នៅ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_88.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 150,
+      "reference": "អ្នកវិទ្យាសាស្ត្រគិតថា ខ្លារខិនដើររកស៊ីចំណី សត្វជាចំណី ដោយការស្រងក្លិន ការហិតក្លិននៅតាមដីដែលវាធ្លាប់នៅ",
+      "hypothesis": "អ្នកវិទ្យាសាស្រីគិតថា ខ្លារខិនដើររកស៊ីចំណី ដោយការស្រង់ក្លិន ការហិតក្លិននៅតាមដីដែលវាធ្លាប់នៅ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 111,
+      "substitutions": 2,
+      "deletions": 3,
+      "insertions": 3,
+      "hits": 17,
+      "word_errors": 8,
+      "reference_words": 22,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "វិទ្យា សា"
+        },
+        {
+          "type": "substitute",
+          "reference": "វិទ្យាសាស្ត្រ",
+          "hypothesis": "ស្រី"
+        },
+        {
+          "type": "delete",
+          "reference": "សត្វ ជា ចំណី",
+          "hypothesis": ""
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ស្រង់"
+        },
+        {
+          "type": "substitute",
+          "reference": "ស្រងក្លិន",
+          "hypothesis": "ក្លិន"
+        }
+      ],
+      "publisher_hypothesis": "អ្នកវិទ្យាសាស្ត្រគិតថា ខ្លារខិនដើររកស៊ីចំណី ដោយការស្រង់ក្លិន ការហិតក្លិននៅតាមដីដែលវាធ្លាប់នៅ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_150.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 197,
+      "reference": "វាក៏ពុំមានសិទ្ធិអំណាច ដើម្បីបដិសេធច្បាប់ពន្ធ និងពន្ធគយរវាងរដ្ឋនីមួយៗនោះដែរ",
+      "hypothesis": "វាក៏ពុំមានសុទ្ធអំណាច ដើម្បីបដិសណ្ឋាពន្ធ និងពន្យល់យ៉ាវរវាងរដ្ឋនីមួយៗតែងតែ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 89,
+      "substitutions": 5,
+      "deletions": 1,
+      "insertions": 2,
+      "hits": 13,
+      "word_errors": 8,
+      "reference_words": 19,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "សិទ្ធិ",
+          "hypothesis": "សុទ្ធ"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "បដិ"
+        },
+        {
+          "type": "substitute",
+          "reference": "បដិសេធ ច្បាប់",
+          "hypothesis": "ស ណ្ឋា"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ពន្យល់"
+        },
+        {
+          "type": "substitute",
+          "reference": "ពន្ធគយ",
+          "hypothesis": "យ៉ាវ"
+        },
+        {
+          "type": "substitute",
+          "reference": "នោះ",
+          "hypothesis": "តែងតែ"
+        },
+        {
+          "type": "delete",
+          "reference": "ដែរ",
+          "hypothesis": ""
+        }
+      ],
+      "publisher_hypothesis": "វាក៏ពុំមានសុទ្ធអំណាច ដើម្បីបដិសណ្ឋានប្រពន្ធ និងពន្យល់យ៉ាវរវាងរដ្ឋនីមួយៗតែងតែ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_197.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 12,
+      "reference": "ទឹកកំពុងហូរហារលើទំនបទឹកនៅផ្នែកមួយដែលមានប្រវែង 100 ហ្វីត",
+      "hypothesis": "ទឹកកំពុងហូរហៀរលើទំនប់ទឹកនៅភ្នែកមួយដែលមានប្រវែង 100 ហ្វ៊ីត",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 74,
+      "substitutions": 4,
+      "deletions": 3,
+      "insertions": 0,
+      "hits": 10,
+      "word_errors": 7,
+      "reference_words": 17,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ហូរ",
+          "hypothesis": "ហូរហៀរ"
+        },
+        {
+          "type": "delete",
+          "reference": "ហារ",
+          "hypothesis": ""
+        },
+        {
+          "type": "substitute",
+          "reference": "ទំ",
+          "hypothesis": "ទំនប់ទឹក"
+        },
+        {
+          "type": "delete",
+          "reference": "នប ទឹក",
+          "hypothesis": ""
+        },
+        {
+          "type": "substitute",
+          "reference": "ផ្នែក",
+          "hypothesis": "ភ្នែក"
+        },
+        {
+          "type": "substitute",
+          "reference": "ហ្វី",
+          "hypothesis": "ហ្វ៊ី"
+        }
+      ],
+      "publisher_hypothesis": "ទឹក កំពុងហូរហៀរលើទំនប់ទឹកនៅភ្នែកមួយដែលមានប្រវែង មួយរយ ហ្វៀត",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_12.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 65,
+      "reference": "គាត់បាននិយាយថា គាត់បានផលិតកន្តឹងទ្វារ wifi",
+      "hypothesis": "គាត់បាននិយាយថា គាត់បានផលិតកណ្ដឹងទ្វារ wi-fi",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 45,
+      "substitutions": 5,
+      "deletions": 2,
+      "insertions": 0,
+      "hits": 6,
+      "word_errors": 7,
+      "reference_words": 13,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ផ លិ ត កន្តឹ ង",
+          "hypothesis": "ផលិត កណ្ដឹង ទ្វារ wi fi"
+        },
+        {
+          "type": "delete",
+          "reference": "ទ្វារ wifi",
+          "hypothesis": ""
+        }
+      ],
+      "publisher_hypothesis": "គាត់បាននិយាយថា គាត់បានផលិតកណ្តឹងទ្វារ Wi-Fi",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_65.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 85,
+      "reference": "លទ្ធផលវិភាគអំពីគម្រោងនឹងត្រូវបង្ហោះនៅលើគេហទំព័រសាធារណៈ",
+      "hypothesis": "ហត្ថផលវិភាគអំពីគម្លងនឹងត្រូវបង្ខោះនៅលើគេហទំព័រសាធារណៈ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 67,
+      "substitutions": 5,
+      "deletions": 0,
+      "insertions": 2,
+      "hits": 6,
+      "word_errors": 7,
+      "reference_words": 11,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ហត្ថ"
+        },
+        {
+          "type": "substitute",
+          "reference": "លទ្ធផល",
+          "hypothesis": "ផល"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "អំ"
+        },
+        {
+          "type": "substitute",
+          "reference": "អំពី គម្រោង នឹង",
+          "hypothesis": "ពី គម្ល ងនឹង"
+        },
+        {
+          "type": "substitute",
+          "reference": "បង្ហោះ",
+          "hypothesis": "បង្ខោះ"
+        }
+      ],
+      "publisher_hypothesis": "វត្ថុផលវិភាគអំពីគម្លងនឹងត្រូវបង្ខំនៅលើគេហទំព័រសាធារណៈ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_85.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 116,
+      "reference": "កាលពីរាប់ពាន់ឆ្នាំមុន បុរសម្នាក់ដែលមានឈ្មោះថា aristarchus បានពោលថា ប្រព័ន្ធសូឡាគឺធ្វើដំណើរជុំវិញព្រះអាទិត្យ",
+      "hypothesis": "កាលពីរប៉ុន្មានឆ្នាំមុន បុរសម្នាក់ដែលមានឈ្មោះថា អារ៉េស្តុកឃឺស បានពោលថា ប្រព័ន្ធសូឡា គឺធ្វើដំណើរជុំវិញព្រះអាទិត្យ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 140,
+      "substitutions": 3,
+      "deletions": 0,
+      "insertions": 4,
+      "hits": 16,
+      "word_errors": 7,
+      "reference_words": 19,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "កាល"
+        },
+        {
+          "type": "substitute",
+          "reference": "កាលពី រាប់ពាន់",
+          "hypothesis": "ពីរ ប៉ុន្មាន"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "អា រ៉េ ស្តុក"
+        },
+        {
+          "type": "substitute",
+          "reference": "aristarchus",
+          "hypothesis": "ឃឺស"
+        }
+      ],
+      "publisher_hypothesis": "កាលពីរប៉ុន្មានឆ្នាំមុន បុរសម្នាក់ដែលមានឈ្មោះថា អារ៉េស្តថឺស បានពោលថា ប្រព័ន្ធសូឡាគឺធ្វើដំណើរជុំវិញព្រះអាទិត្យ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_116.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 135,
+      "reference": "ភាគច្រើននៃជីវិតរបស់គ្រួសារហេព្រើរគឺរស់នៅលើទីវាលបើកចំហរ",
+      "hypothesis": "ភាគខ្លាំងនៃជីវិតរបស់គ្រួសារ ហេប្រើ គឺរស់នៅលើទីវាលបាល់កំហុរ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 75,
+      "substitutions": 4,
+      "deletions": 0,
+      "insertions": 3,
+      "hits": 8,
+      "word_errors": 7,
+      "reference_words": 12,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ភាគ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ភាគច្រើន",
+          "hypothesis": "ខ្លាំង"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ហេ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ហេព្រើរ",
+          "hypothesis": "ប្រើ"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "បាល់"
+        },
+        {
+          "type": "substitute",
+          "reference": "បើក ចំហរ",
+          "hypothesis": "កំ ហុរ"
+        }
+      ],
+      "publisher_hypothesis": "ភាគឆ្លើយនៃជីវិតរបស់គ្រួសារ ហេតុប្រើ គឺរស់នៅលើទីវាលបើកចំហ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_135.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 140,
+      "reference": "ទឹកកំពុងហូរហារលើទំនបទឹកនៅផ្នែកមួយដែលមានប្រវែង 100 ហ្វីត",
+      "hypothesis": "ទឹកកំពង់ហូរហារលើទំនប់ទឹកនៅផ្នែកមួយដែលមានប្រវែង 500 វីដេអូ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 74,
+      "substitutions": 4,
+      "deletions": 3,
+      "insertions": 0,
+      "hits": 10,
+      "word_errors": 7,
+      "reference_words": 17,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "កំពុង",
+          "hypothesis": "កំពង់"
+        },
+        {
+          "type": "substitute",
+          "reference": "ទំ",
+          "hypothesis": "ទំនប់ទឹក"
+        },
+        {
+          "type": "delete",
+          "reference": "នប ទឹក",
+          "hypothesis": ""
+        },
+        {
+          "type": "substitute",
+          "reference": "100 ហ្វី",
+          "hypothesis": "500 វីដេអូ"
+        },
+        {
+          "type": "delete",
+          "reference": "ត",
+          "hypothesis": ""
+        }
+      ],
+      "publisher_hypothesis": "ទឹកកំពង់ហូរហាលលើទំនប់ទឹកនៅផ្នែកមួយដែលមានប្រវែង មួយរយ វីដេអូ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_140.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 147,
+      "reference": "កាលពីរាប់ពាន់ឆ្នាំមុន បុរសម្នាក់ដែលមានឈ្មោះថា aristarchus បានពោលថា ប្រព័ន្ធសូឡាគឺធ្វើដំណើរជុំវិញព្រះអាទិត្យ",
+      "hypothesis": "កាលពីរដប់ពាន់ឆ្នាំមុន បុរសម្នាក់ដែលមានឈ្មោះ ហា អារីស្តាឈូស បានពោលថា ប្រព័ន្ធសូឡា គឺធ្វើដំណើរជុំវិញព្រះអាទិត្យ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 135,
+      "substitutions": 4,
+      "deletions": 0,
+      "insertions": 3,
+      "hits": 15,
+      "word_errors": 7,
+      "reference_words": 19,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "កាល"
+        },
+        {
+          "type": "substitute",
+          "reference": "កាលពី រាប់ពាន់",
+          "hypothesis": "ពីរ ដប់ពាន់"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ហា អារី"
+        },
+        {
+          "type": "substitute",
+          "reference": "ថា aristarchus",
+          "hypothesis": "ស្តា ឈូស"
+        }
+      ],
+      "publisher_hypothesis": "កាលពីរាប់ពាន់ឆ្នាំមុន បុរសម្នាក់ដែលមានឈ្មោះថា អារ៉េស្តាឈូក បានពោលថា ប្រព័ន្ធសូឡាគឺធ្វើដំណើរជុំវិញព្រះអាទិត្យ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_147.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 162,
+      "reference": "កាលពីរាប់ពាន់ឆ្នាំមុន បុរសម្នាក់ដែលមានឈ្មោះថា aristarchus បានពោលថា ប្រព័ន្ធសូឡាគឺធ្វើដំណើរជុំវិញព្រះអាទិត្យ",
+      "hypothesis": "កាលវីរប្រព័ន្ធឆ្នាំមុនបុរីម្នាក់ដែលមានឈ្មោះថា aristarchist បានពោលថាប្រព័ន្ធសូឡា គឺធ្វើដំណើរជុំវិញពេលអាទិត្យ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 121,
+      "substitutions": 5,
+      "deletions": 0,
+      "insertions": 2,
+      "hits": 14,
+      "word_errors": 7,
+      "reference_words": 19,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "កាល"
+        },
+        {
+          "type": "substitute",
+          "reference": "កាលពី រាប់ពាន់",
+          "hypothesis": "វីរ ប្រព័ន្ធ"
+        },
+        {
+          "type": "substitute",
+          "reference": "បុរស",
+          "hypothesis": "បុរី"
+        },
+        {
+          "type": "substitute",
+          "reference": "aristarchus",
+          "hypothesis": "aristarchist"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ពេល"
+        },
+        {
+          "type": "substitute",
+          "reference": "ព្រះអាទិត្យ",
+          "hypothesis": "អាទិត្យ"
+        }
+      ],
+      "publisher_hypothesis": "កាលពីរប៉ុន្មានឆ្នាំមុន បុរសម្នាក់ដែលមានឈ្មោះថា អារី សីតឺសិស្ស ប័ណ្ណពរថាប្រព័ន្ធសូឡា គឺធ្វើដំណើរជុំវិញព្រះអាទិត្យ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_162.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 177,
+      "reference": "មិនមានព្រៃឈើធំ ៗ នៅក្នុងដែនដីកាណាន canaan ទេ ដូច្នេះ ឈើមានតម្លៃថ្លៃណាស់",
+      "hypothesis": "មិនមានព្រៃឈើធំៗនៅក្នុងដែនដីកាន់ណាទី ដូច្នេះឈើមានតម្លៃថ្លៃណាស់",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 82,
+      "substitutions": 6,
+      "deletions": 1,
+      "insertions": 0,
+      "hits": 9,
+      "word_errors": 7,
+      "reference_words": 16,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ព្រៃឈើ ធំ ៗ",
+          "hypothesis": "ព្រៃ ឈើ ធំៗ"
+        },
+        {
+          "type": "substitute",
+          "reference": "កា ណាន canaan",
+          "hypothesis": "កាន់ ណា ទី"
+        },
+        {
+          "type": "delete",
+          "reference": "ទេ",
+          "hypothesis": ""
+        }
+      ],
+      "publisher_hypothesis": "មិនមានព្រៃឈើធំៗនៅក្នុងដែនដីកាន់ណាទី ដូច្នេះឈើមានតម្លៃថ្លៃណាស់",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_177.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 184,
+      "reference": "គាត់បាននិយាយថា គាត់បានផលិតកន្តឹងទ្វារ wifi",
+      "hypothesis": "គាត់បាននិយាយថា គាត់បានផលិតកណ្ដឹងទ្វារ wi-fi",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 45,
+      "substitutions": 5,
+      "deletions": 2,
+      "insertions": 0,
+      "hits": 6,
+      "word_errors": 7,
+      "reference_words": 13,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ផ លិ ត កន្តឹ ង",
+          "hypothesis": "ផលិត កណ្ដឹង ទ្វារ wi fi"
+        },
+        {
+          "type": "delete",
+          "reference": "ទ្វារ wifi",
+          "hypothesis": ""
+        }
+      ],
+      "publisher_hypothesis": "គាត់បាននិយាយថា គាត់បានផលិតកណ្តឹងទ្វារ Wi-Fi",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_184.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 29,
+      "reference": "ក៏ប៉ុន្តែ សញ្ញាភាគច្រើនត្រូវបានបង្ហាញឡើងតែក្នុងភាសាកាតាឡានតែប៉ុណ្ណោះ ពីព្រោះច្បាប់បានកំណត់ថាវាជាភាសាផ្លូវការដំបូងគេ",
+      "hypothesis": "ក៏ប៉ុន្តែសញ្ញាភាគច្រើនត្រូវបានបង្ហាញឡើងតែក្នុងគាសាការតាឡានតែប៉ុណ្ណោះ ពីព្រោះច្បាប់បានកំណត់ថាវាជីពិសាផ្លូវការដំបូងគេ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 142,
+      "substitutions": 5,
+      "deletions": 0,
+      "insertions": 1,
+      "hits": 19,
+      "word_errors": 6,
+      "reference_words": 24,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "គា"
+        },
+        {
+          "type": "substitute",
+          "reference": "ភាសា កា",
+          "hypothesis": "សា ការ"
+        },
+        {
+          "type": "substitute",
+          "reference": "វា ជា ភាសាផ្លូវការ",
+          "hypothesis": "វាជី ពិសា ផ្លូវការ"
+        }
+      ],
+      "publisher_hypothesis": "ក៏ប៉ុន្តែសញ្ញាភាគច្រើនត្រូវបានបង្ហាញឡើងតែក្នុងគាសាការតា ឡើងតែប៉ុណ្ណោះ ពីព្រោះច្បាប់បានកំណត់ថា វាជាភាសាផ្លូវការដំបូងគេ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_29.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 33,
+      "reference": "ភាគច្រើននៃជីវិតរបស់គ្រួសារហេព្រើរគឺរស់នៅលើទីវាលបើកចំហរ",
+      "hypothesis": "ភាគច្រើននៃជីវិតរបស់គ្រួសាភែប្រើគឺរស់នៅលើទីវាលបើកចំហ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 67,
+      "substitutions": 3,
+      "deletions": 1,
+      "insertions": 2,
+      "hits": 8,
+      "word_errors": 6,
+      "reference_words": 12,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "គ្រួ សា"
+        },
+        {
+          "type": "substitute",
+          "reference": "គ្រួសារ ហេព្រើរ",
+          "hypothesis": "ភែ ប្រើ"
+        },
+        {
+          "type": "substitute",
+          "reference": "បើក",
+          "hypothesis": "បើកចំហ"
+        },
+        {
+          "type": "delete",
+          "reference": "ចំហរ",
+          "hypothesis": ""
+        }
+      ],
+      "publisher_hypothesis": "ភាគច្រើននៃជីវិតរបស់គ្រួសារ ហេប ព្រឹក គឺរស់នៅលើទីវាលបើកចំហ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_33.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 51,
+      "reference": "គាត់បាននិយាយថា គាត់បានផលិតកន្តឹងទ្វារ wifi",
+      "hypothesis": "គាត់បាននិយាយថា គាត់បានផលិតកណ្តឹងទ្វារ windfall",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 45,
+      "substitutions": 4,
+      "deletions": 2,
+      "insertions": 0,
+      "hits": 7,
+      "word_errors": 6,
+      "reference_words": 13,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ផ លិ ត",
+          "hypothesis": "ផលិត ក ណ្តឹង"
+        },
+        {
+          "type": "delete",
+          "reference": "កន្តឹ ង",
+          "hypothesis": ""
+        },
+        {
+          "type": "substitute",
+          "reference": "wifi",
+          "hypothesis": "windfall"
+        }
+      ],
+      "publisher_hypothesis": "គាត់បាននិយាយថា គាត់បានផលិតកម្តឹងទ្វារ Wi-Fi",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_51.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 72,
+      "reference": "ប្រាក់អាចប្តូរបាននៅធនាគារតែមួយគត់នៅលើកោះនេះ ដែលមានទីតាំងនៅ stanley ទល់មុខហាងលក់ទំនិញ fic west",
+      "hypothesis": "ប្រាក់អាចប្តូរបាននៅធនាគារតែមួយគត់នៅលើកោះនេះ ដែលមានទីតាំងនៅស្ទានី ទៅមុខហាងលក់ទំនិញ f i c west",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 109,
+      "substitutions": 3,
+      "deletions": 0,
+      "insertions": 3,
+      "hits": 17,
+      "word_errors": 6,
+      "reference_words": 20,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ស្ទា"
+        },
+        {
+          "type": "substitute",
+          "reference": "stanley ទល់មុខ",
+          "hypothesis": "នី ទៅមុខ"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "f i"
+        },
+        {
+          "type": "substitute",
+          "reference": "fic",
+          "hypothesis": "c"
+        }
+      ],
+      "publisher_hypothesis": "ប្រាក់អាចប្តូរបាននៅធនាគារតែមួយគត់នៅលើកកញ្ញនេះ ដែលមានទីតាំងនៅស្ទីលនេះ ដល់មុខហាងលក់ទំនិញ F I C West",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_72.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 113,
+      "reference": "ផលិតផលសិប្បកម្មអាចត្រូវបានចាត់ទុកថាជាវត្ថុបុរាណ ទោះបីជាវាមានអាយុតិចកាលជាងទំនិញស្រដៀងគ្នាដែល ផលិតបានច្រើនក៏ដោយ",
+      "hypothesis": "ផលិតផលសិប្បកម្មអាចត្រូវបានចាត់ទុកថាជាវត្ថុបុរាណ ទោះបីជាវីមិត្តអាយុតិចការចៀនទំនិញសំដីគ្នា ដែលផលិតបានច្រើនក៏ដោយ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 134,
+      "substitutions": 5,
+      "deletions": 0,
+      "insertions": 1,
+      "hits": 17,
+      "word_errors": 6,
+      "reference_words": 22,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "វា មាន",
+          "hypothesis": "វី មិត្ត"
+        },
+        {
+          "type": "substitute",
+          "reference": "កាល ជាង",
+          "hypothesis": "ការ ចៀន"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "សំដី"
+        },
+        {
+          "type": "substitute",
+          "reference": "ស្រដៀងគ្នា",
+          "hypothesis": "គ្នា"
+        }
+      ],
+      "publisher_hypothesis": "ផលិតផលសិប្បកម្មអាចត្រូវបានចាត់ទុកថាជាវត្ថុបុរាណ ទោះបីជាវាមានអាយុតិចកាលចៀនទំនិញសំដៅគ្នាដែលផលិតបានច្រើនក៏ដោយ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_113.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 153,
+      "reference": "នៅទីបំផុត កង់ឈើត្រូវបានជំនួសដោយកង់ដែក នៅឆ្នាំ 1767 ផ្លូវដែកពេញលេញដំបូងគេ ត្រូវបានដាក់ឲ្យដំណើរការ",
+      "hypothesis": "នៅទីបំផុត កង់ឈើត្រូវបានចំណូលដែលកង់ដែក នៅឆ្នាំ 1998 ផ្លូវដែកពេញលេញដំបូងគេទៅបានដាក់ឱ្យដំណើរការ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 120,
+      "substitutions": 5,
+      "deletions": 0,
+      "insertions": 1,
+      "hits": 15,
+      "word_errors": 6,
+      "reference_words": 20,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ជំនួស ដោយ",
+          "hypothesis": "ចំណូល ដែល"
+        },
+        {
+          "type": "substitute",
+          "reference": "1767",
+          "hypothesis": "1998"
+        },
+        {
+          "type": "substitute",
+          "reference": "ត្រូវ",
+          "hypothesis": "ទៅ"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ដាក់"
+        },
+        {
+          "type": "substitute",
+          "reference": "ដាក់ឲ្យ",
+          "hypothesis": "ឱ្យ"
+        }
+      ],
+      "publisher_hypothesis": "នៅទីបំផុត កង់ឈើត្រូវបានចំណូលដោយកង់ដែក នៅឆ្នាំមួយពាន់ប្រាំពីររយហុកសិបប្រាំពីរ ផ្លូវដែកពេញលេញដំបូងគេទៅបានដាក់ឱ្យដំណើរការ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_153.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 173,
+      "reference": "បន្ទាប់មក ឡាក់ខាស៊ីងបាននាំមុខក្នុងការច្រៀងចម្រៀងផាចានស៍",
+      "hypothesis": "បន្ទាប់មក ឡាក់កាសីងបានដាំមុខក្នុងការច្រៀងចម្រៀង ផាចាន",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 62,
+      "substitutions": 3,
+      "deletions": 1,
+      "insertions": 2,
+      "hits": 9,
+      "word_errors": 6,
+      "reference_words": 13,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "កា"
+        },
+        {
+          "type": "substitute",
+          "reference": "ខា ស៊ីង",
+          "hypothesis": "សី ង"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ដាំ"
+        },
+        {
+          "type": "substitute",
+          "reference": "នាំមុខ",
+          "hypothesis": "មុខ"
+        },
+        {
+          "type": "delete",
+          "reference": "ស៍",
+          "hypothesis": ""
+        }
+      ],
+      "publisher_hypothesis": "បន្ទាប់មក ឡាក់កៅស៊ីងបានដំបូងក្នុងការច្រៀងចម្រៀង ផាចាន",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_173.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 174,
+      "reference": "សត្វខ្លះដូចជា ដំរី និង សត្វកវែង ព្យាយាមចូលមកជិតឡាន ដូច្នេះសម្ភារៈតាមបទដ្ឋាន គឺអំណោយផលក្នុងការមើលទេសភាពបានល្អ",
+      "hypothesis": "សត្វខ្លះដូចជាដំរី និងសត្វកវែង ព្យាយាមចូលមកជិតឡាន ដូច្នេះសោភ័ណ្ឌរាក់តាមឧបត្ថម្ភ គឺអំណោយផលក្នុងការមើលទេសភាពបានល្អ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 132,
+      "substitutions": 3,
+      "deletions": 0,
+      "insertions": 3,
+      "hits": 22,
+      "word_errors": 6,
+      "reference_words": 25,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ដូ ច្នេះ សោភ័ណ្"
+        },
+        {
+          "type": "substitute",
+          "reference": "ដូច្នេះ សម្ភារៈ",
+          "hypothesis": "ឌ រាក់"
+        },
+        {
+          "type": "substitute",
+          "reference": "បទដ្ឋាន",
+          "hypothesis": "ឧបត្ថម្ភ"
+        }
+      ],
+      "publisher_hypothesis": "សត្វខ្លះដូចជា ដំរី និងសត្វកវែង ព្យាយាមចូលមកជន្លាន ដូច្នេះសម្ភារៈអត់ឧបត្ថម្ភ គឺអំណោយផលក្នុងការមើលទេសភាពបានល្អ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_174.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 180,
+      "reference": "ទ្រង់ទ្រាយទូទៅជាច្រើន ឧទាហរណ៍ ទ្រង់ទ្រាយនៃក្រុម aps មានចំនួនស្មើនឹង ឬប្រហាក់ប្រហែលទៅនឹងសមាមាត្រមួយនេះ",
+      "hypothesis": "ទ្រង់ទ្រាយទូទៅជាច្រើន និទាហរណ៍ទ្រង់ទ្រាយនៅក្រុម ahs មានចំនួនស្មើនឹង ឬប្រហាក់ប្រហែលទៅនឹងសមាមាត្រមួយនេះ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 121,
+      "substitutions": 3,
+      "deletions": 0,
+      "insertions": 3,
+      "hits": 16,
+      "word_errors": 6,
+      "reference_words": 19,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "និ ទា ហរ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ឧទាហរណ៍",
+          "hypothesis": "ណ៍"
+        },
+        {
+          "type": "substitute",
+          "reference": "នៃ",
+          "hypothesis": "នៅ"
+        },
+        {
+          "type": "substitute",
+          "reference": "aps",
+          "hypothesis": "ahs"
+        }
+      ],
+      "publisher_hypothesis": "ទ្រង់ទ្រាយទូទៅជាច្រើន និទានហោជទ្រង់ទ្រាយនៃក្រុម APS មានចំនួនស្មើនឹង ឬប្រហាក់ប្រហែលទៅនឹងសមាមាត្រមួយនេះ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_180.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 190,
+      "reference": "នៅពេលអ្នកទូរសព្ទហៅនរណាម្នាក់ដែលនៅចម្ងាយរាប់ពាន់គីឡូម៉ែត្រ អ្នក គឺកំពុងប្រើប្រាស់ផ្កាយរណបហើយ",
+      "hypothesis": "នៅពេលអ្នកទូរសព្ទហៅនរណាម្នាក់ដែលនៅចម្ងាយរប៉ុណ្ណោះខ្លួនម៉ែត្រ អ្នកគឺកំពុងប្រើប្រាស់កាយរណប់ហើយ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 113,
+      "substitutions": 3,
+      "deletions": 0,
+      "insertions": 3,
+      "hits": 14,
+      "word_errors": 6,
+      "reference_words": 17,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "រប៉ុ ណ្ណោះ"
+        },
+        {
+          "type": "substitute",
+          "reference": "រាប់ពាន់ គីឡូម៉ែត្រ",
+          "hypothesis": "ខ្លួន ម៉ែត្រ"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "កាយ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ផ្កាយរណប",
+          "hypothesis": "រណប់"
+        }
+      ],
+      "publisher_hypothesis": "នៅពេលអ្នកទូរសព្ទហៅនរណាម្នាក់ដែលនៅចម្ងាយរាប់ពាន់ខ្លួនម៉ែត្រ អ្នកគឺកំពុងប្រើប្រាស់កាយរណបហើយ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_190.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 196,
+      "reference": "គួបផ្សំនឹងភាពមិនទាក់ទងគ្នា ពាក្យ timbuktu ត្រូវបានគេប្រើជាពាក្យប្រៀបធៀបសម្រាប់ដែនដីនៅឆ្ងាយនិងប្លែកថ្មី",
+      "hypothesis": "គូបសំខាន់នឹងភាពមិនទាក់ទងគ្នា ពាក្យ team building ត្រូវបានគេប្រើជាពាក្យប្រើប្រាស់សម្រាប់ដែនដីនៅឆ្ងាយ និងប្លែកថ្មី",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 119,
+      "substitutions": 4,
+      "deletions": 0,
+      "insertions": 2,
+      "hits": 16,
+      "word_errors": 6,
+      "reference_words": 20,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "គូប"
+        },
+        {
+          "type": "substitute",
+          "reference": "គួបផ្សំ",
+          "hypothesis": "សំខាន់"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "team"
+        },
+        {
+          "type": "substitute",
+          "reference": "timbuktu",
+          "hypothesis": "building"
+        },
+        {
+          "type": "substitute",
+          "reference": "ពាក្យប្រៀប ធៀប",
+          "hypothesis": "ពាក្យ ប្រើប្រាស់"
+        }
+      ],
+      "publisher_hypothesis": "គួបផ្សំនឹងភាពមិនទាក់ទងគ្នា ពាក្យ ធីមបុកទូ ត្រូវបានគេប្រើជាពាក្យប្រៀបធៀបសម្រាប់ដែនដីនៅឆ្ងាយ និងប្លែកថ្មី",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_196.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 22,
+      "reference": "នេះបានក្លាយជាទម្លាប់ធម្មតាប៉ុន្តែដែកបានបំផ្លាញដោយវាជ្រេសស៊ីកង់ឈើរបស់រទេះ",
+      "hypothesis": "នេះបានក្លាយជាទម្លាប់ផ្នែកដើម ប៉ុន្តែដៃបានបំផ្លាញដោយវាជ្រេសស៊ីកង់ឈើរបស់លោតិះ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 97,
+      "substitutions": 3,
+      "deletions": 0,
+      "insertions": 2,
+      "hits": 14,
+      "word_errors": 5,
+      "reference_words": 17,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ផ្នែក"
+        },
+        {
+          "type": "substitute",
+          "reference": "ធម្មតា",
+          "hypothesis": "ដើម"
+        },
+        {
+          "type": "substitute",
+          "reference": "ដែក",
+          "hypothesis": "ដៃ"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "លោ"
+        },
+        {
+          "type": "substitute",
+          "reference": "រទេះ",
+          "hypothesis": "តិះ"
+        }
+      ],
+      "publisher_hypothesis": "នេះបានក្លាយជាទម្លាប់ផ្ទាប់ផ្ទាត់ ប៉ុន្តែដៃបានបំផ្លាញដោយវាច្រេសស៊ីកង់ឈើរបស់លទេស",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_22.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 30,
+      "reference": "ការប្រកួតកីឡាធំជាងគេប្រចាំឆ្នាំ ប្រារព្ធធ្វើឡើងនៅខែធ្នូ នៅឯទីលានប៉ូឡូ នៅឡាស ខានីតាស",
+      "hypothesis": "ការប្រកួតកីឡាធំជាងគេប្រចាំឆ្នាំប្រារព្ធធ្វើឡើងនៅខែធ្នូ នៅឯទីលានពូឡូ នៅឡាស់ ខានីតាំ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 103,
+      "substitutions": 4,
+      "deletions": 1,
+      "insertions": 0,
+      "hits": 15,
+      "word_errors": 5,
+      "reference_words": 20,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ទី លា",
+          "hypothesis": "ទីលាន ពូ"
+        },
+        {
+          "type": "delete",
+          "reference": "នប៉ូ",
+          "hypothesis": ""
+        },
+        {
+          "type": "substitute",
+          "reference": "ឡាស",
+          "hypothesis": "ឡាស់"
+        },
+        {
+          "type": "substitute",
+          "reference": "តាស",
+          "hypothesis": "តាំ"
+        }
+      ],
+      "publisher_hypothesis": "ការប្រកួតកីឡាធំជាងគេប្រចាំឆ្នាំប្រារព្ធធ្វើឡើងនៅខែធ្នូ នៅឯទីលានពោលលោម នៅឡាស់ខណ្ឌីតាស",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_30.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 42,
+      "reference": "យោងតាមសម្តីរបស់ប៉ូលីស អ្នកបើកបររថយន្តដែលបុកអ្នកថតរូបនោះ ប្រហែលជាមិនទទួលរងនូវការចោទប្រកាន់ពីបទឧក្រិដ្ឋនោះទេ",
+      "hypothesis": "យោងតាមសម្តីរបស់ប៉ូលីស អ្នកបើកបរិយានដែលបុកអ្នកថតរូបនោះប្រហែលជាមិនទទួលរងនូវការចោទប្រកាន់ពីបរិក្រិតនោះទេ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 127,
+      "substitutions": 3,
+      "deletions": 0,
+      "insertions": 2,
+      "hits": 18,
+      "word_errors": 5,
+      "reference_words": 21,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "អ្នក"
+        },
+        {
+          "type": "substitute",
+          "reference": "អ្នកបើកបរ រថយន្ត",
+          "hypothesis": "បើក បរិយាន"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "បរិ"
+        },
+        {
+          "type": "substitute",
+          "reference": "បទឧក្រិដ្ឋ",
+          "hypothesis": "ក្រិត"
+        }
+      ],
+      "publisher_hypothesis": "យោងតាមសម្តីរបស់ប៉ូលីស អ្នកបើកបរិយានដែលបុកអ្នកថតរូបនោះ ប្រហែលជាមិនទទួលរងនូវការចោទប្រកាន់ពីបទរូបក្រឹត្យនោះទេ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_42.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 54,
+      "reference": "ចំនួនប្រជាជនដើមមិនបានផ្លាស់ប្តូរនោះទេ ពួកគេនៅតែត្រូវការការសម្របខ្លួនដូចតែពីមុនអញ្ចឹង",
+      "hypothesis": "ចំនួនប្រជាជនដើមមិនបានផ្លាស់ប្ដូរនោះទេ ពួកគេនៅតែត្រូវការការសម្របខ្លួនដូចតែពីមួយចិន",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 102,
+      "substitutions": 3,
+      "deletions": 1,
+      "insertions": 1,
+      "hits": 12,
+      "word_errors": 5,
+      "reference_words": 16,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ផ្លាស់",
+          "hypothesis": "ផ្លាស់ប្ដូរ"
+        },
+        {
+          "type": "delete",
+          "reference": "ប្តូរ",
+          "hypothesis": ""
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ពី"
+        },
+        {
+          "type": "substitute",
+          "reference": "ពីមុន អញ្ចឹង",
+          "hypothesis": "មួយ ចិន"
+        }
+      ],
+      "publisher_hypothesis": "ជំនាន់ប្រជាជនដ៏មិនបានផ្លាស់ប្តូរនោះទេ ពួកគេនៅតែត្រូវការការសម្របខ្លួនដូចតែពីមុនអញ្ចឹង",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_54.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 58,
+      "reference": "មិនមានព្រៃឈើធំ ៗ នៅក្នុងដែនដីកាណាន canaan ទេ ដូច្នេះ ឈើមានតម្លៃថ្លៃណាស់",
+      "hypothesis": "មិនមានព្រៃឈើធំៗនៅក្នុងដែនដីកាណានទេ ដូច្នេះឈើមានតម្លៃថ្លៃណាស់",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 80,
+      "substitutions": 5,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 11,
+      "word_errors": 5,
+      "reference_words": 16,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ព្រៃឈើ ធំ ៗ",
+          "hypothesis": "ព្រៃ ឈើ ធំៗ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ណាន canaan",
+          "hypothesis": "ណា ន"
+        }
+      ],
+      "publisher_hypothesis": "មិនមានព្រៃឈើធំៗនៅក្នុងដែនដីកាលណាទេ ដូច្នេះឈើមានតម្លៃថ្លៃណាស់",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_58.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 106,
+      "reference": "ក៏ប៉ុន្តែ សញ្ញាភាគច្រើនត្រូវបានបង្ហាញឡើងតែក្នុងភាសាកាតាឡានតែប៉ុណ្ណោះ ពីព្រោះច្បាប់បានកំណត់ថាវាជាភាសាផ្លូវការដំបូងគេ",
+      "hypothesis": "ក៏ប៉ុន្តែ សញ្ញាភាគច្រើនទៅបានបង្ហាញឡើងតែក្នុងភាសាកាតាឡានតែប៉ុណ្ណោះ ពីព្រោះច្បាប់បានកំណត់ថា វាជាភាសាហ្វើការដំបូងគេ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 137,
+      "substitutions": 2,
+      "deletions": 0,
+      "insertions": 3,
+      "hits": 22,
+      "word_errors": 5,
+      "reference_words": 24,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ត្រូវ",
+          "hypothesis": "ទៅ"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ភា សា ហ្វើ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ភាសាផ្លូវការ",
+          "hypothesis": "ការ"
+        }
+      ],
+      "publisher_hypothesis": "ក៏ប៉ុន្តែសញ្ញាភាគច្រើនទៅបានបង្ហាញឡើងតែក្នុងភាសាកាត់តាឡានតែប៉ុណ្ណោះ ពីព្រោះច្បាប់បានកំណត់ថាវាជាភាសាហ្វិកការណ៍ដំបូងគេ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_106.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 155,
+      "reference": "ជារឿយៗ ទស្សនៈដែលបានបង្ហាញមានលក្ខណៈមិនលម្អិត ទូទៅ និងសាមញ្ញពេក បើប្រៀបធៀបនឹងព័ត៌មានលម្អិតដែលមាននៅកន្លែងផ្សេងទៀត",
+      "hypothesis": "ជារឿយៗ ទស្សនៈដែលបានបង្ហាញមានលក្ខណៈមិនលំអិតទូទៅ និងសាមញ្ញពេក បើពិធីធាតុនៅព័ត៌មានលំអិតដែលមាននៅកន្លែងផ្សេងទៀត",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 134,
+      "substitutions": 4,
+      "deletions": 0,
+      "insertions": 1,
+      "hits": 20,
+      "word_errors": 5,
+      "reference_words": 24,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "លម្អិត",
+          "hypothesis": "លំអិត"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ពិធី"
+        },
+        {
+          "type": "substitute",
+          "reference": "ប្រៀបធៀប នឹង",
+          "hypothesis": "ធាតុ នៅ"
+        },
+        {
+          "type": "substitute",
+          "reference": "លម្អិត",
+          "hypothesis": "លំអិត"
+        }
+      ],
+      "publisher_hypothesis": "ជារឿយៗ ទស្សនៈដែលបានបង្ហាញមានលក្ខណៈមិនលម្អិតទូទៅ និងសាមញ្ញពេក បើពិធី និងព័ត៌មានលម្អិតដែលមាននៅកន្លែងផ្សេងទៀត",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_155.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 16,
+      "reference": "អ្នកធម្មជាតិវិទូ និងអ្នកទស្សនវិទូបានផ្តោតលើអត្ថបទបែបបុរាណ និងជាពិសេសលើព្រះគម្ពីរជាភាសាឡាតាំង",
+      "hypothesis": "អ្នកធម្មជាតិវិទូ និងអ្នកទស្សនវិទូបានផ្តោតលើអត្ថបទបែបបុរាណ និងជាពិសេសលើប្រេះគម្ពីរជាពិសេសឡាតាំង",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 116,
+      "substitutions": 3,
+      "deletions": 0,
+      "insertions": 1,
+      "hits": 14,
+      "word_errors": 4,
+      "reference_words": 17,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ប្រេះ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ព្រះគម្ពីរ ជា ភាសាឡាតាំង",
+          "hypothesis": "គម្ពីរ ជាពិសេស ឡាតាំង"
+        }
+      ],
+      "publisher_hypothesis": "អ្នកធម្មជាតិវិទូ និងអ្នកទស្សនវិទូបានផ្តោតលើអត្ថបទបែបបុរាណ និងជាពិសេសលើប្រេះគម្ពីរជាពិសេសឡាតាំង",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_16.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 39,
+      "reference": "មិនយូរមិនឆាប់ នៅពេលដែលប្រជាជនថ្មីចាប់ផ្តើមសម្របខ្លួនទៅនឹងបរិស្ថានថ្មីរបស់ខ្លួន ពួកគេចាប់ផ្តើមមើលទៅកាន់តែពុំដូចទៅនឹងប្រជាជនដទៃទៀតនោះឡើយ",
+      "hypothesis": "មិនយូរមិនឆាំនៅពេលដែលប្រជាជនថ្មីចាប់ផ្តើមសម្របខ្លួនទៅនឹងបរិស្ថានថ្មីរបស់ខ្លួន ពួកគេចាប់ផ្តើមមើលទៅកាន់តែពុំដូចទៅនឹងប្រជាជនដទៃទៀតនៅឡើយ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 166,
+      "substitutions": 2,
+      "deletions": 1,
+      "insertions": 1,
+      "hits": 23,
+      "word_errors": 4,
+      "reference_words": 26,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "មិន"
+        },
+        {
+          "type": "substitute",
+          "reference": "មិនឆាប់",
+          "hypothesis": "ឆាំ"
+        },
+        {
+          "type": "substitute",
+          "reference": "នោះ",
+          "hypothesis": "នៅឡើយ"
+        },
+        {
+          "type": "delete",
+          "reference": "ឡើយ",
+          "hypothesis": ""
+        }
+      ],
+      "publisher_hypothesis": "មិនយូរមិនឆាប់ នៅពេលដែលប្រជាជនថ្មីចាប់ផ្តើមសម្របខ្លួនទៅនឹងបរិស្ថានថ្មីរបស់ខ្លួន ពួកគេចាប់ផ្តើមមើលទៅកាន់តែពុំដូចទៅនឹងប្រជាជនដទៃទៀតនៅឡើយ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_39.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 52,
+      "reference": "គួបផ្សំនឹងភាពមិនទាក់ទងគ្នា ពាក្យ timbuktu ត្រូវបានគេប្រើជាពាក្យប្រៀបធៀបសម្រាប់ដែនដីនៅឆ្ងាយនិងប្លែកថ្មី",
+      "hypothesis": "គួបសមនឹងភាពមិនទាក់ទងគ្នា ពាក្យ team boo ត្រូវបានគេប្រើជាពាក្យប្រៀបធៀបសម្រាប់ដែនដីនៅឆ្ងាយ និងប្លែកថ្មី",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 111,
+      "substitutions": 3,
+      "deletions": 0,
+      "insertions": 1,
+      "hits": 17,
+      "word_errors": 4,
+      "reference_words": 20,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "គួបផ្សំ នឹង",
+          "hypothesis": "គួប សមនឹង"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "team"
+        },
+        {
+          "type": "substitute",
+          "reference": "timbuktu",
+          "hypothesis": "boo"
+        }
+      ],
+      "publisher_hypothesis": "គួបសមនឹងភាពមិនទាក់ទងគ្នា ពាក្យ ធីមបុកទូ ត្រូវបានគេប្រើជាពាក្យប្រៀបធៀបសម្រាប់ដែនដីនៅឆ្ងាយ និងប្លែកថ្មី",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_52.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 68,
+      "reference": "ការកកិត គឺមានកម្រិតទាបនៅតាមផ្លូវព្រឹលទឹកកក ហើយអ្នកមិនអាចបើកបរបានដូចអ្នកដែលបើកបរនៅលើផ្លូវកៅស៊ូនោះទេ",
+      "hypothesis": "ការកកើត គឺមានកម្រិតទាបនៅតាមផ្លូវព្រិលទឹកកូរ ហើយអ្នកមិនអាចបើកបរបានដូចអ្នកដែលបើកបរនៅលើផ្លូវកៅស៊ូនោះទេ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 123,
+      "substitutions": 3,
+      "deletions": 0,
+      "insertions": 1,
+      "hits": 22,
+      "word_errors": 4,
+      "reference_words": 25,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "កកិត",
+          "hypothesis": "កកើត"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ព្រិល"
+        },
+        {
+          "type": "substitute",
+          "reference": "ព្រឹល ទឹកកក",
+          "hypothesis": "ទឹក កូរ"
+        }
+      ],
+      "publisher_hypothesis": "ការកកិត គឺមានកម្រិតទាបនៅតាមផ្លូវព្រឹទ្ធាករ ហើយអ្នកមិនអាចបើកបរបានដូចអ្នកដែលបើកបរនៅលើផ្លូវកៅស៊ូនោះទេ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_68.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 71,
+      "reference": "សាសនាចម្បងគេនៅក្នុងប្រទេស ម៉ុលដូវ៉ា គឺសាសនាគ្រីស្ទ កាន់វិន័យចាស់",
+      "hypothesis": "សាសនាចម្បងគេនៅក្នុងប្រទេសមូលដូរវ៉ា គឺសាសនាគ្រីស កាន់វិន័យចាស់",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 75,
+      "substitutions": 2,
+      "deletions": 0,
+      "insertions": 2,
+      "hits": 11,
+      "word_errors": 4,
+      "reference_words": 13,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "មូល ដូរ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ម៉ុលដូវ៉ា",
+          "hypothesis": "វ៉ា"
+        },
+        {
+          "type": "substitute",
+          "reference": "ស្ទ",
+          "hypothesis": "ស"
+        }
+      ],
+      "publisher_hypothesis": "សាសនាចម្បងគេនៅក្នុងប្រទេស មូលដូរវ៉ា គឺសាសនាគ្រីស កាន់វិន័យចាស់",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_71.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 73,
+      "reference": "នៅក្នុងទីធ្លាព្រះវិហារ មានរូបចម្លាក់ជាថ្មម៉ាបដែលគួរឱ្យចាប់អារម្មណ៍នៅលើផ្នូរខ្លះ",
+      "hypothesis": "នៅក្នុងទីធ្លាព្រះវិហារ មានរូបចម្លាក់ជាថ្មម៉ាម ដែលគួរឱ្យចាប់អារម្មណ៍នៅលើម៉ូងខ្លះ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 98,
+      "substitutions": 2,
+      "deletions": 0,
+      "insertions": 2,
+      "hits": 13,
+      "word_errors": 4,
+      "reference_words": 15,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ថ្ម ម៉ា"
+        },
+        {
+          "type": "substitute",
+          "reference": "ថ្មម៉ាប",
+          "hypothesis": "ម"
+        },
+        {
+          "type": "substitute",
+          "reference": "ផ្នូរ",
+          "hypothesis": "ម៉ូង"
+        }
+      ],
+      "publisher_hypothesis": "នៅក្នុងទីធ្លាព្រះវិហារ មានរូបចម្លាក់ជាថ្មមាប ដែលគួរឱ្យចាប់អារម្មណ៍នៅលើម៉ូងខ្លះ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_73.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 84,
+      "reference": "ចំនួនប្រជាជនដើមមិនបានផ្លាស់ប្តូរនោះទេ ពួកគេនៅតែត្រូវការការសម្របខ្លួនដូចតែពីមុនអញ្ចឹង",
+      "hypothesis": "ចំនួនប្រជាជនដើមមិនបានផ្លាស់ប្ដូរនៅទេ ពួកគេនៅតែត្រូវការការសម្របខ្លួនដូចតែពីមុនអញ្ចឹង",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 103,
+      "substitutions": 2,
+      "deletions": 2,
+      "insertions": 0,
+      "hits": 12,
+      "word_errors": 4,
+      "reference_words": 16,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ផ្លាស់ ប្តូរ",
+          "hypothesis": "ផ្លាស់ប្ដូរ នៅទេ"
+        },
+        {
+          "type": "delete",
+          "reference": "នោះ ទេ",
+          "hypothesis": ""
+        }
+      ],
+      "publisher_hypothesis": "ចំនួនប្រជាជនដើមមិនបានផ្លាស់ប្តូរនោះទេ ពួកគេនៅតែត្រូវការការសម្របខ្លួនដូចតែពីមុនអញ្ចឹង",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_84.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 87,
+      "reference": "ចំនួនប្រជាជនដើមមិនបានផ្លាស់ប្តូរនោះទេ ពួកគេនៅតែត្រូវការការសម្របខ្លួនដូចតែពីមុនអញ្ចឹង",
+      "hypothesis": "ចំនួនប្រជាជនដើមមិនបានផ្លាស់ប្ដូរនោះទេ ពួកគេនៅតែត្រូវការការសម្របខ្លួនដូចពីដូចតែពីមុនអញ្ចឹង",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 112,
+      "substitutions": 1,
+      "deletions": 1,
+      "insertions": 2,
+      "hits": 14,
+      "word_errors": 4,
+      "reference_words": 16,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ផ្លាស់",
+          "hypothesis": "ផ្លាស់ប្ដូរ"
+        },
+        {
+          "type": "delete",
+          "reference": "ប្តូរ",
+          "hypothesis": ""
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ដូច ពី"
+        }
+      ],
+      "publisher_hypothesis": "ចំនួនប្រជាជនដើមមិនបានផ្លាស់ប្តូរនោះទេ ពួកគេនៅតែត្រូវការការសម្របខ្លួនដូចតែពីមុនអញ្ចឹង",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_87.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 91,
+      "reference": "ផ្កាយរណបនៅក្នុងលំហអាកាស ទទួលបានសញ្ញា ហើយបន្ទាប់មកបញ្ជូនសញ្ញានោះត្រឡប់មកផែនដីវិញ ស្ទើរតែឥតដាច់",
+      "hypothesis": "កាយកាយរណបនៅក្នុងលំហអាកាសទទួលបានសញ្ញា ហើយបន្ទាប់មកបញ្ជូនសញ្ញានោះត្រឡប់មកផែនដីវិញ ស្ទើរតែឥតដាច",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 108,
+      "substitutions": 2,
+      "deletions": 0,
+      "insertions": 2,
+      "hits": 16,
+      "word_errors": 4,
+      "reference_words": 18,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "កាយ កាយ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ផ្កាយរណប",
+          "hypothesis": "រណប"
+        },
+        {
+          "type": "substitute",
+          "reference": "ដាច់",
+          "hypothesis": "ដាច"
+        }
+      ],
+      "publisher_hypothesis": "កាយរណប នៅក្នុងលំហអាកាសទទួលបានសញ្ញា ហើយបន្ទាប់មកបញ្ជូនសញ្ញានោះត្រឡប់មកផែនដីវិញ ស្ទើរតែឥតដាច់",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_91.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 94,
+      "reference": "មានត្រឹមតែមេដាយចំនួន18ប៉ុណ្ណោះក្នុងមួយថ្ងៃ ប្រទេសជាច្រើនបរាជ័យក្នុងការដណ្តើមយកមេដាយទាំងនោះ",
+      "hypothesis": "មានត្រឹមតែមេដាយចំនួន 16 ប៉ុណ្ណោះក្នុងមួយថ្ងៃ ប្រទេសជាច្រើនបរាជ័យក្នុងការនាំយកមេដាយទាំងនោះ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 111,
+      "substitutions": 2,
+      "deletions": 0,
+      "insertions": 2,
+      "hits": 12,
+      "word_errors": 4,
+      "reference_words": 14,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ចំនួន 16"
+        },
+        {
+          "type": "substitute",
+          "reference": "ចំនួន18ប៉ុណ្ណោះ",
+          "hypothesis": "ប៉ុណ្ណោះ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ដណ្តើម",
+          "hypothesis": "នាំ"
+        }
+      ],
+      "publisher_hypothesis": "មានត្រឹមតែមេដាយចំនួន ដប់ប្រាំបី ប៉ុណ្ណោះក្នុងមួយថ្ងៃ ប្រទេសជាច្រើនបរាជ័យក្នុងការនាំយកមេដាយទាំងនោះ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_94.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 105,
+      "reference": "ក៏ប៉ុន្តែ សញ្ញាភាគច្រើនត្រូវបានបង្ហាញឡើងតែក្នុងភាសាកាតាឡានតែប៉ុណ្ណោះ ពីព្រោះច្បាប់បានកំណត់ថាវាជាភាសាផ្លូវការដំបូងគេ",
+      "hypothesis": "ក៏មិនតែសញ្ញាភាគច្រើនទៅបានបង្ហាញឡើងតែក្នុងភាសាកាតាឡានតែប៉ុណ្ណោះ ពីព្រោះច្បាប់បានកំណត់ថា វាជាភាសាផ្លូវការដំបូងគេ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 134,
+      "substitutions": 2,
+      "deletions": 0,
+      "insertions": 2,
+      "hits": 22,
+      "word_errors": 4,
+      "reference_words": 24,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ក៏ មិន"
+        },
+        {
+          "type": "substitute",
+          "reference": "ក៏ប៉ុន្តែ",
+          "hypothesis": "តែ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ត្រូវ",
+          "hypothesis": "ទៅ"
+        }
+      ],
+      "publisher_hypothesis": "ក៏មិនតែសញ្ញាភាគច្រើនទៅបានបង្ហាញឡើងតែក្នុងភាសាកាត់តាឡានតែប៉ុណ្ណោះពីព្រោះច្បាប់បានកំណត់ថាវិជ្ជាភាសាផ្លូវការដំបូងគេ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_105.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 108,
+      "reference": "អ្នកវិទ្យាសាស្ត្របាននិយាយថា ការផ្ទុះដែលកើតពីការប៉ះទង្គិចគ្នានេះ គឺមានភាពធំសម្បើមណាស់",
+      "hypothesis": "អ្នកវិទ្យាសាស្ត្របាននិយាយថា ការផ្ទុះដែលកាលពីកាលប៉ះទង្គិចគ្នានេះ គឺមានភាពធុងសម្បើមណាស់",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 101,
+      "substitutions": 3,
+      "deletions": 1,
+      "insertions": 0,
+      "hits": 16,
+      "word_errors": 4,
+      "reference_words": 20,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "កើត ពី",
+          "hypothesis": "កាលពី កាល"
+        },
+        {
+          "type": "delete",
+          "reference": "ការ",
+          "hypothesis": ""
+        },
+        {
+          "type": "substitute",
+          "reference": "ធំ",
+          "hypothesis": "ធុង"
+        }
+      ],
+      "publisher_hypothesis": "អ្នកវិទ្យាសាស្ត្របាននិយាយថា ការផ្ទុះដែលកាលពីកាលប៉ះទង្គិចគ្នានេះ គឺមានភាពធុងសម្បើមណាស់",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_108.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 110,
+      "reference": "ផ្កាយរណបនៅក្នុងលំហអាកាស ទទួលបានសញ្ញា ហើយបន្ទាប់មកបញ្ជូនសញ្ញានោះត្រឡប់មកផែនដីវិញ ស្ទើរតែឥតដាច់",
+      "hypothesis": "កែលម្អនៅក្នុងលំហ អាកាសទទួលបានសញ្ញា ហើយបន្ទាប់មកបញ្ជូនសញ្ញា នោះត្រឡប់មកផែនដីវិញស្ទើរតែឥតដាច់",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 109,
+      "substitutions": 2,
+      "deletions": 0,
+      "insertions": 2,
+      "hits": 16,
+      "word_errors": 4,
+      "reference_words": 18,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "កែ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ផ្កាយរណប",
+          "hypothesis": "លម្អ"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "លំហ"
+        },
+        {
+          "type": "substitute",
+          "reference": "លំហអាកាស",
+          "hypothesis": "អាកាស"
+        }
+      ],
+      "publisher_hypothesis": "កែលម្អនៅក្នុងលំហ ឱ្យការទទួលបានសញ្ញា ហើយបន្ទាប់មកបញ្ជូនសញ្ញានោះត្រឡប់មកផែនដីវិញស្ទើរតែឥតដាច់",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_110.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 125,
+      "reference": "កម្មវិធីមួយចំនួនមានតំបន់បោះតង់ពិសេសសម្រាប់គ្រួសារដែលមានក្មេងតូចៗ",
+      "hypothesis": "ការមានវិធីមួយចំនួនមានតំបន់បោះតង់ពិសាសម្រាប់គ្រួសារដែលមានក្មេងតូចៗ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 83,
+      "substitutions": 2,
+      "deletions": 0,
+      "insertions": 2,
+      "hits": 11,
+      "word_errors": 4,
+      "reference_words": 13,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ការ មាន"
+        },
+        {
+          "type": "substitute",
+          "reference": "កម្មវិធី",
+          "hypothesis": "វិធី"
+        },
+        {
+          "type": "substitute",
+          "reference": "ពិសេស",
+          "hypothesis": "ពិសា"
+        }
+      ],
+      "publisher_hypothesis": "ការមានវិធីមួយចំនួនមានតំបន់បោះតង់ពិសាសម្រាប់គ្រួសារដែលមានក្មេងតូចៗ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_125.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 128,
+      "reference": "អ្នកជំងឺធ្លាប់បានទៅប្រទេសនីហ្សេរីយ៉ា ដែលនៅប្រទេសនេះបានកើតមានករណីវីរុស អេបូឡាមួយចំនួន",
+      "hypothesis": "អ្នកជំងឺធ្លាប់បានទៅប្រទេស new zealand ដែលនៅប្រទេសនេះបានកើតមានករណីនិរន្ធអេបូឡាមួយចំនួន",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 95,
+      "substitutions": 2,
+      "deletions": 0,
+      "insertions": 2,
+      "hits": 16,
+      "word_errors": 4,
+      "reference_words": 18,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "new"
+        },
+        {
+          "type": "substitute",
+          "reference": "នីហ្សេរីយ៉ា",
+          "hypothesis": "zealand"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "និ"
+        },
+        {
+          "type": "substitute",
+          "reference": "វីរុស",
+          "hypothesis": "រន្ធ"
+        }
+      ],
+      "publisher_hypothesis": "អ្នកជំងឺធ្លាប់បានទៅប្រទេស និស្សិរិយា ដែលនៅប្រទេសនេះបានកើតមានកាតិនីរូប អេបូឡា មួយចំនួន",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_128.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 142,
+      "reference": "ទោះជាយ៉ាងណា រាល់ការផ្លាស់ប្តូរឬការស្នើសុំគប្បីឆ្លងកាត់ភ្នាក់ងារធ្វើដំណើរជាមុន ហើយមិនត្រូវធ្វើឡើងដោយផ្ទាល់តាមរយៈសណ្ឋាគារនោះទេ",
+      "hypothesis": "ទោះជាយ៉ាងណា រាល់ការផ្លាស់ប្ដូរ ឬការស្នើសុំ កុំបីឆ្លងកាត់ភ្នាក់ងារធ្វើដំណើរជាមុន ហើយមិនត្រូវធ្វើឡើងដោយផ្ទាល់តាមរយៈសណ្ឋាគារនោះទេ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 157,
+      "substitutions": 2,
+      "deletions": 2,
+      "insertions": 0,
+      "hits": 19,
+      "word_errors": 4,
+      "reference_words": 23,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ការ",
+          "hypothesis": "ការផ្លាស់ប្ដូរ"
+        },
+        {
+          "type": "delete",
+          "reference": "ផ្លាស់ ប្តូរ",
+          "hypothesis": ""
+        },
+        {
+          "type": "substitute",
+          "reference": "គប្បី",
+          "hypothesis": "កុំបី"
+        }
+      ],
+      "publisher_hypothesis": "ទោះជាយ៉ាងណា រាល់ការផ្លាស់ប្តូរ ឬការស្នើសុំគុម្ពបីឆ្លងកាត់ភ្នាក់ងារធ្វើដំណើរជាមុន ហើយមិនត្រូវធ្វើឡើងដោយផ្ទាល់តាមរយៈសណ្ឋាគារនោះទេ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_142.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 165,
+      "reference": "រឿងនោះហាក់ដូចជាធ្វើឲ្យខ្ញុំមិនយល់សោះ វាពិតជាមិនយុត្តិធម៌ទេ",
+      "hypothesis": "រឿងនោះហើយដូចជាធ្វើឲ្យខ្ញុំមិនយល់សុះ វាពិតជាមានយុត្តិធម៌ទេ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 77,
+      "substitutions": 3,
+      "deletions": 0,
+      "insertions": 1,
+      "hits": 10,
+      "word_errors": 4,
+      "reference_words": 13,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ហើយ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ហាក់ដូចជា",
+          "hypothesis": "ដូចជា"
+        },
+        {
+          "type": "substitute",
+          "reference": "សោះ",
+          "hypothesis": "សុះ"
+        },
+        {
+          "type": "substitute",
+          "reference": "មិន",
+          "hypothesis": "មាន"
+        }
+      ],
+      "publisher_hypothesis": "រឿងនោះហាក់ដូចជាធ្វើឱ្យខ្ញុំមិនយល់សោះ វាពិតជាមិនយុត្តិធម៌ទេ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_165.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 194,
+      "reference": "វាត្រូវបានគេគ្រោងនឹងកាត់បន្ថយនៅថ្ងៃអង្គារនេះទេ ប៉ុន្តែវាត្រូវបានរក្សាទុកសម្រេចពេលក្រោយបន្ទាប់ពីសេចក្តីសម្រេចរបស់តុលាការបន្ទាន់",
+      "hypothesis": "វាត្រូវបានគេគ្រោងនិងកាត់បន្ថយនៅថ្ងៃអង្គាននេះទេ ប៉ុន្តែវាត្រូវបានរក្សាទុកសម្រេចពេលក្រោយបន្ទាប់ពីសេចក្តីសម្រេចរបស់តុលាការបន្ទាន់",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 153,
+      "substitutions": 3,
+      "deletions": 0,
+      "insertions": 1,
+      "hits": 21,
+      "word_errors": 4,
+      "reference_words": 24,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "នឹង",
+          "hypothesis": "និង"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ថ្ងៃ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ថ្ងៃអង្គារ នេះ",
+          "hypothesis": "អង្គា ននេះ"
+        }
+      ],
+      "publisher_hypothesis": "វាត្រូវបានគេគ្រោះនិងកាត់បន្ថយនៅថ្ងៃអង្គាណនេះទេ ប៉ុន្តែវាត្រូវបានរក្សាទុកសម្រេចពេលក្រោយបន្ទាប់ពីសេចក្តីសម្រេចរបស់តុលាការបន្ទាន់",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_194.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 28,
+      "reference": "គ្រាប់បែក បី គ្រាប់ផ្សេងទៀតបានផ្ទុះឡើងនៅក្បែរអគាររដ្ឋាភិបាលអស់រយៈពេលពីម៉ោងផងដែរ",
+      "hypothesis": "គ្រាប់បែកបីគ្រាប់ផ្សេងទៀតបានផ្ទុះឡើងនៅខ្មែរអគាររដ្ឋាភិបាលអរិយពេលពីម៉ោងផងដែរ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 94,
+      "substitutions": 3,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 13,
+      "word_errors": 3,
+      "reference_words": 16,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ក្បែរ",
+          "hypothesis": "ខ្មែរ"
+        },
+        {
+          "type": "substitute",
+          "reference": "អស់ រយៈពេល",
+          "hypothesis": "អរិយ ពេល"
+        }
+      ],
+      "publisher_hypothesis": "គ្រាប់ប៉ែកបីគ្រាប់ផ្សេងទៀតបានផ្ទុះឡោមនៅខ្មែរអគាររដ្ឋាភិបាលអរិយពេលពីម៉ោងផងដែរ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_28.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 50,
+      "reference": "បណ្តាកោះនៃអាហ្រ្វិកខាងកើតស្ថិតនៅក្នុងមហាសមុទ្រឥណ្ឌានៅតាមឆ្នេរសមុទ្រខាងកើតនៃទ្វីបអាហ្វ្រិក",
+      "hypothesis": "បណ្ណាក់ស់នៃអាហ្វ្រិកខាងកើត ស្ថិតនៅក្នុងមហាសមុទ្រឥណ្ឌានៅតាមឆ្នេរសមុទ្រខាងកើតនៃទ្វីបអាហ្វ្រិក",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 108,
+      "substitutions": 3,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 13,
+      "word_errors": 3,
+      "reference_words": 16,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "បណ្តា កោះ",
+          "hypothesis": "បណ្ណា ក់ស់"
+        },
+        {
+          "type": "substitute",
+          "reference": "អាហ្រ្វិក",
+          "hypothesis": "អាហ្វ្រិក"
+        }
+      ],
+      "publisher_hypothesis": "បណ្តាក់សន៍នៃអាហ្វ្រិកខាងកើត ស្ថិតនៅក្នុងមហាសមុទ្រឥណ្ឌានៅតាមឆ្នេរសមុទ្រខាងកើតនៃទ្វីបអាហ្វ្រិក",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_50.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 59,
+      "reference": "របាយការណ៍ខ្លះបានបញ្ជាក់ថា ចំនួនអ្នកស្លាប់ជាផ្លូវការមានប្រាំបីនាក់ហើយរបាយការណ៍ជាផ្លូវការបញ្ជាក់ថា មានរហូតដល់ 30 នាក់បានរងរបួស ប៉ុន្តែចំនួនចុងក្រោយមិនទាន់ត្រូវបានគេដឹងនៅឡើយទេ",
+      "hypothesis": "របាយការណ៍ខ្លះបានបញ្ជាក់ថា ចំនួនអ្នកស្លាប់ជាផ្លូវការមាន 60 នាក់ ហើយរបាយការណ៍ជាផ្លូវការបញ្ជាក់ថា មានរហូតដល់ 30 នាក់បានរងរបួស ប៉ុន្តែចំនួនជុំក្រោយមិនទាន់ត្រូវបានគេដឹងនៅឡើយទេ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 203,
+      "substitutions": 2,
+      "deletions": 0,
+      "insertions": 1,
+      "hits": 34,
+      "word_errors": 3,
+      "reference_words": 36,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ប្រាំបី",
+          "hypothesis": "60"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ជុំ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ចុងក្រោយ",
+          "hypothesis": "ក្រោយ"
+        }
+      ],
+      "publisher_hypothesis": "របាយការណ៍ខ្លះបានបញ្ជាក់ថា ចំនួនអ្នកស្លាប់ជាផ្លូវការមានប្រាំបីនាក់ ហើយរបាយការណ៍ជាផ្លូវការបញ្ជាក់ថា មានរហូតដល់សាមសិបនាក់បានរងរបួស ប៉ុន្តែចំនួនជុំក្រោយមិនទាន់ត្រូវបានគេដឹងនៅឡើយទេ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_59.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 63,
+      "reference": "ជារឿយៗ ទស្សនៈដែលបានបង្ហាញមានលក្ខណៈមិនលម្អិត ទូទៅ និងសាមញ្ញពេក បើប្រៀបធៀបនឹងព័ត៌មានលម្អិតដែលមាននៅកន្លែងផ្សេងទៀត",
+      "hypothesis": "ជារឿយៗ ទស្សនាដែលបានបង្ហាញមានលក្ខណៈមិនលម្អិតទូទៅ និងសាមញ្ញពេក បើប្រៀបធៀបនឹងពណ៌មានលម្អិតដែលមាននៅកន្លែងផ្សេងទៀត",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 130,
+      "substitutions": 2,
+      "deletions": 0,
+      "insertions": 1,
+      "hits": 22,
+      "word_errors": 3,
+      "reference_words": 24,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ទស្សនៈ",
+          "hypothesis": "ទស្សនា"
+        },
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ពណ៌"
+        },
+        {
+          "type": "substitute",
+          "reference": "ព័ត៌មាន",
+          "hypothesis": "មាន"
+        }
+      ],
+      "publisher_hypothesis": "ជារឿយៗ ទស្សនាដែលបានបង្ហាញមានលក្ខណៈមិនលម្អិតទូទៅ និងសាមញ្ញពេក បើប្រៀបធៀបនឹងព័ត៌មានលម្អិតដែលមាននៅកន្លែងផ្សេងទៀត",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_63.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 77,
+      "reference": "អ្នកវិទ្យាសាស្ត្របាននិយាយថា ការផ្ទុះដែលកើតពីការប៉ះទង្គិចគ្នានេះ គឺមានភាពធំសម្បើមណាស់",
+      "hypothesis": "អ្នកវិទ្យាសាស្ត្របាននិយាយថា ការផ្ទុះដែលកើតពីការប៉ះនឹងកិច្ចគ្នានេះ គឺមានភាពធំសម្បើមណាស់",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 104,
+      "substitutions": 1,
+      "deletions": 0,
+      "insertions": 2,
+      "hits": 19,
+      "word_errors": 3,
+      "reference_words": 20,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ប៉ះ នឹង"
+        },
+        {
+          "type": "substitute",
+          "reference": "ប៉ះទង្គិច",
+          "hypothesis": "កិច្ច"
+        }
+      ],
+      "publisher_hypothesis": "អ្នកវិទ្យាសាស្ត្របាននិយាយថា ការផ្ទុះដែលកើតពីការប៉ះនឹងកិច្ចគ្នានេះ គឺមានភាពធំសម្បើមណាស់",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_77.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 82,
+      "reference": "ក្រុមអ្នកវិទ្យាសាស្ត្របាននិយាយថារោមរបស់សត្វនេះ គឺមានពណ៌ត្នោតនៅខាងលើ និងមានពណ៌លឿងនៅខាងក្រោម",
+      "hypothesis": "ក្រុមហ៊ុនវិទ្យាសាស្ត្របាននិយាយថា រោមល្វឹងសត្វនេះគឺមានពណ៌ត្នោតនៅខាងលើ និងមានពណ៌លឿងនៅខាងក្រោម",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 111,
+      "substitutions": 2,
+      "deletions": 1,
+      "insertions": 0,
+      "hits": 17,
+      "word_errors": 3,
+      "reference_words": 20,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ក្រុម",
+          "hypothesis": "ក្រុមហ៊ុន"
+        },
+        {
+          "type": "delete",
+          "reference": "អ្នក",
+          "hypothesis": ""
+        },
+        {
+          "type": "substitute",
+          "reference": "របស់",
+          "hypothesis": "ល្វឹង"
+        }
+      ],
+      "publisher_hypothesis": "ក្រុមហ៊ុនវិទ្យាសាស្ត្របាននិយាយថា រោមលោកសត្វនេះគឺមានពណ៌ត្នោតនៅខាងលើ និងមានពណ៌លឿងនៅខាងក្រោម",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_82.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 86,
+      "reference": "ការបញ្ចេញសូរ គឺមានភាពងាយស្រួលនៅក្នុងភាសាអ៊ីតាលី ដោយសារពាក្យភាគច្រើន ត្រូវបញ្ចេញសូរដូចគ្នាស្ទើរតែទាំងស្រុងទម្រង់សំណេររបស់វា",
+      "hypothesis": "ការបញ្ចេញសូរ គឺមានភាពងាយស្រួលនៅក្នុងភាសាអ៊ីតើលី ដោយសារពាក្យភាគច្រើនត្រូវបញ្ចេញសូរដូចគ្នា ស្ទើរតែទាំងស្រុងទម្រង់សេនារបស់វា",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 145,
+      "substitutions": 2,
+      "deletions": 0,
+      "insertions": 1,
+      "hits": 21,
+      "word_errors": 3,
+      "reference_words": 23,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "អ៊ីតើ"
+        },
+        {
+          "type": "substitute",
+          "reference": "អ៊ីតាលី",
+          "hypothesis": "លី"
+        },
+        {
+          "type": "substitute",
+          "reference": "សំណេរ",
+          "hypothesis": "សេនា"
+        }
+      ],
+      "publisher_hypothesis": "ការបញ្ចេញសូរ គឺមានភាពងាយស្រួលនៅក្នុងភាសាអ៊ីតីលី ដោយសារពាក្យភាគច្រើនត្រូវបញ្ចេញសូរដូចគ្នា ស្ទើរតែទាំងស្រុងទម្រង់សេនារបស់វា",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_86.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 100,
+      "reference": "បន្ទាប់មក ឡាក់ខាស៊ីងបាននាំមុខក្នុងការច្រៀងចម្រៀងផាចានស៍",
+      "hypothesis": "បន្ទាប់មក ឡាក់ ខាហ៊ីង បាននាំមកក្នុងការច្រៀងចម្រៀងផាចាន",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 63,
+      "substitutions": 2,
+      "deletions": 1,
+      "insertions": 0,
+      "hits": 10,
+      "word_errors": 3,
+      "reference_words": 13,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ស៊ីង",
+          "hypothesis": "ហ៊ីង"
+        },
+        {
+          "type": "substitute",
+          "reference": "នាំមុខ",
+          "hypothesis": "នាំមក"
+        },
+        {
+          "type": "delete",
+          "reference": "ស៍",
+          "hypothesis": ""
+        }
+      ],
+      "publisher_hypothesis": "បន្ទាប់មក ឡាក់ ខាស៊ីង បាននាំមកក្នុងការច្រៀងចម្រៀងផាចាន",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_100.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 112,
+      "reference": "ក្រុមហ៊ុននាំសំបុត្រទទួលបានប្រាក់ខែខ្ពស់សម្រាប់ការដឹកជញ្ជូនទំនិញយ៉ាងឆាប់រហ័ស ជារឿយៗ ពេលវេលាពិតជាសំខាន់ណាស់ជាមួយឯកសារអាជីវកម្មផ្សេងៗ ទំនិញ ឬ គ្រឿងបន្លាស់សម្រាប់ការជួសជុលបន្ទាន់",
+      "hypothesis": "ក្រុមឧណ្ហៗសំបុត្រទទួលបានប្រាក់ខែខ្ពស់សម្រាប់ការដឹកជញ្ជូនទំនិញយ៉ាងឆាប់រហ័ស ជារឿយៗ ពេលវេលាពិតជាសំខាន់ណាស់ជាមួយឯកសារអាជីវកម្មផ្សេងៗ ទំនិញ ឬគ្រឿងបន្លាស់សម្រាប់ការជួសជុលបន្ទាន់",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 210,
+      "substitutions": 2,
+      "deletions": 0,
+      "insertions": 1,
+      "hits": 30,
+      "word_errors": 3,
+      "reference_words": 32,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ក្រុម"
+        },
+        {
+          "type": "substitute",
+          "reference": "ក្រុមហ៊ុន នាំ",
+          "hypothesis": "ឧណ្ហ ៗ"
+        }
+      ],
+      "publisher_hypothesis": "ក្រុមឧណ្ហៗសំបុត្រទទួលបានប្រាក់ខែខ្ពស់សម្រាប់ការដឹកជញ្ជូនទំនិញយ៉ាងឆាប់រហ័ស ជារឿយៗពេលវេលាបានជាសំខាន់ណាស់ ជាមួយឯកសារអាជីវកម្មផ្សេងៗ ទំនិញ ឬគ្រឿងបន្លាស់សម្រាប់ការជួសជុលបន្ទាន់",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_112.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 134,
+      "reference": "មានត្រឹមតែមេដាយចំនួន18ប៉ុណ្ណោះក្នុងមួយថ្ងៃ ប្រទេសជាច្រើនបរាជ័យក្នុងការដណ្តើមយកមេដាយទាំងនោះ",
+      "hypothesis": "មានត្រឹមតែមេដាយចំនួន 16 ប៉ុណ្ណោះក្នុងមួយថ្ងៃ ប្រទេសជាច្រើនបរាជ័យក្នុងការដណ្តើមយកមេដាយទាំងនោះ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 114,
+      "substitutions": 1,
+      "deletions": 0,
+      "insertions": 2,
+      "hits": 13,
+      "word_errors": 3,
+      "reference_words": 14,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ចំនួន 16"
+        },
+        {
+          "type": "substitute",
+          "reference": "ចំនួន18ប៉ុណ្ណោះ",
+          "hypothesis": "ប៉ុណ្ណោះ"
+        }
+      ],
+      "publisher_hypothesis": "មានត្រឹមតែមេដាយចំនួន ដប់ប្រាំបី ប៉ុណ្ណោះក្នុងមួយថ្ងៃ ប្រទេសជាច្រើនបរាជ័យក្នុងការដណ្តើមយកមេដាយទាំងនោះ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_134.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 145,
+      "reference": "រឿងបែបនេះបានក្លាយជាវិន័យដាច់ដោយឡែក ដែលផ្តោតលើការផ្តល់ដំណោះស្រាយចំពោះបញ្ហាជីវិតពិត",
+      "hypothesis": "រឿងបែបនេះបានក្លាយជាវិន័យដៃដ៏លៃ ដែលផ្តោតលើការផ្តល់ដំណោះស្រាយចំពោះបញ្ហាជីវិតពិត",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 100,
+      "substitutions": 1,
+      "deletions": 0,
+      "insertions": 2,
+      "hits": 15,
+      "word_errors": 3,
+      "reference_words": 16,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ដៃ ដ៏"
+        },
+        {
+          "type": "substitute",
+          "reference": "ដាច់ដោយឡែក",
+          "hypothesis": "លៃ"
+        }
+      ],
+      "publisher_hypothesis": "រឿងបែបនេះបានក្លាយជាវិន័យដៃដ៏លៃដែលផ្តោតលើការផ្តល់ដំណោះស្រាយចំពោះបញ្ហាជីវិតពិត",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_145.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 156,
+      "reference": "ខ្ញុំមិនដឹងថាតើអ្នកដឹងវាឬអត់នោះទេ ប៉ុន្តែទំនិញភាគច្រើនដែលមកពីអាមេរិកកណ្តាលបានចូលមកក្នុងប្រទេសនេះដោយគ្មានពន្ធ",
+      "hypothesis": "ខ្ញុំមិនដឹងថា តើអ្នកដឹងវា ឬអនុរតេ ប៉ុន្តែទំនិញភាគច្រើនដែលមកពីអាមេរិកកណ្តាលបានចូលមកក្នុងប្រទេសនេះដោយគ្មានពន្ធ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 134,
+      "substitutions": 2,
+      "deletions": 1,
+      "insertions": 0,
+      "hits": 24,
+      "word_errors": 3,
+      "reference_words": 27,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "អត់ នោះ",
+          "hypothesis": "អនុ រតេ"
+        },
+        {
+          "type": "delete",
+          "reference": "ទេ",
+          "hypothesis": ""
+        }
+      ],
+      "publisher_hypothesis": "ខ្ញុំមិនដឹងថាតើអ្នកដឹងវាឬអត់នោះទេ ប៉ុន្តែទំនិញភាគច្រើនដែលមកពីអាមេរិកកណ្តាលបានចូលមកក្នុងប្រទេសនេះដោយគ្មានប៉ុន",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_156.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 171,
+      "reference": "នៅក្នុងទីធ្លាព្រះវិហារ មានរូបចម្លាក់ជាថ្មម៉ាបដែលគួរឱ្យចាប់អារម្មណ៍នៅលើផ្នូរខ្លះ",
+      "hypothesis": "នៅក្នុងទីជ្រៅព្រះវិហារ មានរូបចម្លាក់ជាថ្មម៉ាបដែលគួរឱ្យចាប់អារម្មណ៍នៅលើភ្នំខ្លះ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 97,
+      "substitutions": 2,
+      "deletions": 0,
+      "insertions": 1,
+      "hits": 13,
+      "word_errors": 3,
+      "reference_words": 15,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "ទី"
+        },
+        {
+          "type": "substitute",
+          "reference": "ទីធ្លា",
+          "hypothesis": "ជ្រៅ"
+        },
+        {
+          "type": "substitute",
+          "reference": "ផ្នូរ",
+          "hypothesis": "ភ្នំ"
+        }
+      ],
+      "publisher_hypothesis": "នៅក្នុងទីជ្រលៀងព្រះវិហារ មានរូបចម្លាក់ជាថ្មម៉ាបដែលគួរឱ្យចាប់អារម្មណ៍នៅលើភ្នំខ្លះ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_171.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 9,
+      "reference": "នៅក្នុងប្រព័ន្ធដឹកជញ្ជូនដ៏មមាញឹកនេះ មនុស្សគ្រប់រូបត្រូវបានភ្ជាប់ និងជួយជ្រោមជ្រែងដោយប្រព័ន្ធដឹកជញ្ជូនមួយដែលពឹងផ្អែកលើរថយន្តឯកជន",
+      "hypothesis": "នៅក្នុងប្រព័ន្ធដឹកជញ្ជូនដ៏មមាញឹកនេះ មនុស្សគ្រប់រូបត្រូវបានភ្ជាប់នឹងជួយជ្រោមជ្រែងដោយប្រព័ន្ធដឹកជញ្ជូនមួយ ដែលពឹងផ្អែកលើរថយន្តឯកជន",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 156,
+      "substitutions": 1,
+      "deletions": 1,
+      "insertions": 0,
+      "hits": 21,
+      "word_errors": 2,
+      "reference_words": 23,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ភ្ជាប់",
+          "hypothesis": "ភ្ជាប់នឹង"
+        },
+        {
+          "type": "delete",
+          "reference": "និង",
+          "hypothesis": ""
+        }
+      ],
+      "publisher_hypothesis": "នៅក្នុងប្រព័ន្ធដឹកជញ្ជូនដ៏មមាញឹកនេះ មនុស្សគ្រប់រូបត្រូវបានភ្ជាប់ និងជួយជ្រោមជ្រែងដោយប្រព័ន្ធដឹកជញ្ជូនមួយដែលពឹងផ្អែកលើរថយន្តឯកជន",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_9.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 24,
+      "reference": "ខ្ញុំមិនដឹងថាតើអ្នកដឹងវាឬអត់នោះទេ ប៉ុន្តែទំនិញភាគច្រើនដែលមកពីអាមេរិកកណ្តាលបានចូលមកក្នុងប្រទេសនេះដោយគ្មានពន្ធ",
+      "hypothesis": "យើងមិនដឹងថាតើអ្នកដឹងវាឬអត់នោះទេ ប៉ុន្តែទំនិញភាគច្រើនដែលមកពីអាមេរិកកណ្ដាលបានចូលមកក្នុងប្រទេសនេះដោយគ្មានពន្ធ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 132,
+      "substitutions": 2,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 25,
+      "word_errors": 2,
+      "reference_words": 27,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ខ្ញុំ",
+          "hypothesis": "យើង"
+        },
+        {
+          "type": "substitute",
+          "reference": "កណ្តាល",
+          "hypothesis": "កណ្ដាល"
+        }
+      ],
+      "publisher_hypothesis": "យើងមិនដឹងថាតើអ្នកដឹងវាឬអត់នោះទេ ប៉ុន្តែទំនិញភាគច្រើនដែលមកពីអាមេរិកកណ្តាលបានចូលមកក្នុងប្រទេសនេះដោយគ្មានពន្ធ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_24.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 44,
+      "reference": "ភ្លាមៗនោះដែរ មន្រ្តីដែលបំពាក់ដោយសម្លៀកបំពាក់ឧបករណ៍ការពារកុបកម្ម បានចូលទៅកាន់ទីធ្លានោះ ហើយប្រើឧស្ម័នបង្ហូរទឹកភ្នែករុញផ្ទប់អ្នកទោស",
+      "hypothesis": "ភ្លាមៗនោះដែរ មន្ត្រីដែលបំពាក់ដោយសំលៀកបំពាក់ឧបករណ៍ការពារកុបកម្ម បានចូលទៅកាន់ទីធ្លានោះ ហើយប្រើឧស្ម័នបង្ហូរទឹកភ្នែករុញផ្ទប់អ្នកទោស",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 158,
+      "substitutions": 2,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 23,
+      "word_errors": 2,
+      "reference_words": 25,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "មន្រ្តី",
+          "hypothesis": "មន្ត្រី"
+        },
+        {
+          "type": "substitute",
+          "reference": "សម្លៀកបំពាក់",
+          "hypothesis": "សំលៀកបំពាក់"
+        }
+      ],
+      "publisher_hypothesis": "ភ្លាមៗនោះដែរ មន្ត្រីដែលបំពាក់ដោយសម្លៀកបំពាក់ឧបករណ៍ការពារកុម្ពកម្ម បានចូលទៅកាន់ទីធ្លានោះ ហើយប្រើឧស្ម័នបង្ហូរទឹកភ្នែក រុញផ្ទប់អ្នកទោស",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_44.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 98,
+      "reference": "អំណាចលើគ្រប់វិស័យរបស់ខ្លួន បានជះឥទ្ធិពលដល់មនុស្សគ្រប់គ្នាចាប់ពីស្តេច រហូតដល់មនុស្សសាមញ្ញ",
+      "hypothesis": "អំណាចលើគ្រប់វិស័យរបស់ខ្លួនបានជះឥទ្ធិពលដល់មនុស្សគ្រប់គ្នា ចាប់ពីស្តេច រហូតដល់មនុស្សសមាន",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 104,
+      "substitutions": 1,
+      "deletions": 0,
+      "insertions": 1,
+      "hits": 14,
+      "word_errors": 2,
+      "reference_words": 15,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "មនុស្ស"
+        },
+        {
+          "type": "substitute",
+          "reference": "មនុស្សសាមញ្ញ",
+          "hypothesis": "សមាន"
+        }
+      ],
+      "publisher_hypothesis": "អំណាចលើគ្រប់វិស័យរបស់ខ្លួនបានជះឥទ្ធិពលដល់មនុស្សគ្រប់គ្នា ចាប់ពីស្តេច រហូតដល់មនុស្សសម្តែង",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_98.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 119,
+      "reference": "ជម្រើសដែលកាន់តែពេញនិយមសម្រាប់អ្នក ដែលមានផែនការទុកមួយឆ្នាំចោល រៀនចប់ទុកមួយឆ្នាំទំនេរ គឺការធ្វើដំណើរនិងរៀនអ្វីប្លែកថ្មី",
+      "hypothesis": "ជម្រើសដែលកាន់តែពេញនិយមសម្រាប់អ្នកដែលមានផែនការទុកមួយឆ្នាំចូល ឬចាប់ទុកមួយឆ្នាំទំនេរ គឺការធ្វើដំណើរនិងរៀនអ្វីប្លែកថ្មី",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 145,
+      "substitutions": 2,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 22,
+      "word_errors": 2,
+      "reference_words": 24,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ចោល រៀនចប់",
+          "hypothesis": "ចូល ឬចាប់"
+        }
+      ],
+      "publisher_hypothesis": "ជម្រើសដែលកាន់តែពេញនិយមសម្រាប់អ្នកដែលមានផែនការទុកមួយឆ្នាំចោល ឬចាប់ទុកមួយឆ្នាំទំនេរ គឺ ការធ្វើដំណើរ និងរៀនអ្វីប្លែកថ្មី",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_119.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 127,
+      "reference": "ជម្រើសដែលកាន់តែពេញនិយមសម្រាប់អ្នក ដែលមានផែនការទុកមួយឆ្នាំចោល រៀនចប់ទុកមួយឆ្នាំទំនេរ គឺការធ្វើដំណើរនិងរៀនអ្វីប្លែកថ្មី",
+      "hypothesis": "ជម្រើសដែលកាន់តែពេញនិយមសម្រាប់អ្នកដែលមានផែនការទុកមួយឆ្នាំចោល និងចប់ទុកមួយឆ្នាំទំនេរ គឺការធ្វើដំណើរ និងរៀនអ្វីប្លែកថ្មី",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 147,
+      "substitutions": 1,
+      "deletions": 0,
+      "insertions": 1,
+      "hits": 23,
+      "word_errors": 2,
+      "reference_words": 24,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "និង"
+        },
+        {
+          "type": "substitute",
+          "reference": "រៀនចប់",
+          "hypothesis": "ចប់"
+        }
+      ],
+      "publisher_hypothesis": "ជម្រើសដែលកាន់តែពេញនិយមសម្រាប់អ្នកដែលមានផាសុកការទុកមួយឆ្នាំចោល ឬចប់ទុកមួយឆ្នាំទំនេរ គឺការធ្វើដំណើរ និងរៀនអ្វីប៉ុណ្ណោះប្លែកថ្មី",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_127.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 131,
+      "reference": "ការជិះស្គីគឺជាសកម្មភាពធ្វើដំណើរដ៏ចម្បងមួយដែលពេញនិយមសម្រាប់មនុស្សជាច្រើនដែលជួនកាលគេហៅថា ស្គីបាំ គម្រោងវិស្សមកាលទាំងមូលជុំវិញការជិះស្គីនៅទីតាំងដ៏ពិសេសមួយ",
+      "hypothesis": "ការជិះស្គី គឺជាសកម្មភាពធ្វើដំណើរដ៏ចម្បងមួយដែលពេញនិយម សម្រាប់មនុស្សជាច្រើនដែលជួនកាលគេហៅថា ស្គីបាំ គម្រោង វិសមកាលទាំងមូលជុំវិញការជិះស្គីនៅទីតាំងដ៏ពិសេសមួយ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 191,
+      "substitutions": 1,
+      "deletions": 0,
+      "insertions": 1,
+      "hits": 31,
+      "word_errors": 2,
+      "reference_words": 32,
+      "word_edits": [
+        {
+          "type": "insert",
+          "reference": "",
+          "hypothesis": "វិសម"
+        },
+        {
+          "type": "substitute",
+          "reference": "វិស្សមកាល",
+          "hypothesis": "កាល"
+        }
+      ],
+      "publisher_hypothesis": "ការជិះស្គី គឺជាសកម្មភាពធ្វើដំណើរដ៏ចម្បងមួយដែលពេញនិយម សម្រាប់មនុស្សជាច្រើនដែលជួនកាលគេហៅថា ស្គីបាប់គម្រោង វិស្វកាលទាំងមូលជុំវិញការជិះស្គីនៅទីតាំងដ៏ពិសេសមួយ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_131.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 62,
+      "reference": "វាត្រូវបានគេគ្រោងនឹងកាត់បន្ថយនៅថ្ងៃអង្គារនេះទេ ប៉ុន្តែវាត្រូវបានរក្សាទុកសម្រេចពេលក្រោយបន្ទាប់ពីសេចក្តីសម្រេចរបស់តុលាការបន្ទាន់",
+      "hypothesis": "វាត្រូវបានគេគ្រោងនិងកាត់បន្ថយនៅថ្ងៃអង្គារនេះទេ ប៉ុន្តែវាត្រូវបានរក្សាទុកសម្រេចពេលក្រោយបន្ទាប់ពីសេចក្តីសម្រេចរបស់តុលាការបន្ទាន់",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 153,
+      "substitutions": 1,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 23,
+      "word_errors": 1,
+      "reference_words": 24,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "នឹង",
+          "hypothesis": "និង"
+        }
+      ],
+      "publisher_hypothesis": "វាត្រូវបានគេគ្រោងនិងកាត់បន្ថយនៅថ្ងៃអង្គារនេះទេ ប៉ុន្តែវាត្រូវបានរក្សាទុកសម្រេចពេលក្រោយបន្ទាប់ពីក្តីសម្រេចរបស់តុលាការបន្ទាន់",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_62.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 97,
+      "reference": "សត្វខ្លះដូចជា ដំរី និង សត្វកវែង ព្យាយាមចូលមកជិតឡាន ដូច្នេះសម្ភារៈតាមបទដ្ឋាន គឺអំណោយផលក្នុងការមើលទេសភាពបានល្អ",
+      "hypothesis": "សត្វខ្លះដូចជាដំរី និងសត្វគោវែងព្យាយាមចូលមកជិតឡាន ដូច្នេះសម្ភារៈតាមបទដ្ឋាន គឺអំណោយផលក្នុងការមើលទេសភាពបានល្អ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 126,
+      "substitutions": 1,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 24,
+      "word_errors": 1,
+      "reference_words": 25,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ក",
+          "hypothesis": "គោ"
+        }
+      ],
+      "publisher_hypothesis": "សត្វខ្លះដូចជាដំរី និងសត្វកវែងព្យាយាមចូលមកជិតឡាន ដូច្នេះសម្ភារតាមបទដ្ឋានគឺអំណោយផលក្នុងការមើលទេសភាពបានល្អ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_97.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 103,
+      "reference": "បើទោះបីជាមានមនុស្សបីនាក់ស្ថិតនៅក្នុងផ្ទះនៅពេលរថយន្តបើកបុកក្ដី ក៏ប៉ុន្តែពុំមាននរណាម្នាក់រងរបួសនោះទេ",
+      "hypothesis": "បើទោះបីជាមានមនុស្សបីនាក់ស្ថិតនៅក្នុងផ្ទះនៅពេលរថយន្តបើកបុកក្តី ក៏ប៉ុន្តែពុំមាននរណាម្នាក់រងរបួសនោះទេ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 126,
+      "substitutions": 1,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 22,
+      "word_errors": 1,
+      "reference_words": 23,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ក្ដី",
+          "hypothesis": "ក្តី"
+        }
+      ],
+      "publisher_hypothesis": "បើទោះបីជាមានមនុស្សបីនាក់ស្ថិតនៅក្នុងផ្ទះនៅពេលរថយន្តបើកបុកក្តី ក៏ប៉ុន្តែពុំមាននរណាម្នាក់រងរបួសនោះទេ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_103.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 139,
+      "reference": "រឿងបែបនេះបានក្លាយជាវិន័យដាច់ដោយឡែក ដែលផ្តោតលើការផ្តល់ដំណោះស្រាយចំពោះបញ្ហាជីវិតពិត",
+      "hypothesis": "រូងបែបនេះបានក្លាយជាវិន័យដាច់ដោយឡែក ដែលផ្តោតលើការផ្តល់ដំណោះស្រាយចំពោះបញ្ហាជីវិតពិត",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 104,
+      "substitutions": 1,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 15,
+      "word_errors": 1,
+      "reference_words": 16,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "រឿង",
+          "hypothesis": "រូង"
+        }
+      ],
+      "publisher_hypothesis": "រូងបែបនេះបានក្លាយជាវិន័យដាច់ដោយឡែក ដែលផ្តោតលើការផ្តល់ដំណោះស្រាយចំពោះបញ្ហាជីវិតពិត",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_139.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 160,
+      "reference": "បន្ទាប់ពីតក់ស្លុត និងបានឃើញភាពសាហាវឃោរឃៅនៃសង្គ្រាមក្នុងកំឡុងពេលនៃសង្គ្រាមលោកលើកទីមួយ ប្រជាជាតិជាច្រើនមិនចង់ជួបស្ថានភាពបែបនេះទៀតទេនៅពេលអនាគត",
+      "hypothesis": "បន្ទាប់ពីតក់ស្លុតនឹងបានឃើញភាពសាហាវឃោរឃៅនៃសង្គ្រាមក្នុងកំឡុង ពេលនៃសង្គ្រាមលោកលើកទីមួយ ប្រជាជាតិជាច្រើនមិនចង់ជួបស្ថានភាពបែបនេះទៀតទេនៅពេលអនាគត",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 173,
+      "substitutions": 1,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 23,
+      "word_errors": 1,
+      "reference_words": 24,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "និង",
+          "hypothesis": "នឹង"
+        }
+      ],
+      "publisher_hypothesis": "បន្ទាប់ពីតក់ស្លុត និងបានឃើញភាពសាហាវឃោរឃៅនៃសង្គ្រាមក្នុងកំឡុងពេលនៃសង្គ្រាមលោកលើកទីមួយ ប្រជាជាតិជាច្រើនមិនចង់ជួបស្ថានភាពបែបនេះទៀតទេនៅពេលអនាគត",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_160.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 166,
+      "reference": "គ្រាប់បែក បី គ្រាប់ផ្សេងទៀតបានផ្ទុះឡើងនៅក្បែរអគាររដ្ឋាភិបាលអស់រយៈពេលពីម៉ោងផងដែរ",
+      "hypothesis": "គ្រាប់បែកបីគ្រាប់ផ្សេងទៀតបានផ្ទុះឡើងនៅក្បែរអគាររដ្ឋាភិបាលអស់រយៈពេលពីរម៉ោងផងដែរ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 98,
+      "substitutions": 1,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 15,
+      "word_errors": 1,
+      "reference_words": 16,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ពី",
+          "hypothesis": "ពីរ"
+        }
+      ],
+      "publisher_hypothesis": "គ្រាប់បែកបីគ្រាប់ផ្សេងទៀតបានផ្ទុះឡើងនៅក្បែរអគាររដ្ឋាភិបាលអស់រយៈពេលពីរម៉ោងផងដែរ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_166.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 167,
+      "reference": "វាក៏ពុំមានសិទ្ធិអំណាច ដើម្បីបដិសេធច្បាប់ពន្ធ និងពន្ធគយរវាងរដ្ឋនីមួយៗនោះដែរ",
+      "hypothesis": "វាក៏ពុំមានសិទ្ធិអំណាចដើម្បីបរិស័ទច្បាប់ពន្ធ និងពន្ធគយរវាងរដ្ឋនីមួយៗនោះដែរ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 91,
+      "substitutions": 1,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 18,
+      "word_errors": 1,
+      "reference_words": 19,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "បដិសេធ",
+          "hypothesis": "បរិស័ទ"
+        }
+      ],
+      "publisher_hypothesis": "វាក៏ពុំមានសិទ្ធិអំណាចដើម្បីបរិស័ទច្បាប់ពន្ធ និងពន្ធគយរវាងរដ្ឋនីមួយៗនោះដែរ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_167.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 178,
+      "reference": "ផលិតផលសិប្បកម្មអាចត្រូវបានចាត់ទុកថាជាវត្ថុបុរាណ ទោះបីជាវាមានអាយុតិចកាលជាងទំនិញស្រដៀងគ្នាដែល ផលិតបានច្រើនក៏ដោយ",
+      "hypothesis": "ផលិតផលសិប្បកម្មអាចត្រូវបានចាត់ទុកថាជាវត្ថុបុរាណ ទោះបីជាវាមានអាយុតិចកាលជាងទំនិញស្រដៀងគ្នាដែរ ផលិតបានច្រើនក៏ដោយ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 130,
+      "substitutions": 1,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 21,
+      "word_errors": 1,
+      "reference_words": 22,
+      "word_edits": [
+        {
+          "type": "substitute",
+          "reference": "ដែល",
+          "hypothesis": "ដែរ"
+        }
+      ],
+      "publisher_hypothesis": "ផលិតផលសិប្បកម្មអាចត្រូវបានចាត់ទុកថាជាវត្ថុបុរាណ ទោះបីជាវាមានអាយុតិចកាលជាងទំនិញស្រដៀងគ្នាដែលផលិតបានច្រើនក៏ដោយ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_178.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 10,
+      "reference": "លទ្ធផលវិភាគអំពីគម្រោងនឹងត្រូវបង្ហោះនៅលើគេហទំព័រសាធារណៈ",
+      "hypothesis": "លទ្ធផលវិភាគអំពីគម្រោងនឹងត្រូវបង្ហោះនៅលើគេហទំព័រសាធារណៈ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 69,
+      "substitutions": 0,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 11,
+      "word_errors": 0,
+      "reference_words": 11,
+      "word_edits": [],
+      "publisher_hypothesis": "លទ្ធផលវិភាគអំពីគម្រោងនឹងត្រូវបង្ហោះនៅលើគេហទំព័រសាធារណៈ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_10.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 25,
+      "reference": "សង្កាត់ភាគច្រើនទទួលបានសេវាពីរថយន្តក្រុងតូចៗរបស់ជប៉ុន ដែលមានផាសុកភាព និងមាំល្អ",
+      "hypothesis": "សង្កាត់ភាគច្រើនទទួលបានសេវាពីរថយន្តក្រុងតូចៗរបស់ជប៉ុន ដែលមានផាសុកភាព និងមាំល្អ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 93,
+      "substitutions": 0,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 19,
+      "word_errors": 0,
+      "reference_words": 19,
+      "word_edits": [],
+      "publisher_hypothesis": "សង្កាត់ភាគច្រើនទទួលបានសេវាពីរថយន្តក្រុងតូចៗរបស់ជប៉ុន ដែលមានផាសុកភាព និងមាំល្អ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_25.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 31,
+      "reference": "ក្រុមអ្នកវិទ្យាសាស្ត្របាននិយាយថារោមរបស់សត្វនេះ គឺមានពណ៌ត្នោតនៅខាងលើ និងមានពណ៌លឿងនៅខាងក្រោម",
+      "hypothesis": "ក្រុមអ្នកវិទ្យាសាស្ត្របាននិយាយថា រោមរបស់សត្វនេះគឺមានពណ៌ត្នោតនៅខាងលើ និងមានពណ៌លឿងនៅខាងក្រោម",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 108,
+      "substitutions": 0,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 20,
+      "word_errors": 0,
+      "reference_words": 20,
+      "word_edits": [],
+      "publisher_hypothesis": "ក្រុមអ្នកវិទ្យាសាស្ត្របាននិយាយថា រោមរបស់សត្វនេះគឺមានពណ៌ត្នោតនៅខាងលើ និងមានពណ៌លឿងនៅខាងក្រោម",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_31.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 38,
+      "reference": "សង្កាត់ភាគច្រើនទទួលបានសេវាពីរថយន្តក្រុងតូចៗរបស់ជប៉ុន ដែលមានផាសុកភាព និងមាំល្អ",
+      "hypothesis": "សង្កាត់ភាគច្រើនទទួលបានសេវាពីរថយន្តក្រុងតូចៗរបស់ជប៉ុន ដែលមានផាសុកភាព និងមាំល្អ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 93,
+      "substitutions": 0,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 19,
+      "word_errors": 0,
+      "reference_words": 19,
+      "word_edits": [],
+      "publisher_hypothesis": "សង្កាត់ភាគច្រើនទទួលបានសេវាពីរថយន្តក្រុងតូចៗរបស់ជប៉ុនដែលមានផាសុកភាព និងមាំល្អ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_38.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 78,
+      "reference": "ទ្រឹស្តីទាំងនេះបង្ហាញថា មនុស្សមានតម្រូវការ និង/ឬ សេចក្តីប្រាថ្នាជាក់លាក់ ដែលត្រូវមាននៅក្នុងខ្លួនរបស់ពួកគេនៅពេលពួកគេធំពេញវ័យ។",
+      "hypothesis": "ទ្រឹស្តីទាំងនេះបង្ហាញថា មនុស្សមានតម្រូវការ និងឬសេចក្តីប្រាថ្នាជាក់លាក់ ដែលត្រូវមាននៅក្នុងខ្លួនរបស់ពួកគេនៅពេលពួកគេធំពេញវ័យ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 150,
+      "substitutions": 0,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 23,
+      "word_errors": 0,
+      "reference_words": 23,
+      "word_edits": [],
+      "publisher_hypothesis": "ទ្រឹស្តីទាំងនេះបង្ហាញថា មនុស្សមានតម្រូវការ និងឬសេចក្តីប្រាថ្នាជាក់លាក់ ដែលត្រូវមាននៅក្នុងខ្លួនរបស់ពួកគេនៅពេលពួកគេធំពេញវ័យ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_78.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 83,
+      "reference": "កម្មវិធីមួយចំនួនមានតំបន់បោះតង់ពិសេសសម្រាប់គ្រួសារដែលមានក្មេងតូចៗ",
+      "hypothesis": "កម្មវិធីមួយចំនួនមានតំបន់បោះតង់ពិសេសសម្រាប់គ្រួសារដែលមានក្មេងតូចៗ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 83,
+      "substitutions": 0,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 13,
+      "word_errors": 0,
+      "reference_words": 13,
+      "word_edits": [],
+      "publisher_hypothesis": "កម្មវិធីមួយចំនួនមានតំបន់បោះតង់ពិសេសសម្រាប់គ្រួសារដែលមានក្មេងតូចៗ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_83.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 92,
+      "reference": "នៅពេលយប់ងងឹត ពួកគេអាចមើលឃើញច្បាស់ ហើយក៏ធ្វើដំណើរបានដោយរលូនផងដែរ សត្វខ្លារខិនប្រមាញ់រកចំណីដោយលាក់ខ្លួនពួនចាំចាប់ចំណី",
+      "hypothesis": "នៅពេលយប់ងងឹត ពួកគេអាចមើលឃើញច្បាស់ ហើយក៏ធ្វើដំណើរបានដោយរលូនផងដែរ សត្វខ្លារខិនប្រមាញ់រកចំណីដោយលាក់ខ្លួនពួនចាំចាប់ចំណី",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 146,
+      "substitutions": 0,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 25,
+      "word_errors": 0,
+      "reference_words": 25,
+      "word_edits": [],
+      "publisher_hypothesis": "នាពេលយប់ងងឹត ពួកគេអាចមើលឃើញច្បាស់ ហើយក៏ធ្វើដំណើរបានដោយរលូនផងដែរ សត្វខ្លារខិនប្រមាញ់រកចំណីដោយលាក់ខ្លួនពួនចាំចាប់ចំណី",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_92.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 102,
+      "reference": "នៅក្នុងប្រព័ន្ធដឹកជញ្ជូនដ៏មមាញឹកនេះ មនុស្សគ្រប់រូបត្រូវបានភ្ជាប់ និងជួយជ្រោមជ្រែងដោយប្រព័ន្ធដឹកជញ្ជូនមួយដែលពឹងផ្អែកលើរថយន្តឯកជន",
+      "hypothesis": "នៅក្នុងប្រព័ន្ធដឹកជញ្ជូនដ៏មមាញឹកនេះ មនុស្សគ្រប់រូបត្រូវបានភ្ជាប់ និងជួយជ្រោមជ្រែងដោយប្រព័ន្ធដឹកជញ្ជូនមួយដែលពឹងផ្អែកលើរថយន្តឯកជន",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 156,
+      "substitutions": 0,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 23,
+      "word_errors": 0,
+      "reference_words": 23,
+      "word_edits": [],
+      "publisher_hypothesis": "នៅក្នុងប្រព័ន្ធដឹកជញ្ជូនដ៏មមាញឹកនេះ មនុស្សគ្រប់រូបត្រូវបានភ្ជាប់ និងជួយជ្រោមជ្រែងដោយប្រព័ន្ធដឹកជញ្ជូនមួយដែលពឹងផ្អែកលើរថយន្តឯកជន",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_102.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 104,
+      "reference": "ផ្លូវទឹកនៅក្នុងប្រទេសអាចជាប្រធានបទដ៏ល្អមួយសម្រាប់ដំណើរកម្សាន្តថ្ងៃឈប់សម្រាក",
+      "hypothesis": "ផ្លូវទឹកនៅក្នុងប្រទេសអាចជាប្រធានបទដ៏ល្អមួយសម្រាប់ដំណើរកម្សាន្តថ្ងៃឈប់សម្រាក",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 90,
+      "substitutions": 0,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 14,
+      "word_errors": 0,
+      "reference_words": 14,
+      "word_edits": [],
+      "publisher_hypothesis": "ផ្លូវទឹកនៅក្នុងប្រទេសអាចជាប្រធានបទដ៏ល្អមួយសម្រាប់ដំណើរកម្សាន្តថ្ងៃឈប់សម្រាក",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_104.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 107,
+      "reference": "ផ្លូវទឹកនៅក្នុងប្រទេសអាចជាប្រធានបទដ៏ល្អមួយសម្រាប់ដំណើរកម្សាន្តថ្ងៃឈប់សម្រាក",
+      "hypothesis": "ផ្លូវទឹកនៅក្នុងប្រទេសអាចជាប្រធានបទដ៏ល្អមួយសម្រាប់ដំណើរកម្សាន្តថ្ងៃឈប់សម្រាក",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 90,
+      "substitutions": 0,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 14,
+      "word_errors": 0,
+      "reference_words": 14,
+      "word_edits": [],
+      "publisher_hypothesis": "ផ្លូវទឹកនៅក្នុងប្រទេសអាចជាប្រធានបទដ៏ល្អមួយសម្រាប់ដំណើរកម្សាន្តថ្ងៃឈប់សម្រាក",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_107.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 126,
+      "reference": "លទ្ធផលវិភាគអំពីគម្រោងនឹងត្រូវបង្ហោះនៅលើគេហទំព័រសាធារណៈ",
+      "hypothesis": "លទ្ធផលវិភាគអំពីគម្រោងនឹងត្រូវបង្ហោះនៅលើគេហទំព័រសាធារណៈ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 69,
+      "substitutions": 0,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 11,
+      "word_errors": 0,
+      "reference_words": 11,
+      "word_edits": [],
+      "publisher_hypothesis": "លទ្ធផលវិភាគអំពីគម្រោងនឹងត្រូវបង្ហោះនៅលើគេហទំព័រសាធារណៈ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_126.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 161,
+      "reference": "ប៉ូលីសបាននិយាយថា សាកសពដែលបានរកឃើញបាននៅទីនោះ រយៈពេលមួយថ្ងៃហើយ",
+      "hypothesis": "ប៉ូលីសបាននិយាយថា សាកសពដែលបានរកឃើញ បាននៅទីនោះរយៈពេលមួយថ្ងៃហើយ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 77,
+      "substitutions": 0,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 16,
+      "word_errors": 0,
+      "reference_words": 16,
+      "word_edits": [],
+      "publisher_hypothesis": "ប៉ូលិសបាននិយាយថា សាកសពដែលបានរកឃើញបាននៅទីនោះរយៈពេលមួយថ្ងៃហើយ",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_161.wav",
+      "listening_review_status": "not_reviewed"
+    },
+    {
+      "validation_index": 198,
+      "reference": "សម្លការីអាច គោក ឬ រាវ អាស្រ័យលើបរិមាណអង្គធាតុរាវ ដាក់ទឹកតិចឬច្រើន",
+      "hypothesis": "សម្លការីអាចគោក ឬរាវអាស្រ័យលើបរិមាណអង្គធាតុរាវ ដាក់ទឹកតិច ឬច្រើន",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 77,
+      "substitutions": 0,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 15,
+      "word_errors": 0,
+      "reference_words": 15,
+      "word_edits": [],
+      "publisher_hypothesis": "សម្លការី អាចគោក ឬរាវ អាស្រ័យលើបរិមាណអង្គធាតុលាវ ដាក់ទឹកតិច ឬច្រើន",
+      "audio": "local_eval/qwen_fleurs_audio_expanded/validation_198.wav",
+      "listening_review_status": "not_reviewed"
+    }
+  ],
+  "limitations": [
+    "No listening review has been completed.",
+    "Reference-based edits are diagnostic and must not become validation-specific correction rules.",
+    "Train loss fell while validation WER rose; extra epochs under this recipe did not help."
+  ],
+  "train_vocabulary_diagnostic": {
+    "training_clips": 1663,
+    "unique_transcripts": 1159,
+    "unique_word_tokens": 6155,
+    "reference_token_alignment_counts": {
+      "unseen_error": 140,
+      "seen_correct": 2001,
+      "seen_error": 422,
+      "unseen_correct": 106
+    },
+    "training_clips_with_latin": 632,
+    "training_clips_with_digits": 378,
+    "limitations": "ICU vocabulary coverage is an association, not an acoustic diagnosis; insertions have no reference token."
+  }
+}

@@ -1,0 +1,141 @@
+{
+  "created_date": "2026-10-07",
+  "confirmed_requirement": {
+    "cer_percent_strictly_below": 20,
+    "wer_percent_strictly_below": 20
+  },
+  "scoring": "Existing NFC CER and ICU 77.1 km_KH corpus WER; no reference-dependent corrections",
+  "validation_indices_sha256": "eb43569179d40d422631b6b233d4218e6824f7d638317a57c2a95abdc0e47607",
+  "decoding_pilot_indices": [
+    0,
+    16,
+    24,
+    25,
+    29,
+    46,
+    53,
+    57,
+    71,
+    91,
+    96,
+    105,
+    106,
+    112,
+    115,
+    135,
+    145,
+    147,
+    160,
+    161,
+    162,
+    174,
+    196,
+    197
+  ],
+  "decoding_pilots": [
+    {
+      "dtype": "bfloat16",
+      "beams": 1,
+      "force_khmer": false
+    },
+    {
+      "dtype": "bfloat16",
+      "beams": 1,
+      "force_khmer": true
+    },
+    {
+      "dtype": "bfloat16",
+      "beams": 3,
+      "force_khmer": true
+    }
+  ],
+  "training_candidate": {
+    "base_revision": "351f1cc594f084e4899ef6cf7bbb17ec64484080",
+    "train_manifest": "results/diagnostic/qwen_train30_split_20261007.json",
+    "learning_rate": 1e-05,
+    "epochs": 2,
+    "gradient_accumulation": 8,
+    "lora_rank": 8,
+    "schedule": "cosine with 5% warmup",
+    "precision": "bfloat16",
+    "validation_decoding": {
+      "beams": 3,
+      "force_khmer": true,
+      "reason": "Lowest WER on the predefined 24-clip validation pilot before training began",
+      "greedy_retry_on_missing_eos": true,
+      "batch_size": 4
+    },
+    "output_dir": "models/qwen_lora_train30_v3_guarded"
+  },
+  "selection": "Compare complete 124-clip validation scores; retain best measured model and original baseline. Pilot scores alone never count as a passing result.",
+  "test_policy": "No test audio or reference access during tuning. Freeze model and decoder before one final held-out evaluation. Validation success alone does not prove final success.",
+  "gated_candidate": "seanghay/Qwen3-ASR-0.6B-Khmer-v4 inaccessible without approval; not used",
+  "status": "Expanded student training completed. Epoch 1 selected at 12.49% CER / 28.81% WER; target unmet; held-out test unused.",
+  "completed_decoding_pilots": [
+    {
+      "result": "results\\diagnostic\\qwen_base_bf16_pilot_20261007.json",
+      "metrics": {
+        "evaluated_examples": 24,
+        "cer_percent": 16.646754281162885,
+        "wer_percent_icu_segmented": 35.094339622641506,
+        "cer_reference_characters": 2511,
+        "wer_reference_words": 530,
+        "cer_errors": 418,
+        "wer_errors": 186,
+        "icu_version": "77.1"
+      }
+    },
+    {
+      "result": "results\\diagnostic\\qwen_base_bf16_khmer_pilot_20261007.json",
+      "metrics": {
+        "evaluated_examples": 24,
+        "cer_percent": 16.726403823178014,
+        "wer_percent_icu_segmented": 33.77358490566038,
+        "cer_reference_characters": 2511,
+        "wer_reference_words": 530,
+        "cer_errors": 420,
+        "wer_errors": 179,
+        "icu_version": "77.1"
+      }
+    },
+    {
+      "result": "results\\diagnostic\\qwen_base_bf16_beam3_pilot_20261007.json",
+      "metrics": {
+        "evaluated_examples": 24,
+        "cer_percent": 14.217443249701315,
+        "wer_percent_icu_segmented": 27.358490566037734,
+        "cer_reference_characters": 2511,
+        "wer_reference_words": 530,
+        "cer_errors": 357,
+        "wer_errors": 145,
+        "icu_version": "77.1"
+      }
+    }
+  ],
+  "full_validation_baseline": {
+    "result": "results/diagnostic/qwen_base_bf16_guarded_validation_20261007.json",
+    "metrics": {
+      "evaluated_examples": 124,
+      "cer_percent": 12.583313257849515,
+      "wer_percent_icu_segmented": 28.400149868864744,
+      "cer_reference_characters": 12453,
+      "wer_reference_words": 2669,
+      "cer_errors": 1567,
+      "wer_errors": 758,
+      "icu_version": "77.1"
+    }
+  },
+  "decoder_revision": {
+    "reason": "Full validation exposed one beam output without an end token; retry this condition with single-example greedy decoding. No reference-dependent decision.",
+    "greedy_retry_on_missing_eos": true,
+    "source": "src/qwen_khmer_inference.py",
+    "evaluated_greedy_retries": 1
+  },
+  "smoke_check": {
+    "output_dir": "models/qwen_lora_train30_v3",
+    "optimizer_steps_before_resume": 2,
+    "optimizer_steps_after_resume": 5,
+    "peak_allocated_gpu_gb": 3.08,
+    "result": "Nonzero finite gradients, save, and resume passed. Full guarded run starts afresh to preserve configuration identity."
+  }
+}

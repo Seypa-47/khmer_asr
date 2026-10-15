@@ -1,0 +1,52 @@
+{
+  "source_zip_sha256": "2e936221746c7d8795a4dbaf3a76e4b723514b0747dbdf1e037fb47ea5374a7f",
+  "verified_metrics": {
+    "evaluated_examples": 124,
+    "cer_percent": 12.65558499959849,
+    "wer_percent_icu_segmented": 28.924690895466465,
+    "cer_reference_characters": 12453,
+    "wer_reference_words": 2669,
+    "cer_errors": 1576,
+    "wer_errors": 772,
+    "icu_version": "77.1"
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "optimizer_steps": 208,
+      "mean_train_loss": 0.2631849549717471,
+      "evaluated_examples": 124,
+      "cer_percent": 12.65558499959849,
+      "wer_percent_icu_segmented": 28.924690895466465,
+      "cer_reference_characters": 12453,
+      "wer_reference_words": 2669,
+      "cer_errors": 1576,
+      "wer_errors": 772,
+      "icu_version": "77.1"
+    },
+    {
+      "epoch": 2,
+      "optimizer_steps": 416,
+      "mean_train_loss": 0.23183587103772973,
+      "evaluated_examples": 124,
+      "cer_percent": 12.888460611900745,
+      "wer_percent_icu_segmented": 29.18696140876733,
+      "cer_reference_characters": 12453,
+      "wer_reference_words": 2669,
+      "cer_errors": 1605,
+      "wer_errors": 779,
+      "icu_version": "77.1"
+    }
+  ],
+  "required_word_error_reduction": 239,
+  "target_achieved": false,
+  "test_evaluated": false,
+  "next_experiment": {
+    "notebook": "notebooks/qwen_improve_colab_v2.ipynb",
+    "learning_rate": 5e-05,
+    "max_epochs": 4,
+    "patience": 2,
+    "status": "prepared_not_run",
+    "training_location": "Google Colab"
+  }
+}

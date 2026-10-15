@@ -1,0 +1,1138 @@
+{
+  "purpose": "student candidate selection; validation only",
+  "split": "google/fleurs km_kh validation",
+  "test_used": false,
+  "decoding": {
+    "beams": 3,
+    "force_khmer": true,
+    "greedy_retry_on_missing_eos": true
+  },
+  "examples": [
+    {
+      "validation_index": 0,
+      "reference": "កាលដើមឡើយសម្លៀកបំពាក់គឺធ្ងន់ទទួលឥទ្វិពលដោយវប្បធម៌byzantine នៅភាគខាងកើត។",
+      "hypothesis": "ការដាំឡើងសម្លៀកបំពាក់គឺធ្ងន់ទទួលឥទ្ធិពលដោយវប្បធម៌ប៉ៃសាន់ចេន នៅភាគខាងកើត",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 89
+    },
+    {
+      "validation_index": 2,
+      "reference": "ភាគខាងជើង ឬតំបន់ sentinel range មានភ្នំខ្ពស់ៗជាងគេនៃទ្វីបអង់តាក់ទិក គឺភ្នំ vinson massif ដែលមានកំពូលកម្ពស់ 4892 ម៉ែត្រ ភ្នំ mount vinson",
+      "hypothesis": "ភាគខាងជើងរាជតំបន់ស៊ីនីណែលរ៉េន មានភ្នំខ្ពស់ៗជាងគេនៃទ្វីបអង្គតាតិច គឺភ្នំវ៉ីនស៊ុនប៉ាន់ស៊ីស ដែលមានកំពូលកំពស់ បួនពាន់ប្រាំបីរយកៅសិបពីរម៉ែត្រ ភ្នំម៉ាន់វ៉ីនស៊ុន",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 202
+    },
+    {
+      "validation_index": 3,
+      "reference": "ក្រពើទឹកប្រៃមិនសកម្មក្នុងការរស់នៅក្នុងមហាសមុទ្រនោះទេ ព្រោះជម្រកសំខាន់របស់ពួកវាស្ថិតនៅតាមដងទន្លេភាគខាងជើងនៃទីក្រុង រ៉កខាមថុន",
+      "hypothesis": "ប្រព្រឹត្តទឹកប្រៃមិនសកម្មក្នុងការរស់នៅក្នុងមហាសមុទ្រនោះទេ ព្រោះចំពោះសំខាន់របស់ពួកវា សុទ្ធតែតាមផ្តងទន្លេ ភាគខាងជើងនៃពីក្រុងរកខាងធន់",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 161
+    },
+    {
+      "validation_index": 7,
+      "reference": "ព្រះពុទ្ធសាសនាទីបេ គឺផ្អែកទៅលើការបង្រៀនរបស់ព្រះពុទ្ធ ប៉ុន្តែវាត្រូវបានពង្រីកដោយមាគ៌ានៃមហាយាននៃសេចក្តីស្រឡាញ់ និងដោយប្រើបច្ចេកទេសជាច្រើនតាមការហាត់យូហ្ការបស់ឥណ្ឌា",
+      "hypothesis": "ព្រះពុទ្ធសាសនាទីបេ គឺផ្អែកទៅលើការបង្រៀនរបស់ព្រះពុទ្ធ ប៉ុន្តែវាត្រូវបានពង្រីកដោយមាគ៌ានៃមហាយាននៃសេចក្តីត្រឡាញ និងដែលប្រើបច្ចេកទេសជាច្រើនតាមការហាត់យូហ្គារបស់ឥណ្ឌា",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 192
+    },
+    {
+      "validation_index": 8,
+      "reference": "ជាគោលការណ៍ព្រះពុទ្ធសាសនា ទីបេ tibetan គឺមានភាពសាមញ្ញណាស់ វាមានយូហ្កា គុនដាលីនី kundalini yoga ការធ្វើសមាធិ និងមាគ៌ានៃក្តីស្រឡាញ់ទាំងអស់",
+      "hypothesis": "ជាគោលការណ៍ដែលពុទ្ធសាសនាទីបេ គឺមានភាពសម្បែងណាស់ វាមានយូហ្គា គុណតាលីនី ការធ្វើសមាធិ និងមេកៀននៃក្រីក្រស្រឡាញ់ទាំងអស់",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 136
+    },
+    {
+      "validation_index": 9,
+      "reference": "នៅក្នុងប្រព័ន្ធដឹកជញ្ជូនដ៏មមាញឹកនេះ មនុស្សគ្រប់រូបត្រូវបានភ្ជាប់ និងជួយជ្រោមជ្រែងដោយប្រព័ន្ធដឹកជញ្ជូនមួយដែលពឹងផ្អែកលើរថយន្តឯកជន",
+      "hypothesis": "នៅក្នុងប្រព័ន្ធដឹកជញ្ជូនដ៏មមាញឹកនេះ មនុស្សគ្រប់រូបត្រូវបានភ្ជាប់ និងជួយជ្រោមជ្រែងដោយប្រព័ន្ធដឹកជញ្ជូនមួយដែលពឹងផ្អែកលើរថយន្តឯកជន",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 156
+    },
+    {
+      "validation_index": 10,
+      "reference": "លទ្ធផលវិភាគអំពីគម្រោងនឹងត្រូវបង្ហោះនៅលើគេហទំព័រសាធារណៈ",
+      "hypothesis": "លទ្ធផលវិភាគអំពីគម្រោងនឹងត្រូវបង្ហោះនៅលើគេហទំព័រសាធារណៈ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 69
+    },
+    {
+      "validation_index": 12,
+      "reference": "ទឹកកំពុងហូរហារលើទំនបទឹកនៅផ្នែកមួយដែលមានប្រវែង 100 ហ្វីត",
+      "hypothesis": "ទឹកកំពង់ហូរហៀរលើទំនប់ទឹកនៅភ្នែកមួយដែលមានប្រវែង មួយរយ ហ្វៀត",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 75
+    },
+    {
+      "validation_index": 14,
+      "reference": "អ្នកចម្រៀងល្បី ៗ នៅទូទាំងប្រទេសបានបង្ហាញបទចំរៀងផាចាន់ឬចម្រៀងធម្មជាតថា្វយដល់ជើងរបស់ស្ហ្រ៊ី ស្ហ៊ីយ៉ាំ shri shyam",
+      "hypothesis": "នាគចម្រៀងល្បីៗនៅទូទាំងប្រទេសបានបង្ហាញបទចម្រៀងផាចិន ឬចម្រៀងធម្មជាតិថ្វាយដល់ជើងរបស់ ជារីហ្វ្យាម",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 111
+    },
+    {
+      "validation_index": 16,
+      "reference": "អ្នកធម្មជាតិវិទូ និងអ្នកទស្សនវិទូបានផ្តោតលើអត្ថបទបែបបុរាណ និងជាពិសេសលើព្រះគម្ពីរជាភាសាឡាតាំង",
+      "hypothesis": "អ្នកធម្មជាតិវិទូ និងអ្នកទស្សនវិទូបានផ្តោតលើអត្ថបទបែបបុរាណ និងជាពិសេសលើប្រេះគម្ពីរជាពិសេសឡាតាំង",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 116
+    },
+    {
+      "validation_index": 21,
+      "reference": "ប្រសិនបើអ្នកទៅទស្សនាតំបន់អាក់ទិក ឬតំបន់អង់តាក់ទិកក្នុងរដូវរងា អ្នកនឹងជួបប្រទះនូវប៉ូលរាត្រី ដែលមានន័យថា ព្រះអាទិត្យនឹងមិនរះមកត្រង់ចំកណ្តាលមេឃនោះទេ",
+      "hypothesis": "ប្រសិនបើអ្នកទៅទស្សនាតំបន់អាទិត្យ ឬតំបន់អង្គតែអាទិត្យក្នុងរដូវរងា អ្នកនឹងជួបប្រទះនូវពោធិ៍រាត្រីដែលមានន័យថាព្រះអាទិត្យនឹងមិនរះមកត្រង់ចុងកណ្តាលមេនោះទេ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 182
+    },
+    {
+      "validation_index": 22,
+      "reference": "នេះបានក្លាយជាទម្លាប់ធម្មតាប៉ុន្តែដែកបានបំផ្លាញដោយវាជ្រេសស៊ីកង់ឈើរបស់រទេះ",
+      "hypothesis": "នេះបានក្លាយជាទម្លាប់ធ្នាប់ដើម ប៉ុន្តែដៃបានបំផ្លាញដោយវាជ្រេសស៊ីកង់ឈើរបស់លោតិះ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 98
+    },
+    {
+      "validation_index": 24,
+      "reference": "ខ្ញុំមិនដឹងថាតើអ្នកដឹងវាឬអត់នោះទេ ប៉ុន្តែទំនិញភាគច្រើនដែលមកពីអាមេរិកកណ្តាលបានចូលមកក្នុងប្រទេសនេះដោយគ្មានពន្ធ",
+      "hypothesis": "យើងមិនដឹងថាតើអ្នកដឹងវាឬអត់នោះទេ ប៉ុន្តែទំនិញភាគច្រើនដែលមកពីអាមេរិកកណ្តាលបានចូលមកក្នុងប្រទេសនេះដោយគ្មានពន្ធ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 132
+    },
+    {
+      "validation_index": 25,
+      "reference": "សង្កាត់ភាគច្រើនទទួលបានសេវាពីរថយន្តក្រុងតូចៗរបស់ជប៉ុន ដែលមានផាសុកភាព និងមាំល្អ",
+      "hypothesis": "សង្កាត់ភាគច្រើនទទួលបានសេវាពីរថយន្តក្រុងតូចៗរបស់ជប៉ុន ដែលមានផាសុកភាព និងមាំល្អ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 93
+    },
+    {
+      "validation_index": 26,
+      "reference": "ពួកអារ៉ាប់ក៏បាននាំយកសាសនាអ៊ីស្លាមទៅកាន់ដីគោកដែរ ហើយវាចាប់ផ្ដើមសាយភាយខ្លាំងនៅតំបន់កូម៉ូរូស និងម៉ាយ៉ូតេ",
+      "hypothesis": "ពួកអារ៉ាប់ក៏បាននាំយកសាសនាឥស្លាមទៅកាន់ដីគោកដែរ ហើយវាចាប់ផ្ដើមសាយភាយខ្លាំងនៅតំបន់កុម្មុរស និងម៉ាយុទេ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 122
+    },
+    {
+      "validation_index": 28,
+      "reference": "គ្រាប់បែក បី គ្រាប់ផ្សេងទៀតបានផ្ទុះឡើងនៅក្បែរអគាររដ្ឋាភិបាលអស់រយៈពេលពីម៉ោងផងដែរ",
+      "hypothesis": "គ្រាប់ប៉ែកបីគ្រាប់ផ្សេងទៀតបានផ្ទុះឡើងនៅក្បែរអគាររដ្ឋាភិបាលអរិយពេលពីរម៉ោងផងដែរ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 97
+    },
+    {
+      "validation_index": 29,
+      "reference": "ក៏ប៉ុន្តែ សញ្ញាភាគច្រើនត្រូវបានបង្ហាញឡើងតែក្នុងភាសាកាតាឡានតែប៉ុណ្ណោះ ពីព្រោះច្បាប់បានកំណត់ថាវាជាភាសាផ្លូវការដំបូងគេ",
+      "hypothesis": "ក៏ប៉ុន្តែសញ្ញាភាគច្រើនត្រូវបានបង្ហាញឡើងតែក្នុងភាសាការតាឡើងតែប៉ុណ្ណោះ ពីព្រោះច្បាប់បានកំណត់ថាវាជាភាសាផ្លូវការដំបូងគេ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 141
+    },
+    {
+      "validation_index": 30,
+      "reference": "ការប្រកួតកីឡាធំជាងគេប្រចាំឆ្នាំ ប្រារព្ធធ្វើឡើងនៅខែធ្នូ នៅឯទីលានប៉ូឡូ នៅឡាស ខានីតាស",
+      "hypothesis": "ការប្រកួតកីឡាធំជាងគេប្រចាំឆ្នាំប្រារព្ធធ្វើឡើងនៅខែធ្នូ នៅឯទីលានពូឡូ នៅឡាសេខនីតាស",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 100
+    },
+    {
+      "validation_index": 31,
+      "reference": "ក្រុមអ្នកវិទ្យាសាស្ត្របាននិយាយថារោមរបស់សត្វនេះ គឺមានពណ៌ត្នោតនៅខាងលើ និងមានពណ៌លឿងនៅខាងក្រោម",
+      "hypothesis": "ក្រុមអ្នកវិទ្យាសាស្ត្របាននិយាយថា រោមរបស់សត្វនេះគឺមានពណ៌ត្នោតនៅខាងលើ និងមានពណ៌លឿងនៅខាងក្រោម",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 108
+    },
+    {
+      "validation_index": 33,
+      "reference": "ភាគច្រើននៃជីវិតរបស់គ្រួសារហេព្រើរគឺរស់នៅលើទីវាលបើកចំហរ",
+      "hypothesis": "ភាគច្រើននៃជីវិតរបស់គ្រួសាភែប្រើគឺរស់នៅលើទីវាលបើកចំហ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 67
+    },
+    {
+      "validation_index": 35,
+      "reference": "បន្ទាប់ពីតក់ស្លុត និងបានឃើញភាពសាហាវឃោរឃៅនៃសង្គ្រាមក្នុងកំឡុងពេលនៃសង្គ្រាមលោកលើកទីមួយ ប្រជាជាតិជាច្រើនមិនចង់ជួបស្ថានភាពបែបនេះទៀតទេនៅពេលអនាគត",
+      "hypothesis": "បន្ទាប់ពីតក់ស្លុត នឹងបានឃើញភាពសាហាវខូចខូចនៃសង្គ្រាមកំណត់កំឡុងពេល ដែលសំខាន់មួយ ប្រជាជាតិជាច្រើនមិនចាំងរួមស្ថានភាពបែបនេះទៀតទេនៅពេលអនាគត",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 165
+    },
+    {
+      "validation_index": 36,
+      "reference": "ទន្លេអាម៉ាហ្សូនគឺជាទន្លេដែលធំជាងគេនៅលើភពផែនដីដែលមានទទឹងប្រវែង 6 ម៉ាយល៍",
+      "hypothesis": "ទន្លេអាម៉ាសោម គឺជាទន្លេដែលធំជាងគេនៅលើភពផានដីដែលមានទទឹងប្រវែង ១. ម៉ែត្រ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 88
+    },
+    {
+      "validation_index": 37,
+      "reference": "ដោយសារតែចម្ងាយឆ្ងាយពីទ្វីបហើយថនិកសត្វមិនអាចធ្វើដំណើរបាន ធ្វើឱ្យសត្វអណ្តើកយក្សក្លាយជាសត្វចិញ្ចឹមដ៏សំខាន់បំផុតនៅកាឡាបាហ្គូស",
+      "hypothesis": "ដោយសារតែចម្ងាយឱ្យឆ្ងាយពីទ្វាព្រះ ហើយថ្លោះជាសត្វដែលអាចធ្វើដំណើរបាន ធ្វើឱ្យសត្វដ៏យក្សថ្លែងជាសត្វចិញ្ចឹមដ៏សំខាន់បំផុតនៅកាលឡាបានហ្គោល",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 155
+    },
+    {
+      "validation_index": 38,
+      "reference": "សង្កាត់ភាគច្រើនទទួលបានសេវាពីរថយន្តក្រុងតូចៗរបស់ជប៉ុន ដែលមានផាសុកភាព និងមាំល្អ",
+      "hypothesis": "សង្កាត់ភាគច្រើនទទួលបានសេវាពីរថយន្តក្រុងតូចៗរបស់ជប៉ុនដែលមានផាសុកភាព និងមាំល្អ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 92
+    },
+    {
+      "validation_index": 39,
+      "reference": "មិនយូរមិនឆាប់ នៅពេលដែលប្រជាជនថ្មីចាប់ផ្តើមសម្របខ្លួនទៅនឹងបរិស្ថានថ្មីរបស់ខ្លួន ពួកគេចាប់ផ្តើមមើលទៅកាន់តែពុំដូចទៅនឹងប្រជាជនដទៃទៀតនោះឡើយ",
+      "hypothesis": "មិនយូរមិនឆាប់នៅពេលដែលប្រជាជនថ្មីចាប់ផ្តើមសម្របខ្លួនទៅនឹងបរិស្ថានថ្មីរបស់ខ្លួន ពួកគេចាប់ផ្តើមមើលទៅកាន់តែពុំដូចទៅនឹងប្រជាជនដទៃទៀតនៅឡើយ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 167
+    },
+    {
+      "validation_index": 40,
+      "reference": "អ៊ីស្រាអែលទាមទារឱ្យមានវត្តមានយោធាជាបន្តនៅជ្រលងភ្នំសម្រាប់រយៈពេលដប់ឆ្នាំ ពេលដែលកិច្ចព្រមព្រៀងត្រូវបានចុះហត្ថលេខា ចំណែកឯប៉ាឡេស្ទីនយល់ព្រមឱ្យមានវត្តមានបែបនេះសម្រាប់រយៈពេលតែប្រាំឆ្នាំ ប៉ុណ្ណោះ",
+      "hypothesis": "ឥស្សរអែលទាមទារឱ្យមានវត្តមានយោធាជាមិនទាន់នៅជ្រលងភ្នំសម្រាប់រយៈពេល ដប់ឆ្នាំ ពេលដែលកិច្ចព្រមព្រៀងត្រូវបានចុះអត្ថលេខា ចំណែកអាប់ឡេស្ស៊ីនយល់ព្រមឱ្យមានវត្តមានបែបនេះសម្រាប់រយៈពេលតែ ប្រាំឆ្នាំប៉ុណ្ណោះ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 234
+    },
+    {
+      "validation_index": 42,
+      "reference": "យោងតាមសម្តីរបស់ប៉ូលីស អ្នកបើកបររថយន្តដែលបុកអ្នកថតរូបនោះ ប្រហែលជាមិនទទួលរងនូវការចោទប្រកាន់ពីបទឧក្រិដ្ឋនោះទេ",
+      "hypothesis": "យោងតាមសម្តីរបស់ប៉ូលីសអ្នកបើកបររថយន្តដែលបុកអ្នកថតរូបនោះប្រហែលជាមិនទទួលរងនូវការចោទប្រកាន់ពីបទក្រឹត្យនោះទេ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 127
+    },
+    {
+      "validation_index": 43,
+      "reference": "បុណ្យណូអែល គឺជាថ្ងៃឈប់សម្រាកដ៏សំខាន់មួយនៅក្នុងសាសនាគ្រីស្ទ ហើយត្រូវបានគេអបអរជាថ្ងៃកំណើតរបស់ព្រះគ្រីស្ទ",
+      "hypothesis": "បុណ្យនោះគឺជាថ្ងៃជួបសម្រាកដ៏សំខាន់មួយនៅក្នុងសាសនាគ្រឹស្ន ហើយត្រូវបានគេអបអរជាថ្ងៃកំណើតរបស់ព្រះគ្រឹស្ន",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 122
+    },
+    {
+      "validation_index": 44,
+      "reference": "ភ្លាមៗនោះដែរ មន្រ្តីដែលបំពាក់ដោយសម្លៀកបំពាក់ឧបករណ៍ការពារកុបកម្ម បានចូលទៅកាន់ទីធ្លានោះ ហើយប្រើឧស្ម័នបង្ហូរទឹកភ្នែករុញផ្ទប់អ្នកទោស",
+      "hypothesis": "ភ្លាមៗនោះដែរ មន្ត្រីដែលបំពាក់ដោយសម្លៀកបំពាក់ឧបករណ៍ការពារកុបកម្ម បានចូលទៅកាន់ទីធ្លានោះ ហើយប្រើឧស្ម័នបង្ហូរទឹកភ្នែករុញផ្ទប់អ្នកទោស",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 158
+    },
+    {
+      "validation_index": 46,
+      "reference": "ស្រាបៀក្នុងស្រុកចម្បង គឺស្រាបៀម៉ាក number one វាមិនមែនជាស្រាបៀស្មុគស្មាញអីនោះទេ ប៉ុន្តែវាជាស្រាបៀបែបរីករាយនិងស្រស់ស្រាយ ស្រាបៀក្នុងស្រុកផ្សេងទៀតត្រូវបានគេហៅថា ម៉ានថា manta",
+      "hypothesis": "សាលាបៀរក្នុងស៊ុកចម្បង គឺសាលាបៀរម៉ាក់ ៧២ វាមិនមែនជាសាលាបៀរស្មុគស្មាញអីនោះទេ ប៉ុន្តែវាជាសាលាបៀរបែបរីករាយ និងសោកស្រាយ សាលាបៀរក្នុងស៊ុកផ្សេងទៀតត្រូវបានគេហៅថា ម៉ាន់តា",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 199
+    },
+    {
+      "validation_index": 47,
+      "reference": "កីឡាករលេងគ្រីឃីតលោក រ៉ប់ប៊ីន យូថាផា robin uthappa បានវាយគ្រាប់គ្រីឃីតបានពិន្ទុខ្ពស់ជាងគេ គឺបាន 70 ពិន្ទុ រ៉ាន់ ដោយកូនគ្រាប់បាល់ 41គ្រាប់ប៉ុណ្ណោះ ដោយវាយបាន11ដងនៃពិន្ទុបួន ហើយនិង2ដងនៃពិន្ទុប្រាំមួយ",
+      "hypothesis": "កីឡាករលែងគ្រីខិតឡូត រុបិនយូថាផល បន្សាយគ្រាប់គ្រីខិតបានបន្ទុកខ្ពស់ជាងគេ គឺបានចុច ១០០ បន្ទុកបុរាណ ដោយកូនគ្រាប់បាល់ ផ្សែស ២០០ គ្រាប់ប៉ុណ្ណោះ ដោយវាបានដល់ មួយ ដងនៃបន្ទុកបួន ហើយ និង ពីរ ដងនៃបន្ទុកប្រាំមួយ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 246
+    },
+    {
+      "validation_index": 49,
+      "reference": "សូមមេត្តាគោរពទីកន្លែងនេះដោយរក្សាសេចក្តីថ្លៃថ្នូរ ភាពស្មឹងស្មាធ និងការគោរពដែលសាកសម កុំលេងសើចអំពីការប្រល័យពូជាសាសន៍ ឬពួកណាស៊ីឲ្យសោះ",
+      "hypothesis": "សូមមេត្តាគោរពទីកន្លែងនេះដោយរក្សាសេចក្តីថ្លៃថ្នូរ ភាពស្មឹងស្ម័គ្រ និងការគោរពដែលស័ក្តិសម កំលេងសើចអំពីការប្រឡាយពូជសាសន៍ ឬពួកណាស៊ីលសោះ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 163
+    },
+    {
+      "validation_index": 50,
+      "reference": "បណ្តាកោះនៃអាហ្រ្វិកខាងកើតស្ថិតនៅក្នុងមហាសមុទ្រឥណ្ឌានៅតាមឆ្នេរសមុទ្រខាងកើតនៃទ្វីបអាហ្វ្រិក",
+      "hypothesis": "បណ្តាបក្សនៃអាហ្វ្រិកខាងកើត ស្ថិតនៅក្នុងមហាសមុទ្រឥណ្ឌានៅតាមឆ្នេរសមុទ្រខាងកើតនៃទ្វីបអាហ្វ្រិក",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 106
+    },
+    {
+      "validation_index": 51,
+      "reference": "គាត់បាននិយាយថា គាត់បានផលិតកន្តឹងទ្វារ wifi",
+      "hypothesis": "គាត់បាននិយាយថា គាត់បានផលិតកណ្តឹងទ្វារ windfall",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 45
+    },
+    {
+      "validation_index": 52,
+      "reference": "គួបផ្សំនឹងភាពមិនទាក់ទងគ្នា ពាក្យ timbuktu ត្រូវបានគេប្រើជាពាក្យប្រៀបធៀបសម្រាប់ដែនដីនៅឆ្ងាយនិងប្លែកថ្មី",
+      "hypothesis": "គួបផ្សំនឹងភាពមិនទាក់ទងគ្នា ពាក្យ theme park ត្រូវបានគេប្រើជាពាក្យប្រៀបធៀបសម្រាប់ដែនដីនៅឆ្ងាយ និងប្លែកថ្មី",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 114
+    },
+    {
+      "validation_index": 53,
+      "reference": "ជាធម្មតា វគ្គសិក្សានេះ នឹងនិយាយអំពីបញ្ហានានាដែលពិភាក្សានៅក្នុងទីនេះយ៉ាងល្អិតល្អន់ជាងមុន ជាទូទៅមានបញ្ចូលនូវបទពិសោធន៍ជាក់ស្ដែងផងដែរ",
+      "hypothesis": "ជាធម្មតា ការប្រឹក្សានេះនឹងនិយាយអំពីបញ្ហានិន្នាដែលពិភាក្សានៅក្នុងទីនេះជាច្រើន និងជាងមុន ជាទូទៅមានបញ្ចូលទម្រង់ពិសោធន៍ជាក់ស្តែងផងដែរ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 159
+    },
+    {
+      "validation_index": 54,
+      "reference": "ចំនួនប្រជាជនដើមមិនបានផ្លាស់ប្តូរនោះទេ ពួកគេនៅតែត្រូវការការសម្របខ្លួនដូចតែពីមុនអញ្ចឹង",
+      "hypothesis": "ចំនួនប្រជាជនដំមិនបានផ្លាស់ប្ដូរនោះទេ ពួកគេនៅតែត្រូវការការសម្របខ្លួនដូចតែពីមុនអញ្ចឹង",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 104
+    },
+    {
+      "validation_index": 57,
+      "reference": "ភាគខាងជើង ឬតំបន់ sentinel range មានភ្នំខ្ពស់ៗជាងគេនៃទ្វីបអង់តាក់ទិក គឺភ្នំ vinson massif ដែលមានកំពូលកម្ពស់ 4892 ម៉ែត្រ ភ្នំ mount vinson",
+      "hypothesis": "ភាគខាងជើង ឬតំបន់សែនឆ្នាំរ៉ែង មានភ្នំខ្ពស់ៗជាងគេនៃទ្វីបអង្គតែតិច គឺភ្នំវេនស៊ីន ម៉ាស៊ីស ដែលមិនកំពុងកំពុះ បួនពាន់ប្រាំបីរយកៅសិបពីរម៉ែត្រ ភ្នំម៉ាន់វេនស៊ីន",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 197
+    },
+    {
+      "validation_index": 58,
+      "reference": "មិនមានព្រៃឈើធំ ៗ នៅក្នុងដែនដីកាណាន canaan ទេ ដូច្នេះ ឈើមានតម្លៃថ្លៃណាស់",
+      "hypothesis": "មិនមានព្រៃឈើធំៗនៅក្នុងដែនដីកាលណាទេ ដូច្នេះឈើមានតម្លៃថ្លៃណាស់",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 80
+    },
+    {
+      "validation_index": 59,
+      "reference": "របាយការណ៍ខ្លះបានបញ្ជាក់ថា ចំនួនអ្នកស្លាប់ជាផ្លូវការមានប្រាំបីនាក់ហើយរបាយការណ៍ជាផ្លូវការបញ្ជាក់ថា មានរហូតដល់ 30 នាក់បានរងរបួស ប៉ុន្តែចំនួនចុងក្រោយមិនទាន់ត្រូវបានគេដឹងនៅឡើយទេ",
+      "hypothesis": "របាយការណ៍ខ្លះបានបញ្ជាក់ថា ចំនួនអ្នកស្លាប់ជាផ្លូវការមាន ២២ នាក់ ហើយរបាយការណ៍ជាផ្លូវការបញ្ជាក់ថា មានរហូតដល់ សាមសិប នាក់បានរងរបួស ប៉ុន្តែចំនួនជុំក្រោយមិនទាន់ត្រូវបានគេដឹងនៅឡើយទេ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 210
+    },
+    {
+      "validation_index": 60,
+      "reference": "មានឆ្នេរជាច្រើនកកើតឡើង ដោយសារតែការញែកចេញនៃកំពង់ផែ អក់ឡឹនដ៍ auckland ទាំងពីរ ការពេញនិយមបំផុត គឺស្ថិតនៅក្នុងតំបន់ ឬផ្នែកចំនួនបី",
+      "hypothesis": "មានឆ្នេរជាច្រើនក៏កើតឡើងដោយសារតែការញែកចេញនៅកំពង់ផែអុកឡែនអុកឡែនទាំងពីរការពេញនិយមបំផុតគឺស្ថិតនៅក្នុងនិមន្តនៅផ្នែកចំនួនបី",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 151
+    },
+    {
+      "validation_index": 62,
+      "reference": "វាត្រូវបានគេគ្រោងនឹងកាត់បន្ថយនៅថ្ងៃអង្គារនេះទេ ប៉ុន្តែវាត្រូវបានរក្សាទុកសម្រេចពេលក្រោយបន្ទាប់ពីសេចក្តីសម្រេចរបស់តុលាការបន្ទាន់",
+      "hypothesis": "វាត្រូវបានគេគ្រោង និងកាត់បន្ថយនៅថ្ងៃអង្គារនេះទេ ប៉ុន្តែវាត្រូវបានដោយសារទុកសម្រេចពេលក្រោយបន្ទាប់ពីសេចក្តីសម្រេចរបស់តុលាការបន្ទាន់",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 156
+    },
+    {
+      "validation_index": 63,
+      "reference": "ជារឿយៗ ទស្សនៈដែលបានបង្ហាញមានលក្ខណៈមិនលម្អិត ទូទៅ និងសាមញ្ញពេក បើប្រៀបធៀបនឹងព័ត៌មានលម្អិតដែលមាននៅកន្លែងផ្សេងទៀត",
+      "hypothesis": "ជារឿយៗទស្សនាដែលបានបង្ហាញមានលក្ខណៈមិនលម្អិតទូទៅ និងសាមញ្ញពេក បើប្រៀបធៀបនឹងព័ត៌មានលម្អិតដែលមាននៅកន្លែងផ្សេងទៀត",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 131
+    },
+    {
+      "validation_index": 65,
+      "reference": "គាត់បាននិយាយថា គាត់បានផលិតកន្តឹងទ្វារ wifi",
+      "hypothesis": "គាត់បាននិយាយថាគាត់បានផលិតកណ្តឹងទ្វារ wi-fi",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 44
+    },
+    {
+      "validation_index": 68,
+      "reference": "ការកកិត គឺមានកម្រិតទាបនៅតាមផ្លូវព្រឹលទឹកកក ហើយអ្នកមិនអាចបើកបរបានដូចអ្នកដែលបើកបរនៅលើផ្លូវកៅស៊ូនោះទេ",
+      "hypothesis": "ការកកើតគឺមានកម្រិតទាបនៅតាមផ្លូវព្រឹទ្ធាកូល ហើយអ្នកមិនអាចបើកបរបានដូចអ្នកដែលបើកបរនៅលើផ្លូវកៅស៊ូនោះទេ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 121
+    },
+    {
+      "validation_index": 71,
+      "reference": "សាសនាចម្បងគេនៅក្នុងប្រទេស ម៉ុលដូវ៉ា គឺសាសនាគ្រីស្ទ កាន់វិន័យចាស់",
+      "hypothesis": "សាសនាចម្បងគេនៅក្នុងប្រទេសមូលដូរវ៉ា គឺសាសនាគ្រីស កាន់វិន័យចាស់",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 75
+    },
+    {
+      "validation_index": 72,
+      "reference": "ប្រាក់អាចប្តូរបាននៅធនាគារតែមួយគត់នៅលើកោះនេះ ដែលមានទីតាំងនៅ stanley ទល់មុខហាងលក់ទំនិញ fic west",
+      "hypothesis": "ប្រាក់អាចប្តូរបាននូវធនាគារតែមួយគត់នៅលើកោះនេះ ដែលមានទីតាំងនៅស្ថានីយ៍ទៅមុខកោះហាងលក់ទំនិញ fisc west",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 116
+    },
+    {
+      "validation_index": 73,
+      "reference": "នៅក្នុងទីធ្លាព្រះវិហារ មានរូបចម្លាក់ជាថ្មម៉ាបដែលគួរឱ្យចាប់អារម្មណ៍នៅលើផ្នូរខ្លះ",
+      "hypothesis": "នៅក្នុងទីធ្លាព្រះវិហារមានរូបចម្លាក់ជាថ្មម៉ាមដែលគួរឱ្យចាប់អារម្មណ៍នៅលើម៉ោងខ្លះ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 96
+    },
+    {
+      "validation_index": 74,
+      "reference": "បុណ្យណូអែល គឺជាថ្ងៃឈប់សម្រាកដ៏សំខាន់មួយនៅក្នុងសាសនាគ្រីស្ទ ហើយត្រូវបានគេអបអរជាថ្ងៃកំណើតរបស់ព្រះគ្រីស្ទ",
+      "hypothesis": "បុណ្យ no. ២ គឺជាថ្នែកខូចសម្រាកដ៏រំខាន់មួយនៅក្នុងសាសនាគ្រឹស្ដិ ហើយត្រូវបានគេអបអរជាថ្នែកកំណើតរបស់ព្រះគ្រឹស្ដ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 127
+    },
+    {
+      "validation_index": 76,
+      "reference": "ពួកគេកំពុងព្យាយាមធ្វើការកំណត់ថា តើការធ្លាក់បុកនេះមានទំហំធំប៉ុណ្ណា ហើយថាតើផែនដីនឹងរងប៉ះពាល់ដោយសារការធ្លាក់បុកនេះយ៉ាងដូចម្តេចខ្លះ",
+      "hypothesis": "ពួកគេកំពុងព្យាយាមធ្វើការមកថា តើការធ្លាក់មុខនេះមានកំពុងផងប៉ុណ្ណា ហើយថាតើផែនដី និងរោមផលប៉ះពាល់ ដោយសារការធ្លាក់មុខនេះយ៉ាងមិនត្រឹមខ្លះ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 163
+    },
+    {
+      "validation_index": 77,
+      "reference": "អ្នកវិទ្យាសាស្ត្របាននិយាយថា ការផ្ទុះដែលកើតពីការប៉ះទង្គិចគ្នានេះ គឺមានភាពធំសម្បើមណាស់",
+      "hypothesis": "អ្នកវិទ្យាសាស្ត្របាននិយាយថា ការផ្ទុះដែលកើតពីការប៉ះនឹងកិច្ចគ្នានេះ គឺមានភាពធំសម្បើមណាស់",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 104
+    },
+    {
+      "validation_index": 78,
+      "reference": "ទ្រឹស្តីទាំងនេះបង្ហាញថា មនុស្សមានតម្រូវការ និង/ឬ សេចក្តីប្រាថ្នាជាក់លាក់ ដែលត្រូវមាននៅក្នុងខ្លួនរបស់ពួកគេនៅពេលពួកគេធំពេញវ័យ។",
+      "hypothesis": "ទ្រឹស្តីទាំងនេះបង្ហាញថា មនុស្សមានតម្រូវការ និងសេចក្តីប្រាថ្នាជាក់លាក់ ដែលត្រូវមានក្នុងខ្លួនរបស់ពួកគេនៅពេលពួកគេធំពេញវ័យ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 145
+    },
+    {
+      "validation_index": 82,
+      "reference": "ក្រុមអ្នកវិទ្យាសាស្ត្របាននិយាយថារោមរបស់សត្វនេះ គឺមានពណ៌ត្នោតនៅខាងលើ និងមានពណ៌លឿងនៅខាងក្រោម",
+      "hypothesis": "ក្រុមហ៊ុនវិទ្យាសាស្ត្របាននិយាយថារោមលោកសត្វនេះគឺមានពណ៌ត្នោតនៅខាងលើ និងមានពណ៌លឿងនៅខាងក្រោម",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 108
+    },
+    {
+      "validation_index": 83,
+      "reference": "កម្មវិធីមួយចំនួនមានតំបន់បោះតង់ពិសេសសម្រាប់គ្រួសារដែលមានក្មេងតូចៗ",
+      "hypothesis": "កម្មវិធីមួយចំនួនមានតំបន់បោះតង់ពិសេសសម្រាប់គ្រួសារដែលមានក្មេងតូចៗ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 83
+    },
+    {
+      "validation_index": 84,
+      "reference": "ចំនួនប្រជាជនដើមមិនបានផ្លាស់ប្តូរនោះទេ ពួកគេនៅតែត្រូវការការសម្របខ្លួនដូចតែពីមុនអញ្ចឹង",
+      "hypothesis": "ចំនួនប្រជាជនដើមមិនបានផ្លាស់ប្ដូរនោះទេ ពួកគេនៅតែត្រូវការការសម្របខ្លួនដូចតែពីមុនអញ្ចឹង",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 105
+    },
+    {
+      "validation_index": 85,
+      "reference": "លទ្ធផលវិភាគអំពីគម្រោងនឹងត្រូវបង្ហោះនៅលើគេហទំព័រសាធារណៈ",
+      "hypothesis": "ផលិតផលពិភាក្សាអំពីគម្លងនឹងត្រូវបង្ខោះនៅលើគេហទំព័រសាធារណៈ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 71
+    },
+    {
+      "validation_index": 86,
+      "reference": "ការបញ្ចេញសូរ គឺមានភាពងាយស្រួលនៅក្នុងភាសាអ៊ីតាលី ដោយសារពាក្យភាគច្រើន ត្រូវបញ្ចេញសូរដូចគ្នាស្ទើរតែទាំងស្រុងទម្រង់សំណេររបស់វា",
+      "hypothesis": "ការបញ្ចេញសូរគឺមានភាពងាយស្រួលនៅក្នុងភាសាអ៊ីតិលីដោយសារពាក្យភាគច្រើនត្រូវបញ្ចេញសូរដូចគ្នា ស្ទើរតែទាំងស្រុងទម្រង់សេនារបស់វា",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 143
+    },
+    {
+      "validation_index": 87,
+      "reference": "ចំនួនប្រជាជនដើមមិនបានផ្លាស់ប្តូរនោះទេ ពួកគេនៅតែត្រូវការការសម្របខ្លួនដូចតែពីមុនអញ្ចឹង",
+      "hypothesis": "ចំនួនប្រជាជនដើមមិនបានផ្លាស់ប្ដូរនោះទេ ពួកគេនៅតែត្រូវការការសម្របខ្លួនដូចតែពីមុនអញ្ចឹង",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 105
+    },
+    {
+      "validation_index": 88,
+      "reference": "អ្នកវិទ្យាសាស្ត្រគិតថា ខ្លារខិនដើររកស៊ីចំណី សត្វជាចំណី ដោយការស្រងក្លិន ការហិតក្លិននៅតាមដីដែលវាធ្លាប់នៅ",
+      "hypothesis": "អ្នកវិទ្យាសាស្ត្រគិតថាខ្លួនក្រុមដើររកស៊ីចំណី សត្វជាចំណី ដោយការស្រង់ក្លិន ការហិតក្លិន នៅតាមដីដែលវាធ្លាប់នៅ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 127
+    },
+    {
+      "validation_index": 90,
+      "reference": "បុណ្យណូអែល គឺជាថ្ងៃឈប់សម្រាកដ៏សំខាន់មួយនៅក្នុងសាសនាគ្រីស្ទ ហើយត្រូវបានគេអបអរជាថ្ងៃកំណើតរបស់ព្រះគ្រីស្ទ",
+      "hypothesis": "បុណ្យនោះគឺជាថ្ងៃចុះសម្រាកដ៏សំខាន់មួយនៅក្នុងសាសនាគ្រឹស្ដិ ហើយត្រូវបានគេអបអរជាថ្ងៃកំណើតរបស់ព្រះគ្រឹស្ដ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 125
+    },
+    {
+      "validation_index": 91,
+      "reference": "ផ្កាយរណបនៅក្នុងលំហអាកាស ទទួលបានសញ្ញា ហើយបន្ទាប់មកបញ្ជូនសញ្ញានោះត្រឡប់មកផែនដីវិញ ស្ទើរតែឥតដាច់",
+      "hypothesis": "កាយរណបនៅក្នុងលំហអាកាសទទួលបានសញ្ញា ហើយបន្ទាប់មកបញ្ជូនសញ្ញានោះត្រឡប់មកផែនដីវិញ ស្ទើរតែឥតដាច",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 105
+    },
+    {
+      "validation_index": 92,
+      "reference": "នៅពេលយប់ងងឹត ពួកគេអាចមើលឃើញច្បាស់ ហើយក៏ធ្វើដំណើរបានដោយរលូនផងដែរ សត្វខ្លារខិនប្រមាញ់រកចំណីដោយលាក់ខ្លួនពួនចាំចាប់ចំណី",
+      "hypothesis": "នាពេលយប់ងងឹតពួកគេអាចមើលឃើញច្បាស់ ហើយក៏ធ្វើដំណើរបានដោយរលូនផងដែរ សត្វខ្លារខិនព្រមាញ់រកចំណីដោយលាក់ខ្លួនពូនចាំចាប់ចំណី",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 144
+    },
+    {
+      "validation_index": 94,
+      "reference": "មានត្រឹមតែមេដាយចំនួន18ប៉ុណ្ណោះក្នុងមួយថ្ងៃ ប្រទេសជាច្រើនបរាជ័យក្នុងការដណ្តើមយកមេដាយទាំងនោះ",
+      "hypothesis": "មានត្រឹមតែមេដាយចំនួន ដប់ប្រាំបី ប៉ុណ្ណោះក្នុងមួយថ្ងៃ ប្រទេសជាច្រើនប្រណាំងចេញក្នុងការនាំយកមេដាយទាំងនោះ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 127
+    },
+    {
+      "validation_index": 95,
+      "reference": "សាហ្វារីស safaris ប្រហែលជាចំណុចទាក់ទាញភ្ញៀវទេសចរណ៍ដ៏អស្ចារ្យបំផុតនៅអាហ្វ្រិក និងជាការបញ្ជាក់ប្រាប់ដល់ភ្ញៀវទេសចរជាច្រើនទៀត",
+      "hypothesis": "សិស្សហ្វារីស ប្រហារជាចំណុចទាក់ទាញភ្ញៀវទេសចរដ៏អស្ចារ្យបំផុតនៅអាហ្វ្រិច និងជាការបញ្ជាក់តាប់ដល់ភ្ញៀវទេសចរជាច្រើនទៀត",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 133
+    },
+    {
+      "validation_index": 96,
+      "reference": "ជាគោលការណ៍ព្រះពុទ្ធសាសនា ទីបេ tibetan គឺមានភាពសាមញ្ញណាស់ វាមានយូហ្កា គុនដាលីនី kundalini yoga ការធ្វើសមាធិ និងមាគ៌ានៃក្តីស្រឡាញ់ទាំងអស់",
+      "hypothesis": "ជាគោលការណ៍ព្រះពុទ្ធសាសនាទី ប៊េ គឺមានភាពសាមញ្ញណាស់ វាមានយូហ្គាគុណដាលីនី ការធ្វើសមាធិ និងនិគ្គនៃក្តីស្រឡាញ់ទាំងអស់",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 134
+    },
+    {
+      "validation_index": 97,
+      "reference": "សត្វខ្លះដូចជា ដំរី និង សត្វកវែង ព្យាយាមចូលមកជិតឡាន ដូច្នេះសម្ភារៈតាមបទដ្ឋាន គឺអំណោយផលក្នុងការមើលទេសភាពបានល្អ",
+      "hypothesis": "សត្វខ្លះដូចជាដំរី និងសត្វកវែងព្យាយាមចូលមកជិតឡាន ដូច្នេះសម្ភារៈតាមបទដ្ឋានគឺអំណោយផលក្នុងការមើលទេសភាពបានល្អ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 123
+    },
+    {
+      "validation_index": 98,
+      "reference": "អំណាចលើគ្រប់វិស័យរបស់ខ្លួន បានជះឥទ្ធិពលដល់មនុស្សគ្រប់គ្នាចាប់ពីស្តេច រហូតដល់មនុស្សសាមញ្ញ",
+      "hypothesis": "អំណាចលើគ្រប់វិស័យរបស់ខ្លួនបានជះឥទ្ធិពលដល់មនុស្សគ្រប់គ្នាចាប់ពីស្តេចរហូតដល់មនុស្សសមាន",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 102
+    },
+    {
+      "validation_index": 100,
+      "reference": "បន្ទាប់មក ឡាក់ខាស៊ីងបាននាំមុខក្នុងការច្រៀងចម្រៀងផាចានស៍",
+      "hypothesis": "បន្ទាប់មក ឡាក់ខាស៊ីង បាននាំមកក្នុងការច្រៀងចម្រៀងផាចាន",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 62
+    },
+    {
+      "validation_index": 102,
+      "reference": "នៅក្នុងប្រព័ន្ធដឹកជញ្ជូនដ៏មមាញឹកនេះ មនុស្សគ្រប់រូបត្រូវបានភ្ជាប់ និងជួយជ្រោមជ្រែងដោយប្រព័ន្ធដឹកជញ្ជូនមួយដែលពឹងផ្អែកលើរថយន្តឯកជន",
+      "hypothesis": "នៅក្នុងប្រព័ន្ធដឹកជញ្ជូនដ៏មមាញឹកនេះ មនុស្សគ្រប់រូបត្រូវបានភ្ជាប់ និងជួយជ្រោមជ្រែងដោយប្រព័ន្ធដឹកជញ្ជូនមួយដែលពឹងផ្អែកលើរថយន្តឯកជន",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 156
+    },
+    {
+      "validation_index": 103,
+      "reference": "បើទោះបីជាមានមនុស្សបីនាក់ស្ថិតនៅក្នុងផ្ទះនៅពេលរថយន្តបើកបុកក្ដី ក៏ប៉ុន្តែពុំមាននរណាម្នាក់រងរបួសនោះទេ",
+      "hypothesis": "បើទោះបីជាមានមនុស្សបីនាក់ស្ថិតនៅក្នុងផ្ទះនៅពេលរថយន្តបើកបុកក្តីក៏ប៉ុន្តែពុំមាននរណាម្នាក់រងរបួសនោះទេ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 125
+    },
+    {
+      "validation_index": 104,
+      "reference": "ផ្លូវទឹកនៅក្នុងប្រទេសអាចជាប្រធានបទដ៏ល្អមួយសម្រាប់ដំណើរកម្សាន្តថ្ងៃឈប់សម្រាក",
+      "hypothesis": "ផ្លូវទឹកនៅក្នុងប្រទេសអាចជាប្រធានបទដ៏ល្អមួយសម្រាប់ដំណើរកម្សាន្តថ្ងៃឈប់សម្រាក",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 90
+    },
+    {
+      "validation_index": 105,
+      "reference": "ក៏ប៉ុន្តែ សញ្ញាភាគច្រើនត្រូវបានបង្ហាញឡើងតែក្នុងភាសាកាតាឡានតែប៉ុណ្ណោះ ពីព្រោះច្បាប់បានកំណត់ថាវាជាភាសាផ្លូវការដំបូងគេ",
+      "hypothesis": "ក៏ប៉ុន្តែសញ្ញាភាគច្រើនទៅបានបង្ហាញឡើងតែក្នុងភាសាកាតាឡានតែប៉ុណ្ណោះពីព្រោះច្បាប់បានកំណត់ថាវាជាភាសាផ្លូវការដំបូងគេ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 135
+    },
+    {
+      "validation_index": 106,
+      "reference": "ក៏ប៉ុន្តែ សញ្ញាភាគច្រើនត្រូវបានបង្ហាញឡើងតែក្នុងភាសាកាតាឡានតែប៉ុណ្ណោះ ពីព្រោះច្បាប់បានកំណត់ថាវាជាភាសាផ្លូវការដំបូងគេ",
+      "hypothesis": "ក៏ប៉ុន្តែសញ្ញាភាគច្រើនត្រូវបានបង្ហាញឡើងតែក្នុងភាសាកាតាឡានតែប៉ុណ្ណោះ ពីព្រោះច្បាប់បានកំណត់ថា វាជាភាសាហ្វិកការដំបូងគេ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 140
+    },
+    {
+      "validation_index": 107,
+      "reference": "ផ្លូវទឹកនៅក្នុងប្រទេសអាចជាប្រធានបទដ៏ល្អមួយសម្រាប់ដំណើរកម្សាន្តថ្ងៃឈប់សម្រាក",
+      "hypothesis": "ផ្លូវទឹកក្នុងប្រទេសអាចជាប្រធានបទដ៏ល្អមួយសម្រាប់ដំណើរកម្សាន្តថ្ងៃឈប់សម្រាក",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 87
+    },
+    {
+      "validation_index": 108,
+      "reference": "អ្នកវិទ្យាសាស្ត្របាននិយាយថា ការផ្ទុះដែលកើតពីការប៉ះទង្គិចគ្នានេះ គឺមានភាពធំសម្បើមណាស់",
+      "hypothesis": "អ្នកវិទ្យាសាស្ត្របាននិយាយថា ការផ្ទុះដែលកាលពីកាលប៉ះទង្គិចគ្នានេះ គឺមានភាពធុងសម្បុរណាស់",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 101
+    },
+    {
+      "validation_index": 110,
+      "reference": "ផ្កាយរណបនៅក្នុងលំហអាកាស ទទួលបានសញ្ញា ហើយបន្ទាប់មកបញ្ជូនសញ្ញានោះត្រឡប់មកផែនដីវិញ ស្ទើរតែឥតដាច់",
+      "hypothesis": "កែលម្អនៅក្នុងលំហឱ្យការទទួលបានសញ្ញា ហើយបន្ទាប់មកបញ្ជូនសញ្ញានោះត្រឡប់មកផែនដីវិញស្ទើរតែឥតដាច់",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 109
+    },
+    {
+      "validation_index": 111,
+      "reference": "ទូរសព្ទផ្កាយរណប ជាទូទៅមិនមែនជាការជំនួសទូរសព្ទចល័តទេព្រោះអ្នកត្រូវតែនៅខាងក្រៅអគារ ដោយអាចឲ្យផ្កាយរណបមើលបានច្បាស់ ដើម្បីហៅទូរសព្ទចេញបាន",
+      "hypothesis": "ទូរស័ព្ទកាយរណប ជាទូទៅមិនមែនជាកាយជំនួសទូរស័ព្ទចល័តទេ ព្រោះអ្នកត្រូវតែនៅខាងក្រៅអគារ ដោយអាចឱ្យកាយរណបមើលបានច្បាស់ ដើម្បីហៅទូរស័ព្ទចេញបាន",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 161
+    },
+    {
+      "validation_index": 112,
+      "reference": "ក្រុមហ៊ុននាំសំបុត្រទទួលបានប្រាក់ខែខ្ពស់សម្រាប់ការដឹកជញ្ជូនទំនិញយ៉ាងឆាប់រហ័ស ជារឿយៗ ពេលវេលាពិតជាសំខាន់ណាស់ជាមួយឯកសារអាជីវកម្មផ្សេងៗ ទំនិញ ឬ គ្រឿងបន្លាស់សម្រាប់ការជួសជុលបន្ទាន់",
+      "hypothesis": "ក្រុមអនុម័ងសំបុត្រទទួលបានប្រាក់ខែខ្ពស់សម្រាប់ការដឹកជញ្ជូនទំនិញយ៉ាងឆាប់រហ័ស ជារឿយៗពេលវេលាបានជាសំខាន់ណាស់ជាមួយឯកសារអាជីវកម្មផ្សេងៗ ទំនិញ ឬគ្រឿងបន្លាស់សម្រាប់ការជួសជុលបន្ទាន់",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 210
+    },
+    {
+      "validation_index": 113,
+      "reference": "ផលិតផលសិប្បកម្មអាចត្រូវបានចាត់ទុកថាជាវត្ថុបុរាណ ទោះបីជាវាមានអាយុតិចកាលជាងទំនិញស្រដៀងគ្នាដែល ផលិតបានច្រើនក៏ដោយ",
+      "hypothesis": "ផលិតផលសិប្បកម្មអាចត្រូវបានចាត់ទុកថាជាវត្ថុបុរាណ ទោះបីជាវាមានអាយុតិចការចៀនទំនិញសំដៀងគ្នាដែលផលិតបានច្រើនក៏ដោយ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 130
+    },
+    {
+      "validation_index": 115,
+      "reference": "លោកវេជ្ជបណ្ឌិត moll គិតថា អ្នកជំងឺមួយចំនួនប្រហែលបានឆ្លងពួកសត្វល្អិតនៅក្នុងមន្ទីរពេទ្យ ហើយយ៉ាងហោចក្នុងនោះ ក៏មានបុគ្គលិកសុខាភិបាលពីរនាក់នៅក្នុងមន្ទីរពេទ្យដែរដែលបានឆ្លងជំងឺ",
+      "hypothesis": "លោកវិច្ឆិតមូលគត់ថា អ្នកជំងឺមួយចំនួនប្រហែលបានឆ្លងពួកសាលានៅក្នុងមន្ទីរពេទ្យ ហើយយ៉ាងហើយក្នុងនោះក៏មានបុគ្គលិកសក្ការបាទពីរនាក់នៅក្នុងមន្ទីរពេទ្យដែរដែលបានឆ្លងជំងឺ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 192
+    },
+    {
+      "validation_index": 116,
+      "reference": "កាលពីរាប់ពាន់ឆ្នាំមុន បុរសម្នាក់ដែលមានឈ្មោះថា aristarchus បានពោលថា ប្រព័ន្ធសូឡាគឺធ្វើដំណើរជុំវិញព្រះអាទិត្យ",
+      "hypothesis": "កាលពីរប៉ុន្មានឆ្នាំមុន បុរសម្នាក់ដែលមានឈ្មោះថា អារ៉េស្តុកឃឺស បានពោលថា ប្រព័ន្ធសូឡាគឺធ្វើដំណើរជុំវិញព្រះអាទិត្យ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 139
+    },
+    {
+      "validation_index": 119,
+      "reference": "ជម្រើសដែលកាន់តែពេញនិយមសម្រាប់អ្នក ដែលមានផែនការទុកមួយឆ្នាំចោល រៀនចប់ទុកមួយឆ្នាំទំនេរ គឺការធ្វើដំណើរនិងរៀនអ្វីប្លែកថ្មី",
+      "hypothesis": "ជម្រើសដែលកាន់តែពេញនិយមសម្រាប់អ្នកដែលមានផែនការទុកមួយឆ្នាំចូល ឬចប់ទុកមួយឆ្នាំទំនេរ គឺការធ្វើដំណើរ និងរៀនអ្វីប្លែកថ្មី",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 145
+    },
+    {
+      "validation_index": 121,
+      "reference": "ការលាតសន្ធឹងរវាងទំនប់ ភ័ញមែរៀន point marion និង ហ្វ៊ែរម៉ន់ថ៍ fairmont ដែលបង្ហាញពីស្ថានភាពបើកបរដ៏លំបាកបំផុតនៅលើមហាវិថី បាហ្វហ្វាឡូ ភីតស៍ប៊ើហ្វ buffalo-pittsburgh ដែលត្រូវបានឆ្លងកាត់ជាញឹកញាប់តាមរយៈដីរាបស្មើ",
+      "hypothesis": "ការលេចសន្ធឹងរវាងទំនប់ point maryan និង fairmont ដែលបង្ហាញពីសន្តិភាពបើកបរដ៏លំបាកបំផុតនៅលើមហាវិថី buffalo pieburg ដែលត្រូវបានឆ្លងកាត់ជាញឹកញាប់តាមរយៈដីរាបស្មើ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 150
+    },
+    {
+      "validation_index": 125,
+      "reference": "កម្មវិធីមួយចំនួនមានតំបន់បោះតង់ពិសេសសម្រាប់គ្រួសារដែលមានក្មេងតូចៗ",
+      "hypothesis": "ការមានវិធីមួយចំនួនមានតំបន់បោះតង់ពិសាសម្រាប់គ្រួសារដែលមានក្មេងតូចៗ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 83
+    },
+    {
+      "validation_index": 126,
+      "reference": "លទ្ធផលវិភាគអំពីគម្រោងនឹងត្រូវបង្ហោះនៅលើគេហទំព័រសាធារណៈ",
+      "hypothesis": "លទ្ធផលវិភាគអំពីគម្រោងនឹងត្រូវបង្ហោះនៅលើគេហទំព័រសាធារណៈ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 69
+    },
+    {
+      "validation_index": 127,
+      "reference": "ជម្រើសដែលកាន់តែពេញនិយមសម្រាប់អ្នក ដែលមានផែនការទុកមួយឆ្នាំចោល រៀនចប់ទុកមួយឆ្នាំទំនេរ គឺការធ្វើដំណើរនិងរៀនអ្វីប្លែកថ្មី",
+      "hypothesis": "ជម្រើសដែលកាន់តែពេញនិយមសម្រាប់អ្នកដែលមានផែនការទុកមួយឆ្នាំចោល និងចប់ទុកមួយឆ្នាំទំនេរ គឺការធ្វើដំណើរ និងរៀនអោយបន្លែថ្មី",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 146
+    },
+    {
+      "validation_index": 128,
+      "reference": "អ្នកជំងឺធ្លាប់បានទៅប្រទេសនីហ្សេរីយ៉ា ដែលនៅប្រទេសនេះបានកើតមានករណីវីរុស អេបូឡាមួយចំនួន",
+      "hypothesis": "អ្នកជំងឺធ្លាប់បានទៅប្រទេស new zealand ដែលនៅប្រទេសនេះបានកើតមានកន្លែងនិរន្ធអេបូឡាមួយចំនួន",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 97
+    },
+    {
+      "validation_index": 130,
+      "reference": "អាជ្ញាធរមូលដ្ឋាន កំពុងផ្ដល់ការជូនដំណឹងដល់ពលរដ្ឋនៅក្បែររោងចក្រនោះ ឲ្យស្ថិតនៅក្នុងផ្ទះ បិទម៉ាស៊ីនត្រជាក់ មិនឲ្យទទួលទានទឹករ៉ូប៊ីណេឡើយ",
+      "hypothesis": "អាជ្ញាធរមូលដ្ឋានកំពុងតែការជូនអំណាំងដល់ពលរដ្ឋនៅក្បែររោងចក្រនោះ ឱ្យស្ថិតក្នុងផ្ទះបិទម៉ាស៊ីនត្រជាក់ មិនឱ្យទទួលទានទឹករ៉ូវិនីឡើយ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 155
+    },
+    {
+      "validation_index": 131,
+      "reference": "ការជិះស្គីគឺជាសកម្មភាពធ្វើដំណើរដ៏ចម្បងមួយដែលពេញនិយមសម្រាប់មនុស្សជាច្រើនដែលជួនកាលគេហៅថា ស្គីបាំ គម្រោងវិស្សមកាលទាំងមូលជុំវិញការជិះស្គីនៅទីតាំងដ៏ពិសេសមួយ",
+      "hypothesis": "ការជិះស្គី គឺជាសកម្មភាពធ្វើដំណើរដ៏ចម្បងមួយដែលពេញនិយម សម្រាប់មនុស្សជាច្រើនដែលជួនកាលគេហៅថា ស្គីបាំ គម្រោង វាសមកកាលទាំងមូលជុំវិញការជិះស្គីនៅទីតាំងដ៏ពិសេសមួយ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 191
+    },
+    {
+      "validation_index": 134,
+      "reference": "មានត្រឹមតែមេដាយចំនួន18ប៉ុណ្ណោះក្នុងមួយថ្ងៃ ប្រទេសជាច្រើនបរាជ័យក្នុងការដណ្តើមយកមេដាយទាំងនោះ",
+      "hypothesis": "មានត្រឹមតែមេដាយចំនួន ១៩ ប៉ុណ្ណោះក្នុងមួយថ្ងៃប្រទេសជាច្រើនបរាជ័យក្នុងការដណ្តើមយកមេដាយទាំងនោះ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 115
+    },
+    {
+      "validation_index": 135,
+      "reference": "ភាគច្រើននៃជីវិតរបស់គ្រួសារហេព្រើរគឺរស់នៅលើទីវាលបើកចំហរ",
+      "hypothesis": "ភាគច្រើននៃជីវិតរបស់គ្រួសារ happy life គឺរស់នៅលើទីវាបាល់កំហុរ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 66
+    },
+    {
+      "validation_index": 139,
+      "reference": "រឿងបែបនេះបានក្លាយជាវិន័យដាច់ដោយឡែក ដែលផ្តោតលើការផ្តល់ដំណោះស្រាយចំពោះបញ្ហាជីវិតពិត",
+      "hypothesis": "រូងបែបនេះបានក្លាយជាវិន័យដាច់ដោយឡែកដែលផ្តោតលើការផ្តល់ដំណោះស្រាយចំពោះបញ្ហាជីវិតពិត",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 103
+    },
+    {
+      "validation_index": 140,
+      "reference": "ទឹកកំពុងហូរហារលើទំនបទឹកនៅផ្នែកមួយដែលមានប្រវែង 100 ហ្វីត",
+      "hypothesis": "ទឹកកំពង់ហូរហា លើទំនប់ទឹកនៅផ្នែកមួយដែលមានប្រវែង មួយរយ វីដេអូ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 77
+    },
+    {
+      "validation_index": 141,
+      "reference": "បើទោះបីជាមានការប្រើប្រាស់យ៉ាងទូលំទូលាយក្ដី ជាពិសេសក្នុងចំណោមពលរដ្ឋផ្សេងពីរូម៉ានី ពាក្យថា gypsy ជារឿយត្រូវគិតថាមានន័យមិនល្អ ដោយសារវាពាក់ព័ន្ធផ្នត់គំនិតអវិជ្ជមាន និងទស្សនៈមិនត្រឹមត្រូវរបស់ពលរដ្ឋរូម៉ានី",
+      "hypothesis": "បន្ទាប់ពីជាមានការប្រើប្រាស់យ៉ាងទូលំទូលាយក្តី ជាពិសេសក្នុងចំណោមពលរដ្ឋផ្សេងពីរោមនីយ៍ បៀតហ្សាគីបស៊ី ជារោយត្រូវគិតថាមានន័យមិនល្អ ដោយសារវាពាក់ព័ន្ធផ្នត់គំនិតអវិជ្ជមាន និងទស្សនៈមិនត្រឹមត្រូវរបស់ពលរដ្ឋរោមនីយ៍",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 246
+    },
+    {
+      "validation_index": 142,
+      "reference": "ទោះជាយ៉ាងណា រាល់ការផ្លាស់ប្តូរឬការស្នើសុំគប្បីឆ្លងកាត់ភ្នាក់ងារធ្វើដំណើរជាមុន ហើយមិនត្រូវធ្វើឡើងដោយផ្ទាល់តាមរយៈសណ្ឋាគារនោះទេ",
+      "hypothesis": "ទោះជាយ៉ាងណា រាល់ការផ្លាស់ប្ដូរ ឬការស្នើសុំកុំបីឆ្លងកាត់ភ្នាក់ងារធ្វើដំណើរជាមុន ហើយមិនត្រូវធ្វើឡើងដោយផ្ទាល់តាមរយៈសណ្ឋាគារនោះទេ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 156
+    },
+    {
+      "validation_index": 145,
+      "reference": "រឿងបែបនេះបានក្លាយជាវិន័យដាច់ដោយឡែក ដែលផ្តោតលើការផ្តល់ដំណោះស្រាយចំពោះបញ្ហាជីវិតពិត",
+      "hypothesis": "រឿងបែបនេះបានក្លាយជាវិន័យដៃដោយឡែក ដែលផ្តោតលើការផ្តល់ដំណោះស្រាយចំពោះបញ្ហាជីវិតពិត",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 102
+    },
+    {
+      "validation_index": 147,
+      "reference": "កាលពីរាប់ពាន់ឆ្នាំមុន បុរសម្នាក់ដែលមានឈ្មោះថា aristarchus បានពោលថា ប្រព័ន្ធសូឡាគឺធ្វើដំណើរជុំវិញព្រះអាទិត្យ",
+      "hypothesis": "កាលពីរាប់ពាន់ឆ្នាំមុន បុរសម្នាក់ដែលមានឈ្មោះថា អារ៉េស្សាឈូស បានពោលថា ប្រព័ន្ធសូឡាគឺធ្វើដំណើរជុំវិញព្រះអាទិត្យ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 135
+    },
+    {
+      "validation_index": 149,
+      "reference": "អាជ្ញាធរមូលដ្ឋាន កំពុងផ្ដល់ការជូនដំណឹងដល់ពលរដ្ឋនៅក្បែររោងចក្រនោះ ឲ្យស្ថិតនៅក្នុងផ្ទះ បិទម៉ាស៊ីនត្រជាក់ មិនឲ្យទទួលទានទឹករ៉ូប៊ីណេឡើយ",
+      "hypothesis": "អាជ្ញាធរមូលដ្ឋានកំពុងផ្តល់ការជូនទំនិញដល់ពលរដ្ឋដែលបានរន្ធចាក់នោះឱ្យស្ថិតក្នុងផ្ទះទឹកប៉ុណ្ណោះត្រជាក់ មិនឱ្យទទួលទានទឹករោទិំពីនេះឡើយ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 162
+    },
+    {
+      "validation_index": 150,
+      "reference": "អ្នកវិទ្យាសាស្ត្រគិតថា ខ្លារខិនដើររកស៊ីចំណី សត្វជាចំណី ដោយការស្រងក្លិន ការហិតក្លិននៅតាមដីដែលវាធ្លាប់នៅ",
+      "hypothesis": "អ្នកវិទ្យាសាស្ត្រគិតថា ខ្លារខិនដើររកស៊ីចំណី ដោយការស្រង់ក្លិន ការហិតក្លិននៅតាមដីដែលវាធ្លាប់នៅ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 111
+    },
+    {
+      "validation_index": 153,
+      "reference": "នៅទីបំផុត កង់ឈើត្រូវបានជំនួសដោយកង់ដែក នៅឆ្នាំ 1767 ផ្លូវដែកពេញលេញដំបូងគេ ត្រូវបានដាក់ឲ្យដំណើរការ",
+      "hypothesis": "ទីបំផុត កង់ឈើត្រូវបានចំណូលដោយកង់ដែក នៅឆ្នាំ មួយពាន់ប្រាំពីររយហុកសិបប្រាំពីរ ផ្លូវដែកពេញលេញដំបូងគេត្រូវបានដាក់ដោយដំណើរការ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 155
+    },
+    {
+      "validation_index": 155,
+      "reference": "ជារឿយៗ ទស្សនៈដែលបានបង្ហាញមានលក្ខណៈមិនលម្អិត ទូទៅ និងសាមញ្ញពេក បើប្រៀបធៀបនឹងព័ត៌មានលម្អិតដែលមាននៅកន្លែងផ្សេងទៀត",
+      "hypothesis": "ជារឿយៗ ទស្សនៈដែលបានបង្ហាញមានលក្ខណៈមិនលម្អិតទូទៅ និងសាមញ្ញពេកបើពិធី និងព័ត៌មានលម្អិតដែលមាននៅកន្លែងផ្សេងទៀត",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 129
+    },
+    {
+      "validation_index": 156,
+      "reference": "ខ្ញុំមិនដឹងថាតើអ្នកដឹងវាឬអត់នោះទេ ប៉ុន្តែទំនិញភាគច្រើនដែលមកពីអាមេរិកកណ្តាលបានចូលមកក្នុងប្រទេសនេះដោយគ្មានពន្ធ",
+      "hypothesis": "ខ្ញុំមិនដឹងថាតើអ្នកដឹងវាឬអត់នោះទេ ប៉ុន្តែទំនិញភាគច្រើនដែលមកពីអាមេរិកកណ្តាលបានចូលមកក្នុងប្រទេសនេះដោយគ្មានពន្ធ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 135
+    },
+    {
+      "validation_index": 158,
+      "reference": "ក្រុមអ្នកស្រាវជ្រាវបានលើកឡើងថា ទោះបីនេះជាកន្ទុយរបស់ដាយណូស័រវ័យក្មេងក៏ដោយតែគំរូបង្ហាញពីរោមដាយណូស័រពេញវ័យហើយក៏មិនមែនជារោមមាន់ដែរ",
+      "hypothesis": "ក្រុមអ្នកស្រាវជ្រាវបានដឹកឡើងថា ទោះបីនេះជាកន្ទុយរបស់បានដែលនៅសល់វ័យក្នុងក៏ដោយ តែគំរូបង្ហាញពីរោមដែលនៅសល់វ័យ ហើយក៏មិនមែនជារោមមុនដែរ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 161
+    },
+    {
+      "validation_index": 160,
+      "reference": "បន្ទាប់ពីតក់ស្លុត និងបានឃើញភាពសាហាវឃោរឃៅនៃសង្គ្រាមក្នុងកំឡុងពេលនៃសង្គ្រាមលោកលើកទីមួយ ប្រជាជាតិជាច្រើនមិនចង់ជួបស្ថានភាពបែបនេះទៀតទេនៅពេលអនាគត",
+      "hypothesis": "បន្ទាប់ពីតក់ស្លុត និងបានឃើញភាពសាហាវគួរឃើញនៃសង្គ្រាមក្នុងកំឡុងពេលនៃសង្គ្រាមលោកលើកទីមួយប្រជាជាតិជាច្រើនមិនចង់ជួបស្ថានភាពបែបនេះទៀតទេនៅពេលអនាគត",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 172
+    },
+    {
+      "validation_index": 161,
+      "reference": "ប៉ូលីសបាននិយាយថា សាកសពដែលបានរកឃើញបាននៅទីនោះ រយៈពេលមួយថ្ងៃហើយ",
+      "hypothesis": "ប៉ូលីសបាននិយាយថា សាកសពដែលបានរកឃើញបាននៅទីនោះរយៈពេលមួយថ្ងៃហើយ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 76
+    },
+    {
+      "validation_index": 162,
+      "reference": "កាលពីរាប់ពាន់ឆ្នាំមុន បុរសម្នាក់ដែលមានឈ្មោះថា aristarchus បានពោលថា ប្រព័ន្ធសូឡាគឺធ្វើដំណើរជុំវិញព្រះអាទិត្យ",
+      "hypothesis": "កាលពីរប៉ុន្មានឆ្នាំមុនបុរសម្នាក់ដែលមានឈ្មោះថា aristocrat បានពូកថាបុណ្យសូឡាគឺធ្វើដំណើរជុំវិញពេលអាទិត្យ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 116
+    },
+    {
+      "validation_index": 164,
+      "reference": "នៅប្រទេសអ៊ីរ៉ង់ គ្រោះថ្នាក់ជើងអាកាសគឺជារឿងធម្មតាព្រោះយន្តហោះចាស់ៗ ហើយការថែទាំមិនបានល្អសម្រាប់ទាំងប្រតិបត្តិការស៊ីវិល និងប្រតិបត្តិការយោធា",
+      "hypothesis": "នៅប៉ូតិកអ៊ីរ៉ង់ គោលដែលជើងអាកាសគឺជារឿងធម្មតា ព្រោះយ៉ាន់ហោះចោះចាស់ ហើយការថែទាំមិនអាក់ល្អ ព្រមទាំងប្រតិបត្តិការស៊ីវិល និងប្រតិបត្តិការយោធា",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 175
+    },
+    {
+      "validation_index": 165,
+      "reference": "រឿងនោះហាក់ដូចជាធ្វើឲ្យខ្ញុំមិនយល់សោះ វាពិតជាមិនយុត្តិធម៌ទេ",
+      "hypothesis": "រឿងនោះហើយដូចជាធ្វើឱ្យខ្ញុំមិនយល់សោះ វាពិតជាមិនយុត្តិធម៌ទេ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 78
+    },
+    {
+      "validation_index": 166,
+      "reference": "គ្រាប់បែក បី គ្រាប់ផ្សេងទៀតបានផ្ទុះឡើងនៅក្បែរអគាររដ្ឋាភិបាលអស់រយៈពេលពីម៉ោងផងដែរ",
+      "hypothesis": "គ្រាប់បែកបីគ្រាប់ផ្សេងទៀតបានផ្ទុះឡើងនៅក្បែរអគាររដ្ឋាភិបាលអស់រយៈពេលពីរម៉ោងផងដែរ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 98
+    },
+    {
+      "validation_index": 167,
+      "reference": "វាក៏ពុំមានសិទ្ធិអំណាច ដើម្បីបដិសេធច្បាប់ពន្ធ និងពន្ធគយរវាងរដ្ឋនីមួយៗនោះដែរ",
+      "hypothesis": "វាក៏ពុំមានសិទ្ធិអំណាចដើម្បីបរិស័ទច្បាប់ពន្ធ និងពន្ធគយរវាងរដ្ឋនីមួយៗដែរ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 86
+    },
+    {
+      "validation_index": 169,
+      "reference": "ពិន្ទុចុងក្រោយគឺជាពិន្ទុឈ្នះមួយពិន្ទុ គឺ២១ទល់និង២០ នៅចុងបញ្ចប់នៃការប្រកួតជ័យលាភីហ្គេមall blacksទាំង១៥។",
+      "hypothesis": "ពិន្ទុចុងក្រោយគឺជាពិន្ទុឆ្នាំ មួយពាន់ទៅនឹង មួយពាន់ នៃចុងបញ្ចប់នៃការប្រកួតជ័យលាភីហ្គេម អូរប្លែក ស្ទាំងដប់តាំង",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 136
+    },
+    {
+      "validation_index": 171,
+      "reference": "នៅក្នុងទីធ្លាព្រះវិហារ មានរូបចម្លាក់ជាថ្មម៉ាបដែលគួរឱ្យចាប់អារម្មណ៍នៅលើផ្នូរខ្លះ",
+      "hypothesis": "នៅក្នុងទីជ្រលៃព្រះវិហារ មានរូបចម្លាក់ជាថ្មម៉ាបដែលគួរឱ្យចាប់អារម្មណ៍នៅលើផ្នូលខ្លះ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 99
+    },
+    {
+      "validation_index": 172,
+      "reference": "ដោយសារតែសិស្សនិស្សិតគឺជាទស្សនិកជនដែលធ្វើការរិះគន់ច្រើនជាគេ អ្នកសរសេរប្លក់ចាប់ផ្តើមព្យយាមកែលម្អការសរសេរដើម្បីចៀសវាងមតិរិះគន់",
+      "hypothesis": "ដោយសារតែសិស្សនិស្សិតគឺជាទូរស័ព្ទជនដែលធ្វើការរិះគន់កាន់តែខ្លាំង និងសរសេរប្លក់ ចាប់ផ្ដើមព្យាយាមកែលម្អការសរសេរដើម្បីជៀសវាងមតិអនុគ្រោះ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 161
+    },
+    {
+      "validation_index": 173,
+      "reference": "បន្ទាប់មក ឡាក់ខាស៊ីងបាននាំមុខក្នុងការច្រៀងចម្រៀងផាចានស៍",
+      "hypothesis": "បន្ទាប់មក ឡាក់កាសីងបានដាំមុខក្នុងការច្រៀងចម្រៀងផាចាន",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 61
+    },
+    {
+      "validation_index": 174,
+      "reference": "សត្វខ្លះដូចជា ដំរី និង សត្វកវែង ព្យាយាមចូលមកជិតឡាន ដូច្នេះសម្ភារៈតាមបទដ្ឋាន គឺអំណោយផលក្នុងការមើលទេសភាពបានល្អ",
+      "hypothesis": "សត្វខ្លះដូចជាដំរី និងសត្វកវែង ជាយាងចូលមកជិតឡាន ដូច្នេះសម្ភារៈតាមឧបត្ថម្ភគឺអំណោយផលក្នុងការមើលទេសភាពបានល្អ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 123
+    },
+    {
+      "validation_index": 177,
+      "reference": "មិនមានព្រៃឈើធំ ៗ នៅក្នុងដែនដីកាណាន canaan ទេ ដូច្នេះ ឈើមានតម្លៃថ្លៃណាស់",
+      "hypothesis": "មិនមានព្រៃឈើធំៗនៅក្នុងដែនដីកាន់ណាទេ ដូច្នេះឈើមានតម្លៃថ្លៃណាស់",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 82
+    },
+    {
+      "validation_index": 178,
+      "reference": "ផលិតផលសិប្បកម្មអាចត្រូវបានចាត់ទុកថាជាវត្ថុបុរាណ ទោះបីជាវាមានអាយុតិចកាលជាងទំនិញស្រដៀងគ្នាដែល ផលិតបានច្រើនក៏ដោយ",
+      "hypothesis": "ផលិតផលសិប្បកម្មអាចត្រូវបានចាត់ទុកថាជាវត្ថុបុរាណ ទោះបីជាវាមានអាយុតិចកាលជាងទំនិញស្រដៀងគ្នាដែលផលិតបានច្រើនក៏ដោយ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 129
+    },
+    {
+      "validation_index": 180,
+      "reference": "ទ្រង់ទ្រាយទូទៅជាច្រើន ឧទាហរណ៍ ទ្រង់ទ្រាយនៃក្រុម aps មានចំនួនស្មើនឹង ឬប្រហាក់ប្រហែលទៅនឹងសមាមាត្រមួយនេះ",
+      "hypothesis": "ទ្រង់ទ្រាយទូទៅជាច្រើន និទានហោទ្រទ្រាយនៃក្រុម aps មានចំនួនស្មើនឹង ឬប្រហាក់ប្រហែលទៅនឹងសមាមាត្រមួយនេះ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 117
+    },
+    {
+      "validation_index": 184,
+      "reference": "គាត់បាននិយាយថា គាត់បានផលិតកន្តឹងទ្វារ wifi",
+      "hypothesis": "គាត់បាននិយាយថាគាត់បានផលិតកណ្តឹងទ្វារ wi-fi",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 44
+    },
+    {
+      "validation_index": 190,
+      "reference": "នៅពេលអ្នកទូរសព្ទហៅនរណាម្នាក់ដែលនៅចម្ងាយរាប់ពាន់គីឡូម៉ែត្រ អ្នក គឺកំពុងប្រើប្រាស់ផ្កាយរណបហើយ",
+      "hypothesis": "នៅពេលអ្នកទូរស័ព្ទហៅនរណាម្នាក់ដែលនៅចម្ងាយ ប្រព័ន្ធឃ្លូវម៉ែត្រ អ្នកគឺកំពុងប្រើប្រាស់កាយរណបហើយ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 110
+    },
+    {
+      "validation_index": 194,
+      "reference": "វាត្រូវបានគេគ្រោងនឹងកាត់បន្ថយនៅថ្ងៃអង្គារនេះទេ ប៉ុន្តែវាត្រូវបានរក្សាទុកសម្រេចពេលក្រោយបន្ទាប់ពីសេចក្តីសម្រេចរបស់តុលាការបន្ទាន់",
+      "hypothesis": "វាត្រូវបានគេគ្រោងនឹងកាត់បន្ថយនៅថ្ងៃអង្គារនេះទេ ប៉ុន្តែវាត្រូវបានរក្សាទុកសម្រេចពេលក្រោយបន្ទាប់ពីសេចក្តីសម្រេចរបស់តុលាការបន្ទាន់",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 153
+    },
+    {
+      "validation_index": 196,
+      "reference": "គួបផ្សំនឹងភាពមិនទាក់ទងគ្នា ពាក្យ timbuktu ត្រូវបានគេប្រើជាពាក្យប្រៀបធៀបសម្រាប់ដែនដីនៅឆ្ងាយនិងប្លែកថ្មី",
+      "hypothesis": "គួបផ្សំនឹងភាពមិនទាក់ទងគ្នា ពាក្យ team member ត្រូវបានគេប្រើជាពាក្យប្រៀបធៀបសម្រាប់ដែនដីនៅឆ្ងាយ និងប្លែកថ្មី",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 114
+    },
+    {
+      "validation_index": 197,
+      "reference": "វាក៏ពុំមានសិទ្ធិអំណាច ដើម្បីបដិសេធច្បាប់ពន្ធ និងពន្ធគយរវាងរដ្ឋនីមួយៗនោះដែរ",
+      "hypothesis": "វាក៏ពុំមានសុទ្ធអំណាចដើម្បីបដិសេធបានពន្ធ និងពន្ធករយ៉ាងរបស់រដ្ឋនីមួយៗនោះតែ",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 92
+    },
+    {
+      "validation_index": 198,
+      "reference": "សម្លការីអាច គោក ឬ រាវ អាស្រ័យលើបរិមាណអង្គធាតុរាវ ដាក់ទឹកតិចឬច្រើន",
+      "hypothesis": "សម្លការីអាចគោក ឬរាវអាស្រ័យលើបរិមាណអង្គធាតុរាវដាក់ទឹកតិចឬច្រើន",
+      "has_eos": true,
+      "primary_has_eos": true,
+      "greedy_fallback": false,
+      "generated_tokens_including_padding": 75
+    }
+  ],
+  "metrics": {
+    "evaluated_examples": 124,
+    "cer_percent": 12.422709387296234,
+    "wer_percent_icu_segmented": 27.988010490820532,
+    "cer_reference_characters": 12453,
+    "wer_reference_words": 2669,
+    "cer_errors": 1547,
+    "wer_errors": 747,
+    "icu_version": "77.1"
+  }
+}

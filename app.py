@@ -5,10 +5,12 @@ Ultra-Clean, Minimalist Voice Dictation UI (CADT IDRI Inspired).
 """
 
 import gc
+import json
 import os
 import re
 import sys
 import time
+import traceback
 import unicodedata
 import av
 import gradio as gr
@@ -27,21 +29,34 @@ torch.set_num_threads(4)
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 LOCAL_WHISPER_PATH = os.path.join(PROJECT_ROOT, "models", "whisper-tiny-khmer")
+MATCHED_WHISPER_PATH = os.path.join(PROJECT_ROOT, "models", "whisper-tiny-khmer-matched")
 RETRAINED_WHISPER_PATH = os.path.join(PROJECT_ROOT, "models", "whisper-tiny-khmer-warmup35-b4")
 LOCAL_MMS_PATH = os.path.join(PROJECT_ROOT, "models", "mms-khmer-ctc")
 MATCHED_MMS_PATH = os.path.join(PROJECT_ROOT, "models", "mms-khmer-ctc-matched")
-QWEN_ADAPTER_PATH = os.path.join(PROJECT_ROOT, "models", "qwen_lora_expanded_local_v2", "epoch-1")
+FROZEN_MMS_PATH = os.path.join(PROJECT_ROOT, "models", "mms-khmer-ctc-frozen")
 QWEN_BASE_MODEL = "seanghay/Qwen3-ASR-0.6B-Khmer"
-QWEN_MODEL_NAME = "Qwen3-ASR · Student LoRA (883 clips, epoch 1)"
+QWEN_BASE_REVISION = "351f1cc594f084e4899ef6cf7bbb17ec64484080"
+QWEN_BIGTRAIN_MODEL_NAME = "Approach 3: Qwen3-ASR 0.6B · Big corpus LoRA (16,720 clips, epoch 1)"
+QWEN_MODEL_NAME = "Qwen3-ASR · Student LoRA (1,663 clips, epoch 1)"
+QWEN_883_MODEL_NAME = "Qwen3-ASR · Student LoRA (883 clips, epoch 1)"
+QWEN_ADAPTERS = {
+    QWEN_BIGTRAIN_MODEL_NAME: os.path.join(PROJECT_ROOT, "models", "qwen_km_corpus_bigtrain_20261014_epoch1"),
+    QWEN_MODEL_NAME: os.path.join(PROJECT_ROOT, "models", "qwen_lora_train30_v3_guarded", "epoch-1"),
+    QWEN_883_MODEL_NAME: os.path.join(PROJECT_ROOT, "models", "qwen_lora_expanded_local_v2", "epoch-1"),
+}
 MMS_MODEL_NAME = "🏆 Approach 2: Meta MMS-1B Khmer CTC (Local Checkpoint)"
-HAS_QWEN_ADAPTER = os.path.isfile(os.path.join(QWEN_ADAPTER_PATH, "adapter_model.safetensors"))
-DEFAULT_MODEL_NAME = QWEN_MODEL_NAME if HAS_QWEN_ADAPTER else MMS_MODEL_NAME
+WHISPER_MODEL_NAME = "🧪 Approach 1: Whisper-Tiny Khmer (Matched Checkpoint)"
+WARMUP_WHISPER_MODEL_NAME = "🧪 Whisper-Tiny Khmer (35-Step Warmup Retrain)"
+AVAILABLE_QWEN_MODELS = [name for name, path in QWEN_ADAPTERS.items()
+                         if os.path.isfile(os.path.join(path, "adapter_model.safetensors"))]
+DEFAULT_MODEL_NAME = QWEN_BIGTRAIN_MODEL_NAME if QWEN_BIGTRAIN_MODEL_NAME in AVAILABLE_QWEN_MODELS else (
+    AVAILABLE_QWEN_MODELS[0] if AVAILABLE_QWEN_MODELS else MMS_MODEL_NAME)
 SAMPLES_DIR = os.path.join(PROJECT_ROOT, "samples")
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 
-def mms_checkpoint_label():
+def mms_checkpoint_label(model_choice):
     if os.path.isfile(os.path.join(MATCHED_MMS_PATH, "model.safetensors")):
         return "MMS-1B · matched-run checkpoint"
     if os.path.isfile(os.path.join(LOCAL_MMS_PATH, "model.safetensors")):
@@ -79,25 +94,27 @@ def get_model_and_processor(model_choice: str):
     if torch.cuda.is_available():
         torch.cuda.empty_cache()
 
-    if model_choice == QWEN_MODEL_NAME:
+    if model_choice in QWEN_ADAPTERS:
         from peft import PeftModel
         from qwen_asr import Qwen3ASRModel
 
-        if not HAS_QWEN_ADAPTER:
-            raise FileNotFoundError(f"Student Qwen adapter missing: {QWEN_ADAPTER_PATH}")
-        print(f"[*] Loading Qwen base and student adapter from {QWEN_ADAPTER_PATH}...")
+        adapter_path = QWEN_ADAPTERS[model_choice]
+        if model_choice not in AVAILABLE_QWEN_MODELS:
+            raise FileNotFoundError(f"Student Qwen adapter missing: {adapter_path}")
+        print(f"[*] Loading Qwen base and student adapter from {adapter_path}...")
         wrapper = Qwen3ASRModel.from_pretrained(
             QWEN_BASE_MODEL,
-            dtype=torch.float16 if DEVICE == "cuda" else torch.float32,
+            revision=QWEN_BASE_REVISION,
+            dtype=(torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16) if DEVICE == "cuda" else torch.float32,
             device_map="cuda:0" if DEVICE == "cuda" else "cpu",
             max_inference_batch_size=1,
-            max_new_tokens=256,
+            max_new_tokens=512,
         )
-        wrapper.model = PeftModel.from_pretrained(wrapper.model, QWEN_ADAPTER_PATH, is_trainable=False)
+        wrapper.model = PeftModel.from_pretrained(wrapper.model, adapter_path, is_trainable=False)
         wrapper.model.eval()
         MODELS[model_choice] = ("qwen", wrapper.processor, wrapper)
         return MODELS[model_choice]
-    elif "MMS-1B" in model_choice:
+    elif model_choice == MMS_MODEL_NAME:
         local_path = MATCHED_MMS_PATH if os.path.isfile(os.path.join(MATCHED_MMS_PATH, "model.safetensors")) else LOCAL_MMS_PATH
         if os.path.isfile(os.path.join(local_path, "model.safetensors")):
             print(f"[*] Loading Meta MMS-1B Khmer CTC from {local_path}...")
@@ -110,14 +127,25 @@ def get_model_and_processor(model_choice: str):
         mdl.eval()
         MODELS[model_choice] = ("mms", proc, mdl)
         return "mms", proc, mdl
-    else:
-        whisper_path = RETRAINED_WHISPER_PATH if "35-Step Warmup" in model_choice else LOCAL_WHISPER_PATH
+    elif model_choice in (WHISPER_MODEL_NAME, WARMUP_WHISPER_MODEL_NAME):
+        whisper_path = RETRAINED_WHISPER_PATH if model_choice == WARMUP_WHISPER_MODEL_NAME else MATCHED_WHISPER_PATH
         print(f"[*] Loading Whisper Tiny from {whisper_path}...")
-        proc = WhisperProcessor.from_pretrained(whisper_path, language="Khmer", task="transcribe")
+        # These checkpoints were saved with Transformers 5, while Qwen requires 4.x.
+        # Preserve the token list using the 4.x additional_special_tokens argument.
+        with open(os.path.join(whisper_path, "tokenizer_config.json"), encoding="utf-8") as f:
+            extra_tokens = json.load(f).get("extra_special_tokens")
+        tokenizer_kwargs = {}
+        if isinstance(extra_tokens, list):
+            tokenizer_kwargs = {"extra_special_tokens": {}, "additional_special_tokens": extra_tokens}
+        proc = WhisperProcessor.from_pretrained(
+            whisper_path, language="Khmer", task="transcribe", **tokenizer_kwargs
+        )
         mdl = WhisperForConditionalGeneration.from_pretrained(whisper_path).to(DEVICE)
         mdl.eval()
         MODELS[model_choice] = ("whisper", proc, mdl)
         return "whisper", proc, mdl
+    else:
+        raise ValueError(f"Unknown model choice: {model_choice}")
 
 SAMPLE_METADATA = {
     "sample_1.wav": "មុខម្ហូបតាមដងផ្លូវ គឺជាមុខម្ហូបមួយមានភាពសម្បូរបែប និងមានភាពងាយស្រួល ដែលគេពេញនិយមក្នុងការបរិភោគ ថែមទាំងមានតម្លៃសមរម្យ។",
@@ -141,6 +169,14 @@ def transcribe_audio(audio_path, model_choice):
     if not audio_path:
         return "", "0.0s", "សូមបញ្ចូលសំឡេងជាមុនសិន (No audio input)"
 
+    try:
+        return _transcribe_audio(audio_path, model_choice)
+    except Exception as exc:
+        traceback.print_exc()
+        raise gr.Error(f"Transcription failed with {model_choice}: {exc}") from exc
+
+
+def _transcribe_audio(audio_path, model_choice):
     mtype, processor, model = get_model_and_processor(model_choice)
 
     t0 = time.time()
@@ -148,9 +184,8 @@ def transcribe_audio(audio_path, model_choice):
     duration = len(audio_array) / 16000.0
 
     if mtype == "qwen":
-        with torch.inference_mode():
-            results = model.transcribe(audio=(np.ascontiguousarray(audio_array, dtype=np.float32), sr))
-        raw_text = results[0].text
+        from src.qwen_khmer_inference import transcribe_khmer
+        raw_text = transcribe_khmer(model, audio_array, sr)
     elif mtype == "mms":
         inputs = processor(audio_array, sampling_rate=16000, return_tensors="pt").input_values.to(DEVICE)
         with torch.no_grad():
@@ -179,7 +214,7 @@ def transcribe_audio(audio_path, model_choice):
 
     elapsed = time.time() - t0
     timer_str = f"⏱️ រយៈពេល៖ {elapsed:.2f}s (សំឡេង {duration:.1f}s)"
-    source = mms_checkpoint_label() if mtype == "mms" else model_choice.split("(")[0].strip()
+    source = mms_checkpoint_label(model_choice) if mtype == "mms" else model_choice.split("(")[0].strip()
     status_str = f"🚀 {source} · {DEVICE.upper()}"
 
     return prediction, timer_str, status_str
@@ -338,7 +373,7 @@ def build_app():
                     container=False,
                 )
                 model_status = gr.Textbox(
-                    value=QWEN_MODEL_NAME if HAS_QWEN_ADAPTER else mms_checkpoint_label(),
+                    value=DEFAULT_MODEL_NAME if AVAILABLE_QWEN_MODELS else mms_checkpoint_label(DEFAULT_MODEL_NAME),
                     interactive=False,
                     scale=1,
                     container=False,
@@ -347,14 +382,9 @@ def build_app():
             # Model Selection
             with gr.Row():
                 model_selector = gr.Dropdown(
-                    choices=[
-                        *([QWEN_MODEL_NAME] if HAS_QWEN_ADAPTER else []),
-                        MMS_MODEL_NAME,
-                        "🧪 Approach 1: Whisper-Tiny Khmer (Version 1.0)",
-                        "🧪 Whisper-Tiny Khmer (35-Step Warmup Retrain)",
-                    ],
+                    choices=[QWEN_BIGTRAIN_MODEL_NAME, MMS_MODEL_NAME, WHISPER_MODEL_NAME],
                     value=DEFAULT_MODEL_NAME,
-                    label="🧠 ជ្រើសរើសម៉ូឌែល ASR (ASR Model Architecture)",
+                    label="🧠 ជ្រើសរើសម៉ូឌែល ASR (ASR Model / Checkpoint)",
                     interactive=True,
                 )
 

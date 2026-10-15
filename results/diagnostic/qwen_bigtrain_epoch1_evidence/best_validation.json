@@ -1,0 +1,13 @@
+{
+  "epoch": 1,
+  "optimizer_steps": 2090,
+  "mean_train_loss": 0.47216391906030974,
+  "evaluated_examples": 124,
+  "cer_percent": 12.422709387296234,
+  "wer_percent_icu_segmented": 27.988010490820532,
+  "cer_reference_characters": 12453,
+  "wer_reference_words": 2669,
+  "cer_errors": 1547,
+  "wer_errors": 747,
+  "icu_version": "77.1"
+}

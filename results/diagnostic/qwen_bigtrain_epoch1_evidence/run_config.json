@@ -1,0 +1,56 @@
+{
+  "base_model": "seanghay/Qwen3-ASR-0.6B-Khmer",
+  "base_revision": "351f1cc594f084e4899ef6cf7bbb17ec64484080",
+  "manifest": "results/diagnostic/qwen_train30_split_20261007.json",
+  "manifest_sha256": "95c441600a504cb821897a7c8f77db0b11bfad1fe51530a4e11a115ec9526a1f",
+  "train_examples": 16720,
+  "fleurs_repeat": 2,
+  "external_source": "seanghay/km-speech-corpus",
+  "validation_examples": 124,
+  "extra_training_manifest_sha256": "53d3b056d62bee7fb9255c9a68902fb34ee6def7c295c4802f4a80ef8d8fcab4",
+  "test_used": false,
+  "epochs": 3,
+  "patience": 2,
+  "target_wer": 25.0,
+  "learning_rate": 1e-05,
+  "gradient_accumulation": 8,
+  "dtype": "float32",
+  "seed": 42,
+  "lora": {
+    "r": 8,
+    "alpha": 16,
+    "dropout": 0.05,
+    "targets": [
+      "q_proj",
+      "v_proj"
+    ]
+  },
+  "schedule": "cosine, 5% warmup",
+  "weight_decay": 0.01,
+  "selection": "minimum full validation ICU 77.1 Khmer WER",
+  "max_new_tokens": 512,
+  "hardware": "Tesla T4",
+  "validation_decoding": {
+    "beams": 3,
+    "force_khmer": true,
+    "greedy_retry_on_missing_eos": true
+  },
+  "decoding_source_sha256": "9fcd7af59c52bf5463ecb4d27917ddcdedc38b03a6af8eb6f8ec9fc393bd7ecf",
+  "source_sha256": "1ecc3b0a91d616a161a14147f4bd94e0501e089748e95371d2467d40c4c48126",
+  "source_files_sha256": {
+    "train_qwen_candidate.py": "1ecc3b0a91d616a161a14147f4bd94e0501e089748e95371d2467d40c4c48126",
+    "qwen_khmer_inference.py": "9fcd7af59c52bf5463ecb4d27917ddcdedc38b03a6af8eb6f8ec9fc393bd7ecf",
+    "qwen_experiment_utils.py": "0f3a60c91a801b5d05f42e583172e16807dc13cce3dad6cffee3840d88dfed31",
+    "score_qwen_rows.py": "20108df9a8b9fa352917f97cbcbda842554986026cf29d4ce18a5f20d14848d6",
+    "score_matched_cer_wer.py": "028cff1f5e28b1d86fb9700d768b022521fb3734d2906551de71fc0f348ac2a0",
+    "matched_fleurs.py": "2706b6e439a109b3659f89cba4fa1b096e62d6c15371f63fcad0311cea83bc23",
+    "prepare_km_speech_corpus.py": "5ce0624f0ec3434d47879a5985cc7f9cf853f79a96559a6b1fda470a05db180c"
+  },
+  "versions": {
+    "torch": "2.8.0+cu128",
+    "transformers": "4.57.6",
+    "peft": "0.21.0",
+    "qwen-asr": "0.0.6",
+    "datasets": "5.0.1"
+  }
+}

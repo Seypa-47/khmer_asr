@@ -6,7 +6,7 @@ __pycache__/
 env/
 venv/
 
-# Large Model Weights (>50MB) and Archives
+# Model weights, checkpoints, and archives
 *.zip
 *.tar.gz
 *.safetensors
@@ -32,6 +32,10 @@ logs/
 .codex-pptx-*/
 .codex-finalizer/
 .chart-data-*/
+.codex-presentation-build/
+slides/assets/
+slides/khmer_asr_qwen_mms_whisper_2026-10-16_final.pptx
+results/diagnostic/qwen_bigtrain_local_samples_*.json
 
 # Local assistant instructions
 .claude/
