@@ -15,7 +15,7 @@ OUTPUT = ROOT / "notebooks" / "qwen_bigtrain_live_demo_colab.ipynb"
 def cell(kind: str, source: str, *, hidden: bool = False) -> dict:
     item = {
         "cell_type": kind,
-        "metadata": {"jupyter": {"source_hidden": True}} if hidden else {},
+        "metadata": {"cellView": "form", "jupyter": {"source_hidden": True}} if hidden else {},
         "source": textwrap.dedent(source).lstrip("\n").splitlines(keepends=True),
     }
     if kind == "code":
@@ -188,7 +188,7 @@ cells = [
 ]
 
 # Keep the binary sample in a hidden setup cell instead of depending on GitHub.
-cells.insert(5, cell("code", "SAMPLE_B64 = (\n" + "\n".join(
+cells.insert(5, cell("code", "#@title Built-in sample audio (run this cell)\nSAMPLE_B64 = (\n" + "\n".join(
     f"    '{sample_b64[i:i+120]}'" for i in range(0, len(sample_b64), 120)
 ) + "\n)\n", hidden=True))
 
