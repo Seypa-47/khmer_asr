@@ -42,13 +42,13 @@ The table needs interpretation. Whisper made 2,644 word edits across 2,488 refer
 
 A closer saved analysis of MMS finds 23.75 percent character error on 26 test references containing Latin letters, compared with 13.03 percent on the other 88. Names and mixed-script material may be difficult, but this association does not prove an acoustic cause. The Qwen comparison is confounded by 31.5 times as many effective training examples and a publisher-trained Khmer base. The 114 FLEURS test utterances are also a limited sample; everyday recordings could differ. Finally, ICU Khmer segmentation is a documented scoring choice and may affect WER. The next work is to listen to difficult utterances and classify errors, then run a comparison with matched training data if architecture is the question.
 
+## Live demo cue (after Slide 10, if time allows)
+
+I will now demonstrate the selected Qwen adapter on one short Khmer utterance. I prepared the Colab runtime and checked that the exact epoch-1 adapter loads before this presentation. I will upload an audio file and run inference live. This example shows how the system produces a transcript; it is not part of the 114-utterance test and does not change the reported CER or WER. I will play the audio, then show the generated text and the time taken. If the network or Colab runtime is unavailable, I will use the same saved adapter in my local app.
+
 ## Slide 11
 
 The main result is that Qwen3-ASR achieved the lowest observed error in the chosen lineup on the fixed 114-utterance test: 13.71 percent CER and 33.40 percent ICU Khmer WER. The Qwen validation goal of below 25 percent WER remains unmet. The unequal training data and different starting checkpoints prevent a claim that Qwen architecture alone is better. The strongest next step is a listening-based error audit followed by a matched-data experiment. Thank you.
-
-## Live demo cue (after Slide 11, if time allows)
-
-I will now demonstrate the selected Qwen adapter on one short Khmer utterance. I prepared the Colab runtime and checked that the exact epoch-1 adapter loads before this presentation. I will upload an audio file and run inference live. This example shows how the system produces a transcript; it is not part of the 114-utterance test and does not change the reported CER or WER. I will play the audio, then show the generated text and the time taken. If the network or Colab runtime is unavailable, I will use the same saved adapter in my local app.
 
 ## Slide 12
 
