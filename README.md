@@ -271,9 +271,8 @@ If Windows reports that Application Control blocked `_dynet` while importing Qwe
   - `src/run_app_wsl.sh` / `src/run_qwen_wsl.sh`: WSL CUDA environment launchers.
 - `notebooks/`: Google Colab workflows for Whisper, MMS, and Qwen experiments.
 - `results/`: Matched-run evidence, prediction JSONs, and diagnostic figures (`results/diagnostic/`).
-- `slides/`: Current 13-slide KIT presentation (`Khmer_ASR_KIT_training_process_2026-10-20.pptx`, `.pdf`), speaking script (`presentation_script_training_process_2026-10-20.md`, `Khmer_ASR_presentation_script_2026-10-22.pdf`), and lecturer question guide (`Khmer_ASR_lecturer_QA_training_process_2026-10-22.md`, `Khmer_ASR_lecturer_questions_2026-10-22.pdf`).
+- `slides/`: Current 13-slide KIT presentation (`Khmer_ASR_KIT_training_process_2026-10-20.pptx`, `.pdf`).
 - `tools/`:
-  - `tools/build_presentation_notes_pdf.py`: Generates printable presentation script and lecturer Q&A PDFs.
   - `tools/build_colab_demo.py`: Generates standalone live demo Colab notebook.
 - `run_app.bat` / `run_app_wsl.bat`: Windows and WSL app launch scripts.
 
