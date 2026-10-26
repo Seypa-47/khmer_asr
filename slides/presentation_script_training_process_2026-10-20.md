@@ -1,6 +1,6 @@
 # Khmer ASR presentation rehearsal script
 
-Presentation date: 16 October 2026. Target length: about 10–12 minutes.
+For the 13-slide deck updated 20 October 2026. Target speaking time: about 10 minutes; the questions below are for discussion, not part of the timed talk.
 
 ## Slide 1
 
@@ -28,29 +28,33 @@ I chose the three approaches to cover different model families and training meth
 
 ## Slide 7
 
-On the same 114 held-out utterances, Whisper-Tiny scored 86.76 percent CER and 106.27 percent WER. MMS-1B scored 15.84 percent CER and 67.16 percent WER. Qwen3-ASR LoRA scored 13.71 percent CER and 33.40 percent WER. Qwen has the lowest observed error. The training examples column is essential: Qwen used 16,720 effective examples, while Whisper and MMS used 531. The Qwen base checkpoint was also already adapted for Khmer before my LoRA training. These are shared-test measurements, not a controlled comparison of architectures.
+My process had four stages. First, I prepared short Khmer audio utterances and reference transcripts. Second, I started from three existing pretrained checkpoints and adapted each differently: full fine-tuning for Whisper, the top four encoder layers and CTC head for MMS, and a LoRA adapter for Qwen. Third, I chose checkpoints using the separate 124-utterance validation set. Finally, I scored the selected checkpoints on the same 114 held-out test utterances. All runs used a Tesla T4 GPU. Whisper trained for three epochs; its complete recorded training call took 521 seconds, about 8.7 minutes. MMS trained for 15 epochs, with an interruption and resume; about 1.6 hours is an estimate from the last segment's step rate, because the exact total wall time was not saved. Qwen trained for three epochs on 16,720 effective training entries. Epoch 1 was selected by validation WER. About 6.3 hours of active training is an estimate from a logged segment; setup, validation, and interruptions may add time. I would not present the two estimates as measured totals.
 
 ## Slide 8
 
-The Qwen adapter ran for three epochs. I selected epoch 1 because it had the lowest WER on the 124 validation utterances: 12.42 percent CER and 27.99 percent WER. That validation WER missed the planned below-25-percent goal. After selection, I evaluated the saved adapter once on 114 held-out test utterances, obtaining 13.71 percent CER and 33.40 percent WER. Validation and test use different utterances, so the difference is descriptive. Only test values appear in the three-model result table.
+On the same 114 held-out utterances, Whisper-Tiny scored 86.76 percent CER and 106.27 percent WER. MMS-1B scored 15.84 percent CER and 67.16 percent WER. Qwen3-ASR LoRA scored 13.71 percent CER and 33.40 percent WER. Qwen has the lowest observed error. The training examples column is essential: Qwen used 16,720 effective examples, while Whisper and MMS used 531. The Qwen base checkpoint was also already adapted for Khmer before my LoRA training. These are shared-test measurements, not a controlled comparison of architectures.
 
 ## Slide 9
 
-The table needs interpretation. Whisper made 2,644 word edits across 2,488 reference words, so WER exceeds 100 percent and this saved checkpoint is not reliable on the shared test. MMS improved greatly at the character level but still had 67.16 percent word error rate. Its 1,671 word edits include 605 insertions; character accuracy does not guarantee the right word tokens under ICU segmentation. Qwen made 831 word edits, 840 fewer than MMS, but it used far more effective training examples and started from a Khmer-adapted published checkpoint. I cannot say architecture or LoRA alone caused the difference. These are text edit patterns; I have not verified acoustic causes by listening.
+The Qwen adapter ran for three epochs. I selected epoch 1 because it had the lowest WER on the 124 validation utterances: 12.42 percent CER and 27.99 percent WER. That validation WER missed the planned below-25-percent goal. After selection, I evaluated the saved adapter once on 114 held-out test utterances, obtaining 13.71 percent CER and 33.40 percent WER. Validation and test use different utterances, so the difference is descriptive. Only test values appear in the three-model result table.
 
 ## Slide 10
 
-A closer saved analysis of MMS finds 23.75 percent character error on 26 test references containing Latin letters, compared with 13.03 percent on the other 88. Names and mixed-script material may be difficult, but this association does not prove an acoustic cause. The Qwen comparison is confounded by 31.5 times as many effective training examples and a publisher-trained Khmer base. The 114 FLEURS test utterances are also a limited sample; everyday recordings could differ. Finally, ICU Khmer segmentation is a documented scoring choice and may affect WER. The next work is to listen to difficult utterances and classify errors, then run a comparison with matched training data if architecture is the question.
-
-## Live demo cue (after Slide 10, if time allows)
-
-I will now demonstrate the selected Qwen adapter on one short Khmer utterance. I prepared the Colab runtime and checked that the exact epoch-1 adapter loads before this presentation. I will upload an audio file and run inference live. This example shows how the system produces a transcript; it is not part of the 114-utterance test and does not change the reported CER or WER. I will play the audio, then show the generated text and the time taken. If the network or Colab runtime is unavailable, I will use the same saved adapter in my local app.
+The table needs interpretation. Whisper made 2,644 word edits across 2,488 reference words, so WER exceeds 100 percent and this saved checkpoint is not reliable on the shared test. MMS improved greatly at the character level but still had 67.16 percent word error rate. Its 1,671 word edits include 605 insertions; character accuracy does not guarantee the right word tokens under ICU segmentation. Qwen made 831 word edits, 840 fewer than MMS, but it used far more effective training examples and started from a Khmer-adapted published checkpoint. I cannot say architecture or LoRA alone caused the difference. These are text edit patterns; I have not verified acoustic causes by listening.
 
 ## Slide 11
 
-The main result is that Qwen3-ASR achieved the lowest observed error in the chosen lineup on the fixed 114-utterance test: 13.71 percent CER and 33.40 percent ICU Khmer WER. The Qwen validation goal of below 25 percent WER remains unmet. The unequal training data and different starting checkpoints prevent a claim that Qwen architecture alone is better. The strongest next step is a listening-based error audit followed by a matched-data experiment. Thank you.
+A closer saved analysis of MMS finds 23.75 percent character error on 26 test references containing Latin letters, compared with 13.03 percent on the other 88. Names and mixed-script material may be difficult, but this association does not prove an acoustic cause. The Qwen comparison is confounded by 31.5 times as many effective training examples and a publisher-trained Khmer base. The 114 FLEURS test utterances are also a limited sample; everyday recordings could differ. Finally, ICU Khmer segmentation is a documented scoring choice and may affect WER. The next work is to listen to difficult utterances and classify errors, then run a comparison with matched training data if architecture is the question.
+
+## Live demo cue (after Slide 11, if time allows)
+
+I will now demonstrate the selected Qwen adapter on one short Khmer utterance. I prepared the Colab runtime and checked that the exact epoch-1 adapter loads before this presentation. I will upload an audio file and run inference live. This example shows how the system produces a transcript; it is not part of the 114-utterance test and does not change the reported CER or WER. I will play the audio, then show the generated text and the time taken. If the network or Colab runtime is unavailable, I will use the same saved adapter in my local app.
 
 ## Slide 12
+
+The main result is that Qwen3-ASR achieved the lowest observed error in the chosen lineup on the fixed 114-utterance test: 13.71 percent CER and 33.40 percent ICU Khmer WER. The Qwen validation goal of below 25 percent WER remains unmet. The unequal training data and different starting checkpoints prevent a claim that Qwen architecture alone is better. The strongest next step is a listening-based error audit followed by a matched-data experiment. Thank you.
+
+## Slide 13
 
 The data source is FLEURS. The starting model families are described in the original Whisper and MMS papers and the Qwen Khmer model page. The project repository contains saved prediction pairs, scoring policy, training configuration, and result summaries. AI assistance supported review, analysis, code, documentation, and this presentation; I am responsible for verifying and explaining the submitted work.
 
@@ -69,3 +73,11 @@ The data source is FLEURS. The starting model families are described in the orig
 **Is Qwen architecture better?** This experiment cannot establish that. Qwen used a larger effective training set and a Khmer-adapted starting checkpoint.
 
 **What errors deserve further review?** MMS had more character errors on the 26 references containing Latin letters. Listening is needed before assigning acoustic causes.
+
+**How many hours did you train each model?** Whisper: 8.7 minutes (0.145 hours) measured for the complete run. MMS: about 1.6 hours estimated from a resumed segment. Qwen: about 6.3 hours estimated active training. Exact end-to-end wall times for MMS and Qwen were not retained. All used a Tesla T4; these values are not a compute-normalized model comparison.
+
+**How many epochs, and why choose an earlier checkpoint?** Whisper ran 3 epochs. MMS ran 15; the best saved validation checkpoint was step 300, before the final step 1005. Qwen ran 3; epoch 1 had the best validation WER. I selected by validation data and evaluated the selected checkpoints on the held-out test.
+
+**What is an epoch?** One pass through the training examples. For Qwen, 16,720 is an effective count that includes repeated FLEURS examples, not 16,720 unique recordings.
+
+**What learning rates did you use?** Whisper 1e-5, MMS 3e-5, Qwen 1e-5. They are different training setups, so the rates alone do not explain the result ranking.

@@ -1,6 +1,6 @@
 # Khmer ASR: lecturer questions and model answers
 
-Presentation rehearsal, 16 October 2026. This guide follows the current 12-slide deck. Learn the short answers first, then use the technical answers if the lecturer asks for detail.
+Presentation rehearsal, 22 October 2026. This guide follows the updated 13-slide deck. Learn the short answers first, then use the technical answers if the lecturer asks for detail.
 
 ## The answer to practise first: Why these three approaches? (Slide 6)
 
@@ -21,7 +21,7 @@ Presentation rehearsal, 16 October 2026. This guide follows the current 12-slide
 5. Run the selected systems on the same 114 held-out utterances. Normalize text consistently and calculate corpus CER and ICU-segmented Khmer WER from substitutions, deletions, and insertions.
 6. Interpret the errors and limitations. Qwen had the lowest observed test errors, but the data and starting models differ. A live demo shows inference on one recording; it is separate from the test measurements.
 
-## Training facts to memorize (Slides 3, 5, 7, and 8)
+## Training facts to memorize (Slides 3, 5, and 7-9)
 
 **Approach 1 — Whisper-Tiny.** Starting checkpoint: `openai/whisper-tiny`. Full fine-tuning of all model weights. The matched run trained on 531 FLEURS utterances for **3 completed epochs**. The saved model was evaluated on 114 held-out utterances: **86.76% CER, 106.27% ICU Khmer WER**. The slide does not state a selected Whisper checkpoint step, and the local summary does not preserve one; do not invent it.
 
@@ -71,7 +71,7 @@ Presentation rehearsal, 16 October 2026. This guide follows the current 12-slide
 
 **17. What loss did each approach train with?** Whisper and Qwen trained to predict transcript tokens with a generative token loss. The Qwen code masked the audio/prompt prefix so loss applied to target transcript tokens. MMS trained with CTC loss, which learns to align audio frames and text tokens without frame-by-frame labels.
 
-### Slides 7–10: results and critical analysis
+### Slides 8-11: results and critical analysis
 
 **18. What were the final shared-test results?** On the same 114 FLEURS Khmer utterances: Whisper-Tiny 86.76% CER / 106.27% WER; MMS-1B 15.84% / 67.16%; Qwen3-ASR LoRA 13.71% / 33.40%. Lower is better. These are error rates, not the percentage of fully correct utterances.
 
@@ -97,7 +97,7 @@ Presentation rehearsal, 16 October 2026. This guide follows the current 12-slide
 
 **29. Are the model differences statistically significant?** This deck reports point estimates and edit counts, not a confidence interval or statistical test for the three presented systems. I can say Qwen had the lowest observed error on these 114 utterances, but not claim a population-wide or causal advantage.
 
-### Slides 11–12 and the live demo
+### Slides 12-13 and the live demo
 
 **30. What is the main conclusion?** Qwen3-ASR LoRA had the lowest observed shared-test error: 13.71% CER and 33.40% ICU Khmer WER. The <25% validation WER goal was missed. Unequal training data and different starting checkpoints limit causal conclusions.
 
@@ -106,6 +106,19 @@ Presentation rehearsal, 16 October 2026. This guide follows the current 12-slide
 **32. What does the live Colab demo prove?** It shows that the saved epoch-1 adapter can produce a transcript from a new short recording. One example cannot establish CER or WER without an exact reference or replace the 114-utterance test. The Colab notebook checks the adapter hash and runs an embedded sample before a live upload.
 
 **33. What are the sources and what was your contribution?** FLEURS supplies the audio/reference data. Whisper, MMS, and the publisher's Khmer Qwen are public starting checkpoints. My contribution is the documented adaptation, fixed split/scoring procedure, saved student checkpoints, evaluation, and interpretation. I should be able to explain every configuration and score I present.
+
+
+## Questions about process, hours, and epochs
+
+**34. Explain the complete project workflow in order.** I defined the transcription problem, prepared and filtered the audio/transcript data, fixed training/validation/test splits, loaded public pretrained checkpoints, fine-tuned each approach, selected checkpoints from validation only, then scored the selected systems on the same 114 held-out test utterances. I used the saved predictions to analyze errors and made a separate live inference demo.
+
+**35. How many hours did each approach train?** All three runs used a Tesla T4 GPU. Whisper's complete logged training call was 520.9984 seconds, or **8.7 minutes (0.145 hours), measured**. MMS training was interrupted around step 800 and resumed to step 1005; scaling the logged final segment's rate across all 1005 steps gives **about 1.6 hours, estimated**. Qwen's logged final segment spans steps 4205 to 6270 in 7509 seconds; scaling that rate across 6270 steps gives **about 6.3 hours of active training, estimated**. The exact full wall times for MMS and Qwen were not preserved. Setup, validation, pauses, and interruptions may add time. Do not claim these estimates are exact measured totals.
+
+**36. How many epochs did you train, and what is an epoch?** An epoch is one pass through that run's effective training list. Whisper trained 3 epochs; MMS trained 15 epochs; Qwen trained 3 epochs. Qwen's 16,720 entries per epoch include repeated examples, so this does not mean 16,720 unique recordings.
+
+**37. Why select MMS step 300 and Qwen epoch 1 rather than the last weights?** The selection rule used validation performance, not the held-out test. MMS step 300 had the best saved validation CER. Qwen epoch 1 had the best validation ICU Khmer WER (27.99%), compared with 28.74% and 28.55% at epochs 2 and 3. Continuing training can lower training loss without improving the validation metric.
+
+**38. Why is the time comparison not a speed benchmark?** The models had different parameter counts, trainable components, training data amounts, and interruptions. Whisper's duration is measured, while MMS and Qwen are extrapolations. The times describe these runs; they do not prove which model is generally faster to train.
 
 ## Five statements to keep precise
 
@@ -117,18 +130,18 @@ Presentation rehearsal, 16 October 2026. This guide follows the current 12-slide
 
 ## Evidence to open if asked
 
-- `slides/Khmer_ASR_problem_refined.pptx` — the current 12-slide presentation.
+- `slides/Khmer_ASR_KIT_training_process_2026-10-20.pptx` - the current 13-slide presentation.
 - `results/matched_fleurs_split.json` — exact 531/124/114 FLEURS row lists and eligibility rules.
-- `results/whisper_matched_metrics.json` — Whisper completed three epochs.
-- `results/mms_matched_best300_summary.json` and `results/mms_matched_learning_history.json` — MMS completion and selected step.
-- `results/diagnostic/qwen_bigtrain_epoch1_evidence/run_config.json`, `history.json`, and `best_validation.json` — Qwen configuration and all three validation epochs.
+- `results/whisper_matched_metrics.json` - Whisper completed three epochs and logged 520.9984 seconds of training.
+- `results/mms_matched_metrics.json`, `results/mms_matched_best300_summary.json`, and `results/mms_matched_learning_history.json` - MMS completion, resumed-run timing, and selected step.
+- `results/diagnostic/qwen_bigtrain_epoch1_evidence/run_config.json`, `history.json`, and `best_validation.json`, plus `selected_adapter_and_results (1).zip` (`training.log`) - Qwen configuration, validation epochs, and logged timing segment.
 - `results/matched_cer_wer_summary.json` and `results/diagnostic/qwen_bigtrain_heldout_epoch1_20261015.json` — final test rates and edit counts.
 
 ## Rapid self-test: answer these aloud without reading
 
 1. Explain the user problem and the six-step project flow in one minute.
 2. Give the 40-second answer to why you chose these three approaches.
-3. State each run's completed epochs and the MMS and Qwen selected checkpoints.
+3. State each run's completed epochs, training time (measured or estimated), and the MMS and Qwen selected checkpoints.
 4. Explain full fine-tuning, partial fine-tuning, LoRA, and CTC in plain language.
 5. State the CER/WER formula and why Khmer WER uses ICU word breaks.
 6. Explain why Qwen's 16,720 effective entries do not mean 16,720 unique utterances.

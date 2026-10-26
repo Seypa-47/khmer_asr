@@ -254,25 +254,28 @@ If Windows reports that Application Control blocked `_dynet` while importing Qwe
 
 ## Repository map
 
-- `src/finetune_whisper.py`: Whisper training and evaluation pipeline.
-- `src/train_mms.py`: MMS CTC training pipeline.
-- `src/matched_fleurs.py`: Saves one fixed FLEURS row selection for all approaches.
-- `src/evaluate_saved_whisper.py`: Auditable Whisper scoring on the first N test rows.
-- `src/evaluate_saved_mms.py`: Auditable MMS scoring on the same rows.
-- `src/score_matched_cer_wer.py`: Matched corpus CER and ICU Khmer-segmented WER from saved predictions.
-- `src/probe_qwen_validation.py`: External Qwen baseline on validation clips only.
-- `src/train_qwen_lora.py`: Student LoRA fine-tuning with fixed train/validation rows and adapter checkpoints.
-- `src/plot_cer_wer.py`: CER and WER figure from the audited score summary.
-- `src/evaluate_saved_mms_user_audio.py`: Raw checkpoint inference on private recordings.
-- `src/plot_matched_results.py`: Figures from completed matched runs.
-- `src/analyze_third_approach.py`: Frozen MMS learning curves and paired comparison with the top-four MMS run.
-- `src/evaluate_and_plot.py`: Regenerates figures from the earlier diagnostic runs.
-- `notebooks/khmer_asr_experiments.ipynb`: Colab workflow.
-- `notebooks/mms_frozen_third_approach.ipynb`: completed Colab workflow for the third training strategy.
-- `notebooks/qwen_lora_finetune.ipynb`: controlled follow-up fine-tuning workflow; its results remain separate until measured.
-- `results/`: Final matched-run evidence and figures, with earlier runs in `results/diagnostic/`.
-- `slides/khmer_asr_presentation_three_approaches_final.pptx`: 12-slide presentation in the student's chosen design, updated with all three measured approaches.
-- `app.py`: Gradio inference interface.
+- `app.py`: Gradio inference interface supporting Whisper, MMS, and Qwen adapters.
+- `src/`:
+  - `src/finetune_whisper.py`: Whisper training and evaluation pipeline.
+  - `src/train_mms.py`: MMS CTC training pipeline.
+  - `src/train_qwen_candidate.py` / `src/train_qwen_lora.py`: Qwen LoRA fine-tuning workflows.
+  - `src/matched_fleurs.py`: Generates the fixed FLEURS train/validation/test manifest.
+  - `src/evaluate_saved_whisper.py`: Auditable Whisper evaluation on held-out test rows.
+  - `src/evaluate_saved_mms.py`: Auditable MMS evaluation on held-out test rows.
+  - `src/evaluate_qwen_bigtrain_local.py`: Local RTX BF16 held-out evaluation for the big-corpus Qwen adapter.
+  - `src/score_matched_cer_wer.py`: Matched corpus CER and ICU Khmer-segmented WER calculation.
+  - `src/probe_qwen_validation.py`: External Qwen baseline on validation clips.
+  - `src/plot_cer_wer.py` / `src/plot_matched_results.py`: Figures and learning curve generators.
+  - `src/analyze_third_approach.py`: Frozen MMS learning curves and paired comparison.
+  - `src/evaluate_saved_mms_user_audio.py` / `src/score_user_audio.py`: Personal voice checks and scoring.
+  - `src/run_app_wsl.sh` / `src/run_qwen_wsl.sh`: WSL CUDA environment launchers.
+- `notebooks/`: Google Colab workflows for Whisper, MMS, and Qwen experiments.
+- `results/`: Matched-run evidence, prediction JSONs, and diagnostic figures (`results/diagnostic/`).
+- `slides/`: Current 13-slide KIT presentation (`Khmer_ASR_KIT_training_process_2026-10-20.pptx`, `.pdf`), speaking script (`presentation_script_training_process_2026-10-20.md`, `Khmer_ASR_presentation_script_2026-10-22.pdf`), and lecturer question guide (`Khmer_ASR_lecturer_QA_training_process_2026-10-22.md`, `Khmer_ASR_lecturer_questions_2026-10-22.pdf`).
+- `tools/`:
+  - `tools/build_presentation_notes_pdf.py`: Generates printable presentation script and lecturer Q&A PDFs.
+  - `tools/build_colab_demo.py`: Generates standalone live demo Colab notebook.
+- `run_app.bat` / `run_app_wsl.bat`: Windows and WSL app launch scripts.
 
 ## Model weights
 

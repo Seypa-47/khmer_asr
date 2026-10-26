@@ -22,6 +22,8 @@ hf_cache/
 local_eval/
 local_archive/
 logs/
+tmp/
+output/
 
 # IDE
 .vscode/

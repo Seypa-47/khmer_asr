@@ -16,7 +16,9 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--train-arrow-dir', type=Path)
     args = ap.parse_args()
-    source = Path('selected_adapter_and_results(1).zip')
+    source = Path('local_archive/colab_downloads/selected_adapter_and_results(1).zip')
+    if not source.exists():
+        source = Path('selected_adapter_and_results(1).zip')
     with zipfile.ZipFile(source) as archive:
         prediction = json.loads(archive.read('validation_predictions.json'))
         history = json.loads(archive.read('history.json'))
@@ -62,7 +64,7 @@ def main():
     report = {
         'purpose': 'validation-only error diagnosis; training strategy selection',
         'test_used': False, 'references_modified': False,
-        'source_zip': str(source), 'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest(),
+        'source_zip': source.name, 'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest(),
         'verified_metrics': metrics, 'history': history, 'word_edit_totals': dict(totals),
         'max_word_errors_for_strictly_below_20': target_errors,
         'minimum_errors_to_remove': metrics['wer_errors']-target_errors,
